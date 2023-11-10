@@ -1,13 +1,18 @@
 package com.example.Client_ChatApp.controller;
 
+import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
 import com.example.Client_ChatApp.model.ServerData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -30,7 +35,21 @@ public class SocketController implements Initializable {
     private PasswordField repwdtxt;
     @FXML
     private Label errortxt_;
+    @FXML
+    private TextField usernametxtlo;
+    @FXML
+    private PasswordField pwdtxtlo;
+    @FXML
+    private Label errortxtlo_;
 
+
+
+    Client client;
+    ServerData connectedServer;
+    Socket socket;
+    BufferedWriter bufferedWriter;
+    BufferedReader bufferedReader;
+    Scanner sc = new Scanner(System.in);
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String ipAddress = getThisIP();
@@ -48,14 +67,6 @@ public class SocketController implements Initializable {
             return;
         }
     }
-
-    Client client;
-    ServerData connectedServer;
-    Socket socket;
-    BufferedWriter bufferedWriter;
-    BufferedReader bufferedReader;
-    Scanner sc = new Scanner(System.in);
-
     public void getOnlineUserss(){
         for(int i = 0; i < connectedServer.getConnectAccountCount(); i++ ){
             try {
@@ -98,7 +109,7 @@ public class SocketController implements Initializable {
         return ip;
     }
 
-    public void onsubmitButtonClick(ActionEvent event) {
+    public void signup(ActionEvent event) {
         String fullname = fullnametxt.getText().trim();
         String gmail = gmailtxt.getText().trim();
         String username = usernametxt.getText().trim();
@@ -194,5 +205,65 @@ public class SocketController implements Initializable {
                 System.exit(0);
             }
         }).start();
+    }
+
+    public void onloginClick(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+        Stage stage = new Stage();
+        stage.setTitle("Login!");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void login(ActionEvent event) {
+        String username = usernametxtlo.getText().trim();
+        String pwd = pwdtxtlo.getText().trim();
+        try{
+            bufferedWriter.write("New login");
+            bufferedWriter.newLine();
+            bufferedWriter.write(username);
+            bufferedWriter.newLine();
+            bufferedWriter.write(pwd);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            String loginResult = bufferedReader.readLine();
+            System.out.println(loginResult);
+            if(loginResult.equals("Login-fail")){
+                errortxtlo_.setText("Đăng nhập không thành công");
+                return;
+            }
+            else if(loginResult.equals("Password_fail")){
+                errortxtlo_.setText("Mật khẩu không chính xác");
+                return;
+            }
+            else if(loginResult.equals("Account-logined")){
+                errortxtlo_.setText("Tài khoản đã được đăng nhập");
+                return;
+            }
+            else if(loginResult.equals("Login success")){
+                System.out.println("Đăng nhập thành công!");
+                client.setId(bufferedReader.readLine());
+                client.setName(bufferedReader.readLine());
+                FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+                Stage stage = new Stage();
+                stage.setTitle("Hello!");
+                stage.setScene(scene);
+                stage.show();
+            }
+        }catch (IOException ex){
+
+        }
+    }
+
+    public void onSignupClick(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("signup.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+        Stage stage = new Stage();
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.show();
     }
 }

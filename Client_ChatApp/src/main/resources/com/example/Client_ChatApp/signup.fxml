@@ -14,7 +14,7 @@
                   </image>
               </ImageView>
 
-            <Pane id="login-main" layoutX="155.0" layoutY="356.0" minHeight="343.0" minWidth="871.0" prefHeight="430.0" prefWidth="845.0" style="-fx-background-color: white; -fx-min-height: 250; -fx-min-width: 400; -fx-background-radius: 24px;">
+            <Pane id="login-main" layoutX="168.0" layoutY="328.0" minHeight="343.0" minWidth="871.0" prefHeight="430.0" prefWidth="845.0" style="-fx-background-color: white; -fx-min-height: 250; -fx-min-width: 400; -fx-background-radius: 24px;">
                 <children>
                     <TextField id="fullnametxt" fx:id="fullnametxt" layoutX="251.0" layoutY="14.0" prefHeight="70.0" prefWidth="501.0" promptText="Họ và tên" style="-fx-background-color: #d9d9d9; -fx-background-radius: 16px;">
                         <font>
@@ -29,12 +29,12 @@
                         <font>
                             <Font size="46.0" />
                         </font></Label>
-                    <Button id="submit" layoutX="785.0" mnemonicParsing="false" onAction="#onsubmitButtonClick" prefHeight="430.0" prefWidth="60.0" style="-fx-font-weight: bold; -fx-min-width: 60; -fx-min-height: 300; -fx-border-color: none; -fx-background-color: #F1c40F; -fx-text-fill: white; -fx-background-radius: 0 24 24 0;" textAlignment="CENTER" textFill="WHITE">
+                    <Button id="submit" layoutX="785.0" mnemonicParsing="false" onAction="#signup" prefHeight="430.0" prefWidth="60.0" style="-fx-font-weight: bold; -fx-min-width: 60; -fx-min-height: 300; -fx-border-color: none; -fx-background-color: #F1c40F; -fx-text-fill: white; -fx-background-radius: 0 24 24 0;" textAlignment="CENTER" textFill="WHITE">
                         <font>
                             <Font name="System Bold" size="19.0" />
                         </font>
                     </Button>
-                    <Label id="errortxt_" fx:id="errortxt_" layoutX="253.0" layoutY="405.0" prefHeight="20.0" prefWidth="0.0" textFill="RED">
+                    <Label id="errortxt_" fx:id="errortxt_" layoutX="253.0" layoutY="405.0" prefHeight="20.0" prefWidth="343.0" textFill="RED">
                         <font>
                             <Font name="System Italic" size="14.0" />
                         </font>
@@ -60,6 +60,16 @@
                     <Font name="System Bold" size="50.0" />
                 </font>
             </Label>
+         <Label layoutX="376.0" layoutY="763.0" text="Nếu đã có tài khoản: ">
+            <font>
+               <Font name="System Italic" size="19.0" />
+            </font>
+         </Label>
+         <Label layoutX="552.0" layoutY="763.0" onMouseClicked="#onloginClick" text="Đăng nhập!" textFill="#00c42a">
+            <font>
+               <Font name="System Italic" size="19.0" />
+            </font>
+         </Label>
         </children>
     </Pane>
 </VBox>

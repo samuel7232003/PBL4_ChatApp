@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="808.0" prefWidth="1154.0" spacing="20.0" style="-fx-background-image: url('Background.png');" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.SocketController">
+    <Pane prefHeight="808.0" prefWidth="1145.0">
+        <children>
+            <ImageView id="imgBG" fitHeight="1150.0" fitWidth="1154.0" layoutX="163.0" layoutY="-174.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;">
+                <image>
+                    <Image url="@Background.png" />
+                </image>
+            </ImageView>
+
+            <Pane id="login-main" layoutX="155.0" layoutY="502.0" minHeight="228.0" minWidth="871.0" prefHeight="228.0" prefWidth="845.0" style="-fx-background-color: white; -fx-min-height: 250; -fx-min-width: 400; -fx-background-radius: 24px;">
+                <children>
+                    <Label layoutX="55.0" layoutY="31.0" prefHeight="179.0" prefWidth="172.0" style="-fx-font-weight: bold;" text="ĐĂNG NHẬP" textAlignment="CENTER" wrapText="true">
+                        <font>
+                            <Font size="46.0" />
+                        </font></Label>
+                    <Button id="submit" layoutX="785.0" minHeight="229.0" mnemonicParsing="false" onAction="#login" prefHeight="250.0" prefWidth="60.0" style="-fx-font-weight: bold; -fx-min-width: 60; -fx-border-color: none; -fx-background-color: #F1c40F; -fx-text-fill: white; -fx-background-radius: 0 24 24 0;" textAlignment="CENTER" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="19.0" />
+                        </font>
+                    </Button>
+                    <Label id="errortxtlo_" fx:id="errortxtlo_" layoutX="251.0" layoutY="200.0" prefHeight="20.0" prefWidth="428.0" textFill="RED">
+                        <font>
+                            <Font name="System Italic" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField id="usernametxtlo" fx:id="usernametxtlo" layoutX="251.0" layoutY="31.0" prefHeight="59.0" prefWidth="501.0" promptText="Tên đăng nhập" style="-fx-min-width: 400; -fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                        <font>
+                            <Font size="30.0" />
+                        </font></TextField>
+                    <PasswordField id="pwdtxtlo" fx:id="pwdtxtlo" layoutX="251.0" layoutY="120.0" prefHeight="58.0" prefWidth="501.0" promptText="Mật khẩu" style="-fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                        <font>
+                            <Font size="30.0" />
+                        </font>
+                    </PasswordField>
+                </children>
+            </Pane>
+            <Label id="hello" fx:id="hello" layoutX="188.0" layoutY="167.0" prefHeight="189.0" prefWidth="608.0" text="Bắt đầu cuộc trò chuyện của bạn..." textFill="WHITE" wrapText="true">
+                <font>
+                    <Font name="System Bold" size="50.0" />
+                </font>
+            </Label>
+         <Label layoutX="361.0" layoutY="767.0" text="Nếu chưa có tài khoản: ">
+            <font>
+               <Font name="System Italic" size="19.0" />
+            </font>
+         </Label>
+         <Label onMouseClicked="#onSignupClick" layoutX="556.0" layoutY="767.0" text="Đăng kí!" textFill="#00c42a">
+            <font>
+               <Font name="System Italic" size="19.0" />
+            </font>
+         </Label>
+        </children>
+    </Pane>
+</VBox>

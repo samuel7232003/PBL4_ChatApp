@@ -13,18 +13,18 @@ public class ClientController {
 //            System.out.println();
 //        }
 //    }
-//    public static String Login(String username, String password){
-//        String result = ClientDAO.Login(username, password);
-//        if(result.equals("Login-fail")){
-//            return "Login-fail";
-//        } else if (result.equals("Password_fail")) {
-//            return "Password_fail";
-//        } else{
-//            Client client = ClientDAO.getClient(result);
-//            // System.out.println(result);
-//            return result;
-//        }
-//    }
+    public static String Login(String username, String password){
+        String result = ClientDAO.Login(username, password);
+        if(result.equals("Login-fail")){
+            return "Login-fail";
+        } else if (result.equals("Password_fail")) {
+            return "Password_fail";
+        } else{
+            Client client = ClientDAO.getClient(result);
+            // System.out.println(result);
+            return result;
+        }
+    }
     public static String SignUp(Client client){
         String id_last = "";
         for (Client clientL : ClientDAO.getClients()){
@@ -43,9 +43,9 @@ public class ClientController {
         boolean result = ClientDAO.SignUp(client);
         return "Sign up success";
     }
-//    public static boolean checkClientIsLogin(String idUser){
-//        return ClientDAO.CheckLogin(idUser);
-//    }
+    public static boolean checkClientIsLogin(String idUser){
+        return ClientDAO.CheckLogin(idUser);
+    }
 //    public static void Logout(String iduser){
 //        ClientDAO.Logout(iduser);
 //    }

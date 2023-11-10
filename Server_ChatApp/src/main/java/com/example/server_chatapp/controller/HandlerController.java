@@ -1,5 +1,6 @@
 package com.example.server_chatapp.controller;
 
+import com.example.server_chatapp.DAO.ClientDAO;
 import com.example.server_chatapp.model.Client;
 
 import java.io.*;
@@ -31,6 +32,11 @@ public class HandlerController extends Thread{
             throw new RuntimeException(e);
         }
     }
+
+    public BufferedWriter getBufferedWriter() {
+        return bufferedWriter;
+    }
+
     @Override
     public void run() {
         try{
@@ -40,82 +46,85 @@ public class HandlerController extends Thread{
 
                 System.out.println("Header: " + header);
                 switch (header){
-//                    case "New login": {
-//                        String clientUsername = bufferedReader.readLine();
-//                        String clientPassword = bufferedReader.readLine();
-//
-//                        String rs = ClientController.Login(clientUsername, clientPassword); // kiểm tra đăng nhập
-//                        // nếu mà k dính 2 cái trên thì dưới đó trả về id của client
-//
-//                        if(rs.equals("Login-fail")) {
-//                            System.out.println("Đăng nhập không thành công");
-//                            bufferedWriter.write("Login-fail");
-//                            bufferedWriter.flush();
-//                        }
-//                        else if(rs.equals("Password_fail")) {
-//                            System.out.println("Mật khẩu không chính xác");
-//                            bufferedWriter.write("Password_fail");
-//                            bufferedWriter.flush();
-//                        }
-//                        else {
-//                            boolean logined = ClientController.checkClientIsLogin(rs);
-//                            if(logined) {
-//                                bufferedWriter.write("Account-logined");
-//                                bufferedWriter.flush();
-//                                System.out.println("Tài khoản đã được đăng nhập!");
-//                            }
-//                            else {
-//                                this.client = ClientDAO.getClient(rs);
-//
-//                                String name = this.client.getName();
-//                                System.out.println(name + " đăng nhập thành công");
-//
-//                                SocketController.addHandlerClient(this);
-//                                StartScreen.updateClient();
-//
-//                                this.bufferedWriter.write("Login success");
-//                                this.bufferedWriter.newLine();
-//                                this.bufferedWriter.flush();
-//
-//                                this.bufferedWriter.write(client.getId());
-//                                this.bufferedWriter.newLine();
-//                                this.bufferedWriter.write(client.getName());
-//                                this.bufferedWriter.newLine();
-//                                this.bufferedWriter.flush();
-//
-////                            Hiện số lượng người đang onl - 1 nghĩa là trừ thằng thằng mà đang nhắn
-//                                this.bufferedWriter.write("" + (SocketController.getClientSize() - 1));
-//                                this.bufferedWriter.newLine();
-//                                this.bufferedWriter.flush();
-//                                // cập nhật lại danh sách user đang online cho thằng this client
-//                                for (HandlerController handlerController : SocketController.getClientHandlers()) {
-//                                    if ((handlerController.getClient().getId()).equals(this.client.getId()))
-//                                        continue;
-//                                    this.bufferedWriter.write(handlerController.getClient().getId());
-//                                    this.bufferedWriter.newLine();
-//                                    this.bufferedWriter.write(handlerController.getClient().getName());
-//                                    this.bufferedWriter.newLine();
-//                                    this.bufferedWriter.flush();
-//                                }
-////                              //Gửi thông tin từ this client về các client khác
-//                                for (HandlerController handlerController : SocketController.getClientHandlers()) {
-//
-//                                    if ((handlerController.getClient().getId()).equals(this.client.getId()))
-//                                        continue;
-//                                    handlerController.getBufferedWriter().write("new user online");
+                    case "New login": {
+                        String clientUsername = bufferedReader.readLine();
+                        String clientPassword = bufferedReader.readLine();
+
+                        String rs = ClientController.Login(clientUsername, clientPassword); // kiểm tra đăng nhập
+                        // nếu mà k dính 2 cái trên thì dưới đó trả về id của client
+
+                        if(rs.equals("Login-fail")) {
+                            System.out.println("Đăng nhập không thành công");
+                            bufferedWriter.write("Login-fail");
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+                        }
+                        else if(rs.equals("Password_fail")) {
+                            System.out.println("Mật khẩu không chính xác");
+                            bufferedWriter.write("Password_fail");
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+                        }
+                        else {
+                            boolean logined = ClientController.checkClientIsLogin(rs);
+                            if(logined) {
+                                bufferedWriter.write("Account-logined");
+                                bufferedWriter.newLine();
+                                bufferedWriter.flush();
+                                System.out.println("Tài khoản đã được đăng nhập!");
+                            }
+                            else {
+                                this.client = ClientDAO.getClient(rs);
+
+                                String name = this.client.getName();
+                                System.out.println(name + " đăng nhập thành công");
+
+                                SocketController.addHandlerClient(this);
+                                //StartScreen.updateClient();
+
+                                this.bufferedWriter.write("Login success");
+                                this.bufferedWriter.newLine();
+                                this.bufferedWriter.flush();
+
+                                this.bufferedWriter.write(client.getId());
+                                this.bufferedWriter.newLine();
+                                this.bufferedWriter.write(client.getName());
+                                this.bufferedWriter.newLine();
+                                this.bufferedWriter.flush();
+
+//                            Hiện số lượng người đang onl - 1 nghĩa là trừ thằng thằng mà đang nhắn
+                                this.bufferedWriter.write("" + (SocketController.getClientSize() - 1));
+                                this.bufferedWriter.newLine();
+                                this.bufferedWriter.flush();
+                                // cập nhật lại danh sách user đang online cho thằng this client
+                                for (HandlerController handlerController : SocketController.getClientHandlers()) {
+                                    if ((handlerController.getClient().getId()).equals(this.client.getId()))
+                                        continue;
+                                    this.bufferedWriter.write(handlerController.getClient().getId());
+                                    this.bufferedWriter.newLine();
+                                    this.bufferedWriter.write(handlerController.getClient().getName());
+                                    this.bufferedWriter.newLine();
+                                    this.bufferedWriter.flush();
+                                }
+//                              //Gửi thông tin từ this client về các client khác
+                                for (HandlerController handlerController : SocketController.getClientHandlers()) {
+
+                                    if ((handlerController.getClient().getId()).equals(this.client.getId()))
+                                        continue;
+                                    handlerController.getBufferedWriter().write("new user online");
+                                    handlerController.getBufferedWriter().newLine();
+//                                    handlerController.getBufferedWriter().write("" + (SocketController.getClientSize() - 1));
 //                                    handlerController.getBufferedWriter().newLine();
-////                                    handlerController.getBufferedWriter().write("" + (SocketController.getClientSize() - 1));
-////                                    handlerController.getBufferedWriter().newLine();
-//                                    handlerController.getBufferedWriter().write(this.client.getId());
-//                                    handlerController.getBufferedWriter().newLine();
-//                                    handlerController.getBufferedWriter().write(this.client.getName());
-//                                    handlerController.getBufferedWriter().newLine();
-//                                    handlerController.getBufferedWriter().flush();
-//                                }
-//                            }
-//                        }
-//                        break;
-//                    }
+                                    handlerController.getBufferedWriter().write(this.client.getId());
+                                    handlerController.getBufferedWriter().newLine();
+                                    handlerController.getBufferedWriter().write(this.client.getName());
+                                    handlerController.getBufferedWriter().newLine();
+                                    handlerController.getBufferedWriter().flush();
+                                }
+                            }
+                        }
+                        break;
+                    }
                     case "Sign up":{
                         String name = bufferedReader.readLine();
                         String username = bufferedReader.readLine();
