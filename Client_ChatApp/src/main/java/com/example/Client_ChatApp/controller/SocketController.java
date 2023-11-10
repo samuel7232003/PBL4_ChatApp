@@ -95,7 +95,7 @@ public class SocketController implements Initializable {
 //    public void initialize(URL url, ResourceBundle resourceBundle) {
 //
 
-//    }
+    //    }
     public static String getThisIP() {
         String ip = "";
         try {
@@ -138,73 +138,7 @@ public class SocketController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        connectedServer.setOpen(true);
-        try {
-            connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        getOnlineUserss();
-        //MainChatView mainChatView = new MainChatView(connectedServer);
-        updateUserOnlineList();
-//        mainChatView.updateUserOnlineList(onlineUsers);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        String header = bufferedReader.readLine();
-                        System.out.println("Header: " + header);
-                        if (header == null)
-                            throw new IOException();
-                        switch (header) {
-                            case "new user online": {
-                                String Id_user = bufferedReader.readLine();
-                                String Name_user = bufferedReader.readLine();
-                                Client clientVari = new Client(Id_user, Name_user);
-                                connectedServer.addClient(clientVari);
-                                updateUserOnlineList();
-                                break;
-                            }
-                            case "user quit": {
-                                String Id_user = bufferedReader.readLine();
-                                String Name_user = bufferedReader.readLine();
-
-                                System.out.println(Name_user + " đã rời khỏi cuộc trò chuyện");
-
-                                for(Client client1 : connectedServer.getClients()){
-                                    if(client1.getId().equals(Id_user)){
-                                        connectedServer.removeClient(client1);
-                                        break;
-                                    }
-
-                                }
-                                updateUserOnlineList();
-//                            for (Room room : allRooms) {
-//                                if (room.users.contains(whoQuit)) {
-//                                    Main.mainScreen.addNewMessage(room.id, "notify", whoQuit, "Đã thoát ứng dụng");
-//                                    room.users.remove(whoQuit);
-//                                }
-//                            }
-//                            Main.mainScreen.updateRoomUsersJList();
-
-                                break;
-                            }
-                        }
-                    }
-                }catch (IOException e){
-                    System.out.println("Server đã đóng, ứng dụng sẽ thoát ngay lập tức!");
-                    try {
-                        socket.close();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                System.exit(0);
-            }
-        }).start();
+        StartAll();
     }
 
     public void onloginClick(MouseEvent mouseEvent) throws IOException {
@@ -246,6 +180,7 @@ public class SocketController implements Initializable {
                 System.out.println("Đăng nhập thành công!");
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
+                StartAll();
                 FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
                 Stage stage = new Stage();
@@ -257,7 +192,81 @@ public class SocketController implements Initializable {
 
         }
     }
+    public void StartAll(){
+        connectedServer.setOpen(true);
+        try {
+            connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for(int i = 0; i < connectedServer.getConnectAccountCount(); i++ ){
+            try {
+                String id_user = bufferedReader.readLine();
+                String NameUser = bufferedReader.readLine();
+                Client clientVari = new Client(id_user, NameUser);
+                connectedServer.addClient(clientVari);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        updateUserOnlineList();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        String header = bufferedReader.readLine();
+                        System.out.println("Header: " + header);
+                        if (header == null)
+                            throw new IOException();
+                        switch (header) {
+                            case "new user online": {
+                                String Id_user = bufferedReader.readLine();
+                                String Name_user = bufferedReader.readLine();
+                                Client clientVari = new Client(Id_user, Name_user);
+                                connectedServer.addClient(clientVari);
+                                updateUserOnlineList();
+                                break;
+                            }
+                            case "user quit": {
+                                String Id_user = bufferedReader.readLine();
+                                String Name_user = bufferedReader.readLine();
 
+                                System.out.println(Name_user + " đã rời khỏi cuộc trò chuyện");
+
+                                for(Client client1 : connectedServer.getClients()){
+                                    if(client1.getId().equals(Id_user)){
+                                        connectedServer.removeClient(client1);
+                                        break;
+                                    }
+
+                                }
+                                updateUserOnlineList();
+//                            for (Room room : allRooms) {
+//                                if (room.users.contains(whoQuit)) {
+//                                    Main.mainScreen.addNewMessage(room.id, "notify", whoQuit, "Đã thoát ứng dụng");
+//                                    room.users.remove(whoQuit);
+//                                }
+//                            }
+//                            Main.mainScreen.updateRoomUsersJList();
+
+                                break;
+
+                            }
+                        }
+                    }
+                }catch (IOException e){
+                    System.out.println("Server đã đóng, ứng dụng sẽ thoát ngay lập tức!");
+                    try {
+                        socket.close();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                System.exit(0);
+            }
+        }).start();
+    }
     public void onSignupClick(MouseEvent mouseEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("signup.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
