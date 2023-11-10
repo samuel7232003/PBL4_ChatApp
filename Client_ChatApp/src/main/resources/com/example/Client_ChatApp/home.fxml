@@ -1,14 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.Client_ChatApp.controller.SocketController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.SocketController">
+    <children>
+        <Pane prefHeight="800.0" prefWidth="70.0" style="-fx-background-color: #dd4131;">
+            <children>
+                <Pane layoutX="13.0" layoutY="615.0" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 8; -fx-background-color: #f1c40f;">
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="8.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icon/call.png" />
+                            </image></ImageView>
+                    </children></Pane>
+                <Pane layoutX="13.0" layoutY="680.0" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+                    <children>
+                        <ImageView fitHeight="30.0" fitWidth="25.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icon/chat.png" />
+                            </image></ImageView>
+                    </children></Pane>
+                <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@image/DT.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+        <Pane layoutX="70.0" prefHeight="800.0" prefWidth="260.0" style="-fx-border-color: #d6d6d6;">
+            <children>
+                <Label layoutX="15.0" layoutY="4.0" text="Chats">
+                    <font>
+                        <Font name="System Bold" size="29.0" />
+                    </font></Label>
+                <TextField layoutX="11.0" layoutY="51.0" prefHeight="36.0" prefWidth="233.0" promptText="Tìm kiếm" style="-fx-background-color: #d9d9d9; -fx-background-radius: 10;" />
+                <Pane layoutY="95.0" prefHeight="90.0" prefWidth="266.0">
+                    <children>
+                        <Label layoutX="12.0" layoutY="1.0" text="Kết nối của bạn">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@image/DT.jpg" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="17.0" layoutY="68.0" text="Thành" />
+                        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="73.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@image/DT.jpg" />
+                            </image></ImageView>
+                        <Label layoutX="76.0" layoutY="68.0" text="Thắng" />
+                    </children>
+                </Pane>
+                <Pane layoutY="185.0" prefHeight="488.0" prefWidth="260.0">
+                    <children>
+                        <Label layoutX="13.0" layoutY="-15.0" prefHeight="45.0" prefWidth="197.0" text="Các cuộc trò chuyện gần đây">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                        <Pane layoutY="23.0" prefHeight="75.0" prefWidth="260.0">
+                            <children>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@image/VT.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Label layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
+                            </children></Pane>
+                    </children>
+                </Pane>
+            </children></Pane>
+        <Pane layoutX="330.0" prefHeight="75.0" prefWidth="870.0" style="-fx-border-color: #d6d6d6;">
+            <children>
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@image/VT.jpg" />
+                    </image>
+                </ImageView>
+                <Label layoutX="95.0" layoutY="13.0" text="Lê Việt Thanh">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font></Label>
+                <Label layoutX="95.0" layoutY="45.0" text="Đang hoạt động" />
+                <Label layoutX="808.0" layoutY="11.0" style="-fx-text-fill: #f1c40f;" text=". . .">
+                    <font>
+                        <Font name="System Bold" size="25.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="738.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@icon/call_yellow.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+        <Pane layoutX="330.0" layoutY="743.0" prefHeight="57.0" prefWidth="870.0">
+            <children>
+                <Pane layoutX="14.0" layoutY="9.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="20.0" layoutX="10.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icon/file.png" />
+                            </image>
+                        </ImageView>
+                    </children></Pane>
+                <Pane layoutX="65.0" layoutY="9.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+                    <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="12.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icon/audio.png" />
+                            </image></ImageView>
+                    </children></Pane>
+                <TextField layoutX="166.0" layoutY="9.0" prefHeight="40.0" prefWidth="628.0" promptText="Nhập tin nhắn gửi tới bạn của bạn..." style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextField>
+                <Pane layoutX="801.0" layoutY="9.0" prefHeight="40.0" prefWidth="61.0" style="-fx-background-color: #dd4131; -fx-background-radius: 8;">
+                    <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="16.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icon/send_yellow.png" />
+                            </image></ImageView>
+                    </children></Pane>
+                <Pane layoutX="115.0" layoutY="9.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 8; -fx-background-color: #f1c40f;">
+                    <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icon/photo.png" />
+                            </image></ImageView>
+                    </children></Pane>
+            </children>
+        </Pane>
+    </children>
 </AnchorPane>

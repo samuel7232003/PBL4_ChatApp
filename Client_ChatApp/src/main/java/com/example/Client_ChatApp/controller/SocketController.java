@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -142,6 +143,8 @@ public class SocketController implements Initializable {
     }
 
     public void onloginClick(MouseEvent mouseEvent) throws IOException {
+        Stage stage1 = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
+        stage1.close();
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
         Stage stage = new Stage();
@@ -181,6 +184,8 @@ public class SocketController implements Initializable {
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
                 StartAll();
+                Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();
+                stage1.close();
                 FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
                 Stage stage = new Stage();
@@ -268,6 +273,8 @@ public class SocketController implements Initializable {
         }).start();
     }
     public void onSignupClick(MouseEvent mouseEvent) throws IOException {
+        Stage stage1 = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
+        stage1.close();
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("signup.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
         Stage stage = new Stage();
