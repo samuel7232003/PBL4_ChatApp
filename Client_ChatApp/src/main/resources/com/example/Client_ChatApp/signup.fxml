@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="808.0" prefWidth="1154.0" spacing="20.0" style="-fx-background-image: url('Background.png');" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.SocketController">
+    <Pane prefHeight="808.0" prefWidth="1145.0">
+        <children>
+              <ImageView id="imgBG" fitHeight="1150.0" fitWidth="1154.0" layoutX="163.0" layoutY="-174.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;">
+                  <image>
+                      <Image url="@Background.png" />
+                  </image>
+              </ImageView>
+
+            <Pane id="login-main" layoutX="155.0" layoutY="356.0" minHeight="343.0" minWidth="871.0" prefHeight="430.0" prefWidth="845.0" style="-fx-background-color: white; -fx-min-height: 250; -fx-min-width: 400; -fx-background-radius: 24px;">
+                <children>
+                    <TextField id="fullnametxt" fx:id="fullnametxt" layoutX="251.0" layoutY="14.0" prefHeight="70.0" prefWidth="501.0" promptText="Họ và tên" style="-fx-background-color: #d9d9d9; -fx-background-radius: 16px;">
+                        <font>
+                            <Font size="30.0" />
+                        </font>
+                    </TextField>
+                    <TextField id="gmailtxt" fx:id="gmailtxt" layoutX="251.0" layoutY="96.0" minHeight="70.0" minWidth="501.0" prefHeight="70.0" prefWidth="501.0" promptText="Gmail" style="-fx-min-width: 400; -fx-background-radius: 16px; -fx-background-color: #d9d9d9;">
+                        <font>
+                            <Font size="30.0" />
+                        </font></TextField>
+                    <Label layoutX="53.0" layoutY="121.0" prefHeight="179.0" prefWidth="172.0" style="-fx-font-weight: bold;" text="ĐĂNG KÝ" textAlignment="CENTER" wrapText="true">
+                        <font>
+                            <Font size="46.0" />
+                        </font></Label>
+                    <Button id="submit" layoutX="785.0" mnemonicParsing="false" onAction="#onsubmitButtonClick" prefHeight="430.0" prefWidth="60.0" style="-fx-font-weight: bold; -fx-min-width: 60; -fx-min-height: 300; -fx-border-color: none; -fx-background-color: #F1c40F; -fx-text-fill: white; -fx-background-radius: 0 24 24 0;" textAlignment="CENTER" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="19.0" />
+                        </font>
+                    </Button>
+                    <Label id="errortxt_" fx:id="errortxt_" layoutX="253.0" layoutY="405.0" prefHeight="20.0" prefWidth="0.0" textFill="RED">
+                        <font>
+                            <Font name="System Italic" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField id="usernametxt" fx:id="usernametxt" layoutX="251.0" layoutY="178.0" prefHeight="59.0" prefWidth="501.0" promptText="Tên đăng nhập" style="-fx-min-width: 400; -fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                        <font>
+                            <Font size="30.0" />
+                        </font></TextField>
+                    <PasswordField id="pwdtxt" fx:id="pwdtxt" layoutX="251.0" layoutY="254.0" prefHeight="58.0" prefWidth="501.0" promptText="Mật khẩu" style="-fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                        <font>
+                            <Font size="30.0" />
+                        </font>
+                    </PasswordField>
+                    <PasswordField id="repwdtxt" fx:id="repwdtxt" layoutX="251.0" layoutY="328.0" prefHeight="57.0" prefWidth="501.0" promptText="Xác nhận mật khẩu" style="-fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                        <font>
+                            <Font size="30.0" />
+                        </font>
+                    </PasswordField>
+                </children>
+            </Pane>
+            <Label id="hello" fx:id="hello" layoutX="188.0" layoutY="139.0" prefHeight="189.0" prefWidth="608.0" text="Bắt đầu cuộc trò chuyện của bạn..." textFill="WHITE" wrapText="true">
+                <font>
+                    <Font name="System Bold" size="50.0" />
+                </font>
+            </Label>
+        </children>
+    </Pane>
+</VBox>

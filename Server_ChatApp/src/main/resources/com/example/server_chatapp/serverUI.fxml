@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.server_chatapp.controller.ServerUIController">
+   <children>
+      <Label id="iptxt" fx:id="iptxt" layoutX="87.0" layoutY="24.0" text="Label" />
+      <Label id="porttxt" fx:id="porttxt" layoutX="87.0" layoutY="57.0" text="Label" />
+      <TextArea id="tbtxt" fx:id="tbtxt" layoutX="87.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>
