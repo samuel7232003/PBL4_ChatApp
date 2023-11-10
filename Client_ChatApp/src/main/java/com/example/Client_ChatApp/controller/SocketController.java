@@ -128,7 +128,18 @@ public class SocketController implements Initializable {
             if(SignUpResult.equals("User name existed")){
                 errortxt_.setText("User name đã tồn tại");
             } else if (SignUpResult.equals("Sign up success")) {
-                errortxt_.setText("Bạn đã đăng kí thành công, mời bạn đăng nhập lại.");
+                System.out.println("Đăng kí thành công!");
+                client.setId(bufferedReader.readLine());
+                client.setName(bufferedReader.readLine());
+                StartAll();
+                Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();
+                stage1.close();
+                FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+                Stage stage = new Stage();
+                stage.setTitle("Hello!");
+                stage.setScene(scene);
+                stage.show();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
