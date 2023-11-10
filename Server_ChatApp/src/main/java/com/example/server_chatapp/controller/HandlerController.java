@@ -136,10 +136,52 @@ public class HandlerController extends Thread{
                         clientSignUp.setLogin(false);
                         String result = ClientController.SignUp(clientSignUp);
 
+                        String rs = ClientController.Login(username, password); // kiểm tra đăng nhập
+                        this.client = ClientDAO.getClient(rs);
+
 
                         bufferedWriter.write(result);
                         bufferedWriter.newLine();
                         bufferedWriter.flush();
+
+                        SocketController.addHandlerClient(this);
+                        //StartScreen.updateClient();
+
+                        this.bufferedWriter.write(client.getId());
+                        this.bufferedWriter.newLine();
+                        this.bufferedWriter.write(client.getName());
+                        this.bufferedWriter.newLine();
+                        this.bufferedWriter.flush();
+
+//                            Hiện số lượng người đang onl - 1 nghĩa là trừ thằng thằng mà đang nhắn
+                        this.bufferedWriter.write("" + (SocketController.getClientSize() - 1));
+                        this.bufferedWriter.newLine();
+                        this.bufferedWriter.flush();
+                        // cập nhật lại danh sách user đang online cho thằng this client
+                        for (HandlerController handlerController : SocketController.getClientHandlers()) {
+                            if ((handlerController.getClient().getId()).equals(this.client.getId()))
+                                continue;
+                            this.bufferedWriter.write(handlerController.getClient().getId());
+                            this.bufferedWriter.newLine();
+                            this.bufferedWriter.write(handlerController.getClient().getName());
+                            this.bufferedWriter.newLine();
+                            this.bufferedWriter.flush();
+                        }
+//                              //Gửi thông tin từ this client về các client khác
+                        for (HandlerController handlerController : SocketController.getClientHandlers()) {
+
+                            if ((handlerController.getClient().getId()).equals(this.client.getId()))
+                                continue;
+                            handlerController.getBufferedWriter().write("new user online");
+                            handlerController.getBufferedWriter().newLine();
+//                                    handlerController.getBufferedWriter().write("" + (SocketController.getClientSize() - 1));
+//                                    handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().write(this.client.getId());
+                            handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().write(this.client.getName());
+                            handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().flush();
+                        }
 
                         break;
                     }

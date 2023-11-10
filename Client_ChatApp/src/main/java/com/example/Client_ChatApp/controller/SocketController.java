@@ -138,7 +138,7 @@ public class SocketController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
                 Stage stage = new Stage();
-                stage.setTitle("Hello!");
+                stage.setTitle("Home");
                 stage.setScene(scene);
                 stage.show();
             }
@@ -195,7 +195,7 @@ public class SocketController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
                 Stage stage = new Stage();
-                stage.setTitle("Hello!");
+                stage.setTitle("Home");
                 stage.setScene(scene);
                 stage.show();
             }
