@@ -1,14 +1,14 @@
 package com.example.Client_ChatApp.model;
 
-import java.sql.Time;
+import java.time.LocalDateTime;
 
 public class MessageData {
     private String send_id;
     private String type;
     private String content;
-    private Time send_time;
+    private LocalDateTime send_time;
 
-    public MessageData(String send_id, String type, String content, Time send_time) {
+    public MessageData(String send_id, String type, String content, LocalDateTime send_time) {
         this.send_id = send_id;
         this.type = type;
         this.content = content;
@@ -39,11 +39,11 @@ public class MessageData {
         this.content = content;
     }
 
-    public Time getSend_time() {
+    public LocalDateTime getSend_time() {
         return send_time;
     }
 
-    public void setSend_time(Time send_time) {
+    public void setSend_time(LocalDateTime send_time) {
         this.send_time = send_time;
     }
 }
