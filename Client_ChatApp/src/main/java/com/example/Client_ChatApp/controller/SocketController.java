@@ -90,12 +90,6 @@ public class SocketController implements Initializable {
             System.out.println(i++ + ". " + client.getName());
         }
     }
-//
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//
-
-    //    }
     public static String getThisIP() {
         String ip = "";
         try {
@@ -266,6 +260,27 @@ public class SocketController implements Initializable {
                 System.exit(0);
             }
         }).start();
+    }
+    public void createPrivateRoom(String id_user) {
+
+        try {
+            bufferedWriter.write("request create room");
+            bufferedWriter.newLine();
+            bufferedWriter.write(id_user); // room name
+            bufferedWriter.newLine();
+            bufferedWriter.write("private"); // room type
+            bufferedWriter.newLine();
+//            bufferedWriter.write("2");
+//            bufferedWriter.newLine();
+            bufferedWriter.write(client.getId());
+            bufferedWriter.newLine();
+            bufferedWriter.write(id_user);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
     public void onSignupClick(MouseEvent mouseEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("signup.fxml"));
