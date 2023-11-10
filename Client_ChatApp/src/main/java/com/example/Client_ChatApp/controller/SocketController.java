@@ -2,6 +2,7 @@ package com.example.Client_ChatApp.controller;
 
 import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
+import com.example.Client_ChatApp.model.Room;
 import com.example.Client_ChatApp.model.ServerData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -307,5 +308,17 @@ public class SocketController implements Initializable {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+    }
+
+
+
+
+    ////////////////
+    public void SauClick(){
+        String id_user="";
+        Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
+        if(foundRoom == null){
+            createPrivateRoom(id_user);
+        }
     }
 }

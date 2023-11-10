@@ -8,6 +8,11 @@ public class ServerData {
     private boolean isOpen;
     private int connectAccountCount;
     private ArrayList<Client> clients;
+    private ArrayList<Room> rooms;
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
+    }
 
     public int getConnectAccountCount() {
         return connectAccountCount;
@@ -35,6 +40,7 @@ public class ServerData {
         this.ip = ip;
         this.port = port;
         this.clients = new ArrayList<Client>();
+        this.rooms = new ArrayList<Room>();
         this.isOpen = false;
         this.connectAccountCount = 0;
     }
