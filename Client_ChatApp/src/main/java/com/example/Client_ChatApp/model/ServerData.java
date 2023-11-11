@@ -13,7 +13,7 @@ public class ServerData {
     public ArrayList<Room> getRooms() {
         return rooms;
     }
-
+    public void AddRoom(Room room){rooms.add(room);}
     public int getConnectAccountCount() {
         return connectAccountCount;
     }

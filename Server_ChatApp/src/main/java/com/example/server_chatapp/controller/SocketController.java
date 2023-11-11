@@ -1,6 +1,7 @@
 package com.example.server_chatapp.controller;
 
 import com.example.server_chatapp.model.Client;
+import com.example.server_chatapp.model.Room;
 import javafx.scene.control.TextArea;
 
 import java.io.IOException;
@@ -14,6 +15,11 @@ public class SocketController{
     private int serverPort;
     ServerSocket serverSocket;
     private static ArrayList<HandlerController> clients;
+    private static ArrayList<Room> allRooms;
+    public static void addRoom(Room room){
+        allRooms.add(room);
+    }
+    public static void removeRoom(Room room){ allRooms.remove(room);}
     public void setServerName(String serverName){this.serverName = serverName;}
     public void setServerPort(int serverPort) {
         this.serverPort = serverPort;

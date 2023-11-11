@@ -21,6 +21,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -264,6 +265,22 @@ public class SocketController implements Initializable {
                                 break;
 
                             }
+                            case "new room": {
+                                int roomID = Integer.parseInt(bufferedReader.readLine());
+                                String id_userRequest = bufferedReader.readLine();
+                                String type = bufferedReader.readLine();
+                                ArrayList<Client> clientlist = new ArrayList<Client>();
+                                clientlist.add(client);
+                                for(Client client1 : connectedServer.getClients()){
+                                    if(client1.getId().equals(id_userRequest)){
+                                        clientlist.add(client1);
+                                        break;
+                                    }
+                                }
+                                Room newRoom = new Room(roomID, type, clientlist);
+                                connectedServer.AddRoom(newRoom);
+                                break;
+                            }
                         }
                     }
                 }catch (IOException e){
@@ -281,17 +298,11 @@ public class SocketController implements Initializable {
     public void createPrivateRoom(String id_user) {
 
         try {
-            bufferedWriter.write("request create room");
+            bufferedWriter.write("request create private room");
             bufferedWriter.newLine();
             bufferedWriter.write(id_user); // room name
             bufferedWriter.newLine();
             bufferedWriter.write("private"); // room type
-            bufferedWriter.newLine();
-//            bufferedWriter.write("2");
-//            bufferedWriter.newLine();
-            bufferedWriter.write(client.getId());
-            bufferedWriter.newLine();
-            bufferedWriter.write(id_user);
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (IOException ex) {
