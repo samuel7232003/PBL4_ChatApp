@@ -9,7 +9,7 @@ public class ServerData {
     private int connectAccountCount;
     private ArrayList<Client> clients;
     private ArrayList<Room> rooms;
-
+    private int num = 5;
     public ArrayList<Room> getRooms() {
         return rooms;
     }
@@ -28,6 +28,7 @@ public class ServerData {
         clients.add(client);
     }
     public int getNumClients(){
+        num = clients.size();
         return clients.size();
     }
     public  void removeClient(Client client){
@@ -43,6 +44,10 @@ public class ServerData {
         this.rooms = new ArrayList<Room>();
         this.isOpen = false;
         this.connectAccountCount = 0;
+    }
+
+    public int getNum() {
+        return num;
     }
 
     public ServerData(String ip, int port, boolean isOpen, int connectAccountCount) {

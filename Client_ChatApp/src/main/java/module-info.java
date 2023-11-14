@@ -5,6 +5,7 @@ module com.example.demo {
 
     opens com.example.Client_ChatApp to javafx.fxml;
     exports com.example.Client_ChatApp;
-    exports com.example.Client_ChatApp.controller;
+
     opens com.example.Client_ChatApp.controller to javafx.fxml;
+    exports com.example.Client_ChatApp.controller;
 }

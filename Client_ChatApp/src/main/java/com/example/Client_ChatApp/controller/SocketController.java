@@ -10,10 +10,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -21,6 +23,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -110,7 +113,7 @@ public class SocketController implements Initializable {
         String gmail = gmailtxt.getText().trim();
         String username = usernametxt.getText().trim();
         String pwd = pwdtxt.getText().trim();
-        String repwd = repwdtxt.getId().trim();
+        String repwd = repwdtxt.getText().trim();
         Client client1 = new Client(fullname,gmail,username,pwd);
         try {
             bufferedWriter.write("Sign up");
@@ -133,14 +136,7 @@ public class SocketController implements Initializable {
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
                 StartAll();
-                Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();
-                stage1.close();
-                FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-                Stage stage = new Stage();
-                stage.setTitle("Home");
-                stage.setScene(scene);
-                stage.show();
+                loadHome();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -192,12 +188,7 @@ public class SocketController implements Initializable {
                 StartAll();
                 Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();
                 stage1.close();
-                FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-                Stage stage = new Stage();
-                stage.setTitle("Home");
-                stage.setScene(scene);
-                stage.show();
+                loadHome();
             }
         }catch (IOException ex){
 
@@ -279,7 +270,6 @@ public class SocketController implements Initializable {
         }).start();
     }
     public void createPrivateRoom(String id_user) {
-
         try {
             bufferedWriter.write("request create room");
             bufferedWriter.newLine();
@@ -287,8 +277,6 @@ public class SocketController implements Initializable {
             bufferedWriter.newLine();
             bufferedWriter.write("private"); // room type
             bufferedWriter.newLine();
-//            bufferedWriter.write("2");
-//            bufferedWriter.newLine();
             bufferedWriter.write(client.getId());
             bufferedWriter.newLine();
             bufferedWriter.write(id_user);
@@ -305,12 +293,19 @@ public class SocketController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("signup.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
         Stage stage = new Stage();
-        stage.setTitle("Hello!");
+        stage.setTitle("Sign up");
         stage.setScene(scene);
         stage.show();
     }
 
-
+    public void loadHome() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+        Stage stage = new Stage();
+        stage.setTitle("Home");
+        stage.setScene(scene);
+        stage.show();
+    }
 
 
     ////////////////
@@ -319,6 +314,47 @@ public class SocketController implements Initializable {
         Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
         if(foundRoom == null){
             createPrivateRoom(id_user);
+        }
+    }
+
+    @FXML
+    private Pane us1;
+    @FXML
+    private Pane us2;
+    @FXML
+    private Pane us3;
+    @FXML
+    private Pane us4;
+    @FXML
+    private Pane titlep;
+    @FXML
+    private Pane footerp;
+    @FXML
+    private Label labletxt;
+    @FXML
+    private Label nameus1;
+    public void load(MouseEvent mouseEvent) {
+        us1.setVisible(false);
+        us2.setVisible(false);
+        us3.setVisible(false);
+        us4.setVisible(false);
+        titlep.setVisible(false);
+        footerp.setVisible(false);
+        int num_us = connectedServer.getNum();
+        int i = 1;
+//        System.out.println(num_us);
+        for(Client client : connectedServer.getClients()){
+            if(i==1){
+                us1.setVisible(true);
+                nameus1.setText(client.getName());
+            }
+            else if(i==2){
+                us2.setVisible(true);
+            }
+            else if(i==3){
+                us3.setVisible(true);
+            }
+            i++;
         }
     }
 }

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.SocketController">
+<AnchorPane onMouseClicked="#load" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.SocketController">
     <children>
         <Pane prefHeight="800.0" prefWidth="70.0" style="-fx-background-color: #dd4131;">
             <children>
@@ -39,7 +39,7 @@
                 <TextField layoutX="11.0" layoutY="51.0" prefHeight="36.0" prefWidth="233.0" promptText="Tìm kiếm" style="-fx-background-color: #d9d9d9; -fx-background-radius: 10;" />
                 <Pane layoutY="95.0" prefHeight="90.0" prefWidth="266.0">
                     <children>
-                        <Label layoutX="12.0" layoutY="1.0" text="Kết nối của bạn">
+                        <Label id="labletxt" fx:id="labletxt" layoutX="12.0" layoutY="1.0" text="Kết nối của bạn">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
@@ -57,14 +57,29 @@
                         <Label layoutX="76.0" layoutY="68.0" text="Thắng" />
                     </children>
                 </Pane>
-                <Pane layoutY="185.0" prefHeight="488.0" prefWidth="260.0">
+                <Pane id="list" fx:id="list" layoutY="185.0" prefHeight="488.0" prefWidth="260.0">
                     <children>
                         <Label layoutX="13.0" layoutY="-15.0" prefHeight="45.0" prefWidth="197.0" text="Các cuộc trò chuyện gần đây">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Pane layoutY="23.0" prefHeight="75.0" prefWidth="260.0">
+                        <Pane id="us1" fx:id="us1" layoutY="23.0" prefHeight="75.0" prefWidth="260.0">
+                            <children>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@image/VT.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Label id="nameus1" fx:id="nameus1" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
+                            </children>
+                        </Pane>
+                        <Pane id="us2" fx:id="us2" layoutY="98.0" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -77,11 +92,42 @@
                                     </font>
                                 </Label>
                                 <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
-                            </children></Pane>
+                            </children>
+                        </Pane>
+                        <Pane id="us3" fx:id="us3" layoutY="173.0" prefHeight="75.0" prefWidth="260.0">
+                            <children>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@image/VT.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Label layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
+                            </children>
+                        </Pane>
+                        <Pane id="us4" fx:id="us4" layoutY="248.0" prefHeight="75.0" prefWidth="260.0">
+                            <children>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@image/VT.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Label layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
+                            </children>
+                        </Pane>
                     </children>
                 </Pane>
             </children></Pane>
-        <Pane layoutX="330.0" prefHeight="75.0" prefWidth="870.0" style="-fx-border-color: #d6d6d6;">
+        <Pane id="titlep" fx:id="titlep" layoutX="330.0" prefHeight="75.0" prefWidth="870.0" style="-fx-border-color: #d6d6d6;">
             <children>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -105,7 +151,7 @@
                 </ImageView>
             </children>
         </Pane>
-        <Pane layoutX="330.0" layoutY="743.0" prefHeight="57.0" prefWidth="870.0">
+        <Pane id="footerp" fx:id="footerp" layoutX="330.0" layoutY="743.0" prefHeight="57.0" prefWidth="870.0">
             <children>
                 <Pane layoutX="14.0" layoutY="9.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
                     <children>
