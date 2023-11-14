@@ -255,6 +255,22 @@ public class SocketController implements Initializable {
                                 break;
 
                             }
+                            case "new room": {
+                                int roomID = Integer.parseInt(bufferedReader.readLine());
+                                String id_userRequest = bufferedReader.readLine();
+                                String type = bufferedReader.readLine();
+                                ArrayList<Client> clientlist = new ArrayList<Client>();
+                                clientlist.add(client);
+                                for(Client client1 : connectedServer.getClients()){
+                                    if(client1.getId().equals(id_userRequest)){
+                                        clientlist.add(client1);
+                                        break;
+                                    }
+                                }
+                                Room newRoom = new Room(roomID, type, clientlist);
+                                connectedServer.AddRoom(newRoom);
+                                break;
+                            }
                         }
                     }
                 }catch (IOException e){
@@ -271,16 +287,19 @@ public class SocketController implements Initializable {
     }
     public void createPrivateRoom(String id_user) {
         try {
-            bufferedWriter.write("request create room");
+            bufferedWriter.write("request create private room");
             bufferedWriter.newLine();
             bufferedWriter.write(id_user); // room name
             bufferedWriter.newLine();
             bufferedWriter.write("private"); // room type
             bufferedWriter.newLine();
+<<<<<<< HEAD
             bufferedWriter.write(client.getId());
             bufferedWriter.newLine();
             bufferedWriter.write(id_user);
             bufferedWriter.newLine();
+=======
+>>>>>>> 1e562c1acf15f7729fe52820fb4c16175cbe4724
             bufferedWriter.flush();
         } catch (IOException ex) {
             ex.printStackTrace();

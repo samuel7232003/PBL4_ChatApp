@@ -2,6 +2,7 @@ package com.example.server_chatapp.controller;
 
 import com.example.server_chatapp.DAO.ClientDAO;
 import com.example.server_chatapp.model.Client;
+import com.example.server_chatapp.model.Room;
 
 import java.io.*;
 import java.net.Socket;
@@ -183,6 +184,64 @@ public class HandlerController extends Thread{
                             handlerController.getBufferedWriter().flush();
                         }
 
+                        break;
+                    }
+                    case "request create private room":{
+                        String id_userFinal = bufferedReader.readLine();
+                        String roomType = bufferedReader.readLine();
+//                        int userCount = Integer.parseInt(bufferedReader.readLine());
+//                        ArrayList<String> users = new ArrayList<String>();
+//                        for (int i = 0; i < userCount; i++)
+//                            users.add(bufferedReader.readLine());
+                        // tìm kiếm user
+                        HandlerController handlerController = null;
+                        for(HandlerController handlerController1 : SocketController.getClientHandlers()){
+                            if(handlerController1.getClient().getId().equals(id_userFinal)) {
+                                handlerController = handlerController1;
+                                break;
+                            }
+                        }
+
+                        Room newRoom = new Room(roomType, this, handlerController);
+                        SocketController.addRoom(newRoom);
+
+                        handlerController.getBufferedWriter().write("new room");
+                        handlerController.getBufferedWriter().newLine();
+                        handlerController.getBufferedWriter().write(newRoom.getId());
+                        handlerController.getBufferedWriter().newLine();
+                        handlerController.getBufferedWriter().write(this.client.getId());
+                        handlerController.getBufferedWriter().newLine();
+                        handlerController.getBufferedWriter().write(roomType);
+                        handlerController.getBufferedWriter().flush();
+
+
+//                        for (int i = 0; i < userCount; i++) {
+//                            BufferedWriter currentClientSender = Client.findClient(Main.socketController.connectedClient,
+//                                    users.get(i)).sender;
+//                            currentClientSender.write("new room");
+//                            currentClientSender.newLine();
+//                            currentClientSender.write("" + newRoom.id);
+//                            currentClientSender.newLine();
+//                            currentClientSender.write(thisClient.userName);
+//                            currentClientSender.newLine();
+//                            if (roomType.equals("private")) {
+//                                // private chat thì tên room của mỗi người sẽ là tên của người kia
+//                                currentClientSender.write(users.get(1 - i)); // user 0 thì gửi 1, user 1 thì gửi 0
+//                                currentClientSender.newLine();
+//                            } else {
+//                                currentClientSender.write(roomName);
+//                                currentClientSender.newLine();
+//                            }
+//                            currentClientSender.write(roomType);
+//                            currentClientSender.newLine();
+//                            currentClientSender.write("" + users.size());
+//                            currentClientSender.newLine();
+//                            for (String userr : users) {
+//                                currentClientSender.write(userr);
+//                                currentClientSender.newLine();
+//                            }
+//                            currentClientSender.flush();
+//                        }
                         break;
                     }
                     case "Get id user":{
