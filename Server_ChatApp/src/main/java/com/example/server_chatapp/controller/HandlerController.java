@@ -81,7 +81,7 @@ public class HandlerController extends Thread{
                                 System.out.println(name + " đăng nhập thành công");
 
                                 SocketController.addHandlerClient(this);
-                                //StartScreen.updateClient();
+                                SocketController.updateClient();
 
                                 this.bufferedWriter.write("Login success");
                                 this.bufferedWriter.newLine();
@@ -114,8 +114,6 @@ public class HandlerController extends Thread{
                                         continue;
                                     handlerController.getBufferedWriter().write("new user online");
                                     handlerController.getBufferedWriter().newLine();
-//                                    handlerController.getBufferedWriter().write("" + (SocketController.getClientSize() - 1));
-//                                    handlerController.getBufferedWriter().newLine();
                                     handlerController.getBufferedWriter().write(this.client.getId());
                                     handlerController.getBufferedWriter().newLine();
                                     handlerController.getBufferedWriter().write(this.client.getName());

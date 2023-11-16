@@ -13,7 +13,7 @@ public class connectMySQL {
         String connectionURL = "jdbc:mysql://"+hostName+"/"+dbName;
         Connection conn = null;
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(connectionURL, username, password);
             System.out.println("Ket noi thanh cong");
         } catch (SQLException e){

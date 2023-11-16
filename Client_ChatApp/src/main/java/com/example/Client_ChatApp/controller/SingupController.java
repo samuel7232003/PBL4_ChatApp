@@ -38,7 +38,7 @@ public class SingupController {
         Client client = new Client(fullname, gmail, username, pwd);
         String s = SocketController.singupSocket(client);
         if (s == "Success") {
-            SocketController.StartAll();
+            //SocketController.StartAll();
             loadHome();
         }
         else if(s=="User name existed"){

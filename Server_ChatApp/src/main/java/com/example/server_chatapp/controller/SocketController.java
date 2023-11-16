@@ -82,6 +82,12 @@ public class SocketController{
         }
         return ip;
     }
+    public static void updateClient(){
+        System.out.println("Các tài khoản hiện đang online:");
+        for(HandlerController handlerController : clients){
+            System.out.println(handlerController.getClient().getName());
+        }
+    }
     public void CloseSocket() {
         try {
             for (HandlerController handlerController : clients)

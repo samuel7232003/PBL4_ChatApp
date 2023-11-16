@@ -20,7 +20,7 @@ public class ClientController {
         } else if (result.equals("Password_fail")) {
             return "Password_fail";
         } else{
-            Client client = ClientDAO.getClient(result);
+            // Client client = ClientDAO.getClient(result);
             // System.out.println(result);
             return result;
         }

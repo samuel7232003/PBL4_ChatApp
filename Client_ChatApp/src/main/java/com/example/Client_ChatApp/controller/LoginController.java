@@ -34,12 +34,8 @@ public class LoginController implements Initializable {
         String username = usernametxtlo.getText().trim();
         String pwd = pwdtxtlo.getText().trim();
         String s = socket.loginSocket(username, pwd);
-        if(s.equals("Login success")){
-            SocketController.updateUserOnlineList();
-            SocketController.StartAll();
-            loadHome();
-        }
-        else if(s.equals("Login-fail")){
+
+        if(s.equals("Login-fail")){
             errortxtlo_.setText("Tên đăng nhập không tồn tại!");
             return;
         }
@@ -51,7 +47,6 @@ public class LoginController implements Initializable {
             errortxtlo_.setText("Tài khoản này đã được đăng nhập!");
             return;
         }
-        else System.out.println("Lỗi đăng nhập!");
     }
     public void onSignupClick(MouseEvent mouseEvent) throws IOException {
         Stage stage1 = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
@@ -63,12 +58,5 @@ public class LoginController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public void loadHome() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-        Stage stage = new Stage();
-        stage.setTitle("Home");
-        stage.setScene(scene);
-        stage.show();
-    }
+
 }

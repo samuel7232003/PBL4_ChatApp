@@ -5,6 +5,9 @@ import com.example.Client_ChatApp.model.Client;
 import com.example.Client_ChatApp.model.MessageData;
 import com.example.Client_ChatApp.model.Room;
 import com.example.Client_ChatApp.model.ServerData;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -28,8 +31,7 @@ public class SocketController {
     }
 
     public SocketController() {
-        Client client = new Client();
-        this.client = client;
+        this.client = new Client();
         String ipAddress = getThisIP();
         int port = 2119;
         connectedServer = new ServerData(ipAddress, port);
@@ -45,22 +47,22 @@ public class SocketController {
         }
     }
 
-//    public void getOnlineUserss(){
-//        for(int i = 0; i < connectedServer.getConnectAccountCount(); i++ ){
-//            try {
-//                String id_user = bufferedReader.readLine();
-//                String NameUser = bufferedReader.readLine();
-//                Client clientVari = new Client(id_user, NameUser);
-//                connectedServer.addClient(clientVari);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-//    public void setClient(Client client) {
-//        this.client = client;
-//    }
-//
+    public void getOnlineUserss(){
+        for(int i = 0; i < connectedServer.getConnectAccountCount(); i++ ){
+            try {
+                String id_user = bufferedReader.readLine();
+                String NameUser = bufferedReader.readLine();
+                Client clientVari = new Client(id_user, NameUser);
+                connectedServer.addClient(clientVari);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     public static void updateUserOnlineList(){
         System.out.println("Số user đang online: " + connectedServer.getNumClients());
         int i = 1;
@@ -95,12 +97,12 @@ public class SocketController {
             bufferedWriter.write(client1.getEmail());
             bufferedWriter.newLine();
             bufferedWriter.flush();
-            client = client1;
             String SignUpResult = bufferedReader.readLine();
             if(SignUpResult.equals("User name existed")){
                 System.out.println("User name đã tồn tại");
                 return "User name existed";
             } else if (SignUpResult.equals("Sign up success")) {
+                client = client1;
                 System.out.println("Đăng kí thành công!");
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
@@ -124,6 +126,7 @@ public class SocketController {
 
             String loginResult = bufferedReader.readLine();
             System.out.println(loginResult);
+
             if(loginResult.equals("Login-fail")){
                 return "Login-fail";
             }
@@ -137,6 +140,11 @@ public class SocketController {
                 System.out.println("Đăng nhập thành công!");
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
+                connectedServer.setOpen(true);
+                connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
+                getOnlineUserss();
+                updateUserOnlineList();
+                StartAll();
                 return "Login success";
             }
         }catch (IOException ex){
@@ -145,24 +153,8 @@ public class SocketController {
         return null;
     }
 
-    public static void StartAll(){
-        connectedServer.setOpen(true);
-        try {
-            connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        for(int i = 0; i < connectedServer.getConnectAccountCount(); i++ ){
-            try {
-                String id_user = bufferedReader.readLine();
-                String NameUser = bufferedReader.readLine();
-                Client clientVari = new Client(id_user, NameUser);
-                connectedServer.addClient(clientVari);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        updateUserOnlineList();
+    public void StartAll() throws IOException {
+        //loadHome();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -297,7 +289,14 @@ public class SocketController {
             }
         }
     }
-
+    public void loadHome() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+        Stage stage = new Stage();
+        stage.setTitle("Home");
+        stage.setScene(scene);
+        stage.show();
+    }
     ////////////////
 //    public void SauClick(){
 //        String id_user="";
