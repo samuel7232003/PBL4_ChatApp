@@ -16,10 +16,9 @@ public class SocketController{
     ServerSocket serverSocket;
     private static ArrayList<HandlerController> clients;
     private static ArrayList<Room> allRooms;
-    public static void addRoom(Room room){
-        allRooms.add(room);
-    }
-    public static void removeRoom(Room room){ allRooms.remove(room);}
+
+
+
     public void setServerName(String serverName){this.serverName = serverName;}
     public void setServerPort(int serverPort) {
         this.serverPort = serverPort;
@@ -36,6 +35,10 @@ public class SocketController{
     public static int getClientSize(){
         return clients.size();
     }
+    public static void addRoom(Room room){
+        allRooms.add(room);
+    }
+    public static void removeRoom(Room room){ allRooms.remove(room);}
     public static ArrayList<Client> getClientInfors(){
         ArrayList<Client> clientList= new ArrayList<Client>();
         for(HandlerController handlerController : clients){

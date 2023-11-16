@@ -2,6 +2,7 @@ package com.example.Client_ChatApp.controller;
 
 import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
+import com.example.Client_ChatApp.model.MessageData;
 import com.example.Client_ChatApp.model.Room;
 import com.example.Client_ChatApp.model.ServerData;
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -255,19 +257,22 @@ public class SocketController implements Initializable {
                                 break;
 
                             }
-                            case "new room": {
+                            case "new private room": {
                                 int roomID = Integer.parseInt(bufferedReader.readLine());
                                 String id_userRequest = bufferedReader.readLine();
                                 String type = bufferedReader.readLine();
                                 ArrayList<Client> clientlist = new ArrayList<Client>();
                                 clientlist.add(client);
+                                String name = "";
                                 for(Client client1 : connectedServer.getClients()){
                                     if(client1.getId().equals(id_userRequest)){
+                                        name = client1.getName();
                                         clientlist.add(client1);
                                         break;
                                     }
                                 }
-                                Room newRoom = new Room(roomID, type, clientlist);
+                                // tên đây tức là ngươi phía kia khi nhắn sẽ laf tên thawngf kia
+                                Room newRoom = new Room(roomID, name, type, clientlist);
                                 connectedServer.AddRoom(newRoom);
                                 break;
                             }
@@ -291,15 +296,6 @@ public class SocketController implements Initializable {
             bufferedWriter.newLine();
             bufferedWriter.write(id_user); // room name
             bufferedWriter.newLine();
-            bufferedWriter.write("private"); // room type
-            bufferedWriter.newLine();
-<<<<<<< HEAD
-            bufferedWriter.write(client.getId());
-            bufferedWriter.newLine();
-            bufferedWriter.write(id_user);
-            bufferedWriter.newLine();
-=======
->>>>>>> 1e562c1acf15f7729fe52820fb4c16175cbe4724
             bufferedWriter.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -327,14 +323,46 @@ public class SocketController implements Initializable {
     }
 
 
-    ////////////////
-    public void SauClick(){
-        String id_user="";
+    //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này
+    public void SauClickVao1User(){
+        String id_user=""; // id lấy được khi kick vào 1 user nào đó
         Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
         if(foundRoom == null){
             createPrivateRoom(id_user);
+            // sau khi tạo th tự động đưa vào main chat với người đó
+        }
+        else{
+            // đưa vaào màn hình chat với người đó
+            updateRoomUsersJList();
         }
     }
+    public void SauKhiNhanEnterChat(int roomId, String idSend, String content){
+        LocalTime timenow = LocalTime.now();
+        MessageData messageData = new MessageData(idSend, content,timenow);
+        Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
+        receiveRoom.getMessageDatas().add(messageData);
+    }
+
+    public void updateRoomUsersJList() {
+        System.out.println("updateRoomUsersJList");
+        int id_room = 0; // id room khi được get
+        Room theChattingRoom = RoomController.findRoom(connectedServer.getRooms(), id_room);
+        String name ="";
+        if (theChattingRoom != null) {
+            ArrayList<Client> clients = theChattingRoom.getClients();
+            // update dữ liệu của các message trong đoạn chat ra ngoài màn hình
+            for(MessageData messageData:theChattingRoom.getMessageDatas()){
+                for(Client client1:clients){
+                    if(messageData.getId_user().equals(client1.getId())){
+                        name = client1.getName();
+                        break;
+                    }
+                }
+                System.out.println(name + ": " +messageData.getContent()); // sysout ra người gửi và content
+            }
+        }
+    }
+
 
     @FXML
     private Pane us1;

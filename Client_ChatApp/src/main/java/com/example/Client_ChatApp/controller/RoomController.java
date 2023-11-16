@@ -7,9 +7,9 @@ import com.example.Client_ChatApp.model.Room;
 import java.util.ArrayList;
 
 public class RoomController {
-    public static Room findRoom(ArrayList<Room> roomList, int id) {
+    public static Room findRoom(ArrayList<Room> roomList, int idRoom) {
         for (Room room : roomList)
-            if (room.getId() == id)
+            if (room.getId() == idRoom)
                 return room;
         return null;
     }
@@ -19,7 +19,6 @@ public class RoomController {
                 for (Client client : room.getClients()){
                     if(client.getId().equals(Id_OtherUser)){
                         return room;
-
                     }
                 }
             }

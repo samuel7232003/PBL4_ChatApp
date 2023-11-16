@@ -1,36 +1,23 @@
 package com.example.Client_ChatApp.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class MessageData {
-    private String send_id;
-    private String type;
+    private String id_user;
     private String content;
-    private LocalDateTime send_time;
+    private LocalTime send_time;
 
-    public MessageData(String send_id, String type, String content, LocalDateTime send_time) {
-        this.send_id = send_id;
-        this.type = type;
+    public MessageData(String id_user, String content, LocalTime send_time) {
+        this.id_user = id_user;
         this.content = content;
         this.send_time = send_time;
     }
-
-    public String getSend_id() {
-        return send_id;
+    public String getId_user() {
+        return id_user;
     }
-
-    public void setSend_id(String send_id) {
-        this.send_id = send_id;
+    public void setId_user(String id_user) {
+        this.id_user = id_user;
     }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getContent() {
         return content;
     }
@@ -39,11 +26,4 @@ public class MessageData {
         this.content = content;
     }
 
-    public LocalDateTime getSend_time() {
-        return send_time;
-    }
-
-    public void setSend_time(LocalDateTime send_time) {
-        this.send_time = send_time;
-    }
 }
