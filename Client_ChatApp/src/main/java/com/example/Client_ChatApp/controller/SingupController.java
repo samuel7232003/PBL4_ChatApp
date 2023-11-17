@@ -38,8 +38,9 @@ public class SingupController {
         Client client = new Client(fullname, gmail, username, pwd);
         String s = SocketController.singupSocket(client);
         if (s == "Success") {
+            Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();
             //SocketController.StartAll();
-            loadHome();
+            loadHome(stage1);
         }
         else if(s=="User name existed"){
             errortxt_.setText("Tài khoản đã tồn tại!");
@@ -57,12 +58,10 @@ public class SingupController {
         stage.setScene(scene);
         stage.show();
     }
-    public void loadHome() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
+    public void loadHome(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(SingupController.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-        Stage stage = new Stage();
         stage.setTitle("Home");
         stage.setScene(scene);
-        stage.show();
     }
 }
