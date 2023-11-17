@@ -155,7 +155,7 @@ public class SocketController {
     }
 
     public void StartAll() throws IOException {
-        loadHome();
+        // loadHome();
         new Thread(new Runnable() {
             @Override
             public void run() {
