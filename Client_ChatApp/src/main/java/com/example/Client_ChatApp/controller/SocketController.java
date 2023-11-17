@@ -106,6 +106,7 @@ public class SocketController {
                 System.out.println("Đăng kí thành công!");
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
+                StartAll();
                 return "Success";
             }
         } catch (IOException e) {

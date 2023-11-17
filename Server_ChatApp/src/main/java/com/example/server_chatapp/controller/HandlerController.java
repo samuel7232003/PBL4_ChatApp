@@ -132,7 +132,7 @@ public class HandlerController extends Thread{
                         System.out.println(name + username + password + email);
 
                         Client clientSignUp = new Client(name, username, password, email);
-                        clientSignUp.setLogin(false);
+                        clientSignUp.setLogin(true);
                         String result = ClientController.SignUp(clientSignUp);
 
                         String rs = ClientController.Login(username, password); // kiểm tra đăng nhập
