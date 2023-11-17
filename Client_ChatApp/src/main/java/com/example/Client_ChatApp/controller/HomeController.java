@@ -60,12 +60,8 @@ public class HomeController implements Initializable{
         us4.setVisible(false);
         titlep.setVisible(false);
         footerp.setVisible(false);
-        SocketController socket = new SocketController();
-
-        int num_us = socket.getConnectedServer().getNum();
         int i = 1;
-//        System.out.println(num_us);
-        for(Client client : socket.getConnectedServer().getClients()){
+        for(Client client : StartEverything.getSocketController().getConnectedServer().getClients()){
             if(i==1){
                 us1.setVisible(true);
                 nameus1.setText(client.getName());

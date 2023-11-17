@@ -84,7 +84,7 @@ public class SocketController {
         return ip;
     }
 
-    public static String singupSocket(Client client1){
+    public String singupSocket(Client client1){
         try {
             bufferedWriter.write("Sign up");
             bufferedWriter.newLine();
@@ -154,7 +154,7 @@ public class SocketController {
     }
 
     public void StartAll() throws IOException {
-        //loadHome();
+        loadHome();
         new Thread(new Runnable() {
             @Override
             public void run() {

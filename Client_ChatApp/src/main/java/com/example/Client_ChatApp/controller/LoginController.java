@@ -24,17 +24,18 @@ public class LoginController implements Initializable {
     private PasswordField pwdtxtlo;
     @FXML
     private Label errortxtlo_;
-
+    StartEverything startEverything;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SocketController socket = new SocketController();
+//        SocketController socket = new SocketController();
+        this.startEverything = new StartEverything();
     }
     public void login(ActionEvent event) throws IOException {
-        SocketController socket = new SocketController();
+        // SocketController socket = new SocketController();
         String username = usernametxtlo.getText().trim();
         String pwd = pwdtxtlo.getText().trim();
-        String s = socket.loginSocket(username, pwd);
-
+        //String s = socket.loginSocket(username, pwd);
+        String s = startEverything.getSocketController().loginSocket(username, pwd);
         if(s.equals("Login-fail")){
             errortxtlo_.setText("Tên đăng nhập không tồn tại!");
             return;
