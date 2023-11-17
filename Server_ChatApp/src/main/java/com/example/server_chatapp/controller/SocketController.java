@@ -88,6 +88,7 @@ public class SocketController{
             System.out.println(handlerController.getClient().getName());
         }
     }
+    public boolean checkSocketController(){return  serverSocket.isClosed();}
     public void CloseSocket() {
         try {
             for (HandlerController handlerController : clients)

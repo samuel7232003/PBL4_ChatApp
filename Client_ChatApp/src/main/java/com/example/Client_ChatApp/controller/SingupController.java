@@ -36,11 +36,13 @@ public class SingupController {
         String pwd = pwdtxt.getText().trim();
         String repwd = repwdtxt.getText().trim();
         Client client = new Client(fullname, gmail, username, pwd);
-        String s = SocketController.singupSocket(client);
+//        String s = SocketController.singupSocket(client);
+        String s = StartEverything.getSocketController().singupSocket(client);
         if (s == "Success") {
             Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();
             //SocketController.StartAll();
-            loadHome(stage1);
+            //loadHome();
+            System.out.println("Đăng kí thành công");
         }
         else if(s=="User name existed"){
             errortxt_.setText("Tài khoản đã tồn tại!");
