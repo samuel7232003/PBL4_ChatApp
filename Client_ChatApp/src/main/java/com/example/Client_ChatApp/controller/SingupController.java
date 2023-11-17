@@ -56,12 +56,10 @@ public class SingupController {
         stage.setScene(scene);
         stage.show();
     }
-    public void loadHome() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
+    public void loadHome(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(SingupController.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-        Stage stage = new Stage();
         stage.setTitle("Home");
         stage.setScene(scene);
-        stage.show();
     }
 }
