@@ -46,12 +46,12 @@ public class ClientController {
     public static boolean checkClientIsLogin(String idUser){
         return ClientDAO.CheckLogin(idUser);
     }
-//    public static void Logout(String iduser){
-//        ClientDAO.Logout(iduser);
-//    }
-//    public void showUser(){
-//        String id_user = "US01";
-//        Client client = ClientDAO.getClient(id_user);
-//        System.out.printf("%-10s%-20s%-20s%-20s%-30s%-5s",client.getId(), client.getName(), client.getUsername(), client.getPassword(), client.getEmail(), client.isLogin());
-//    }
+    public static void Logout(String iduser){
+        ClientDAO.Logout(iduser);
+    }
+    public void showUser(){
+        String id_user = "US01";
+        Client client = ClientDAO.getClient(id_user);
+        System.out.printf("%-10s%-20s%-20s%-20s%-30s%-5s",client.getId(), client.getName(), client.getUsername(), client.getPassword(), client.getEmail(), client.isLogin());
+    }
 }

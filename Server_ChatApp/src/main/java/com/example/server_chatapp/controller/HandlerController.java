@@ -301,32 +301,32 @@ public class HandlerController extends Thread{
                 }
             }
         }catch (IOException ex){
-//            if(!StartScreen.checkConnectedUser() && client!=null){
-//                try{
-//                    for (HandlerController clientQuit : SocketController.getClientHandlers()) {
-//                        if (!(clientQuit.getClient().getId()).equals(this.client.getId())) {
-//                            clientQuit.getBufferedWriter().write("user quit");
-//                            clientQuit.getBufferedWriter().newLine();
-//                            clientQuit.getBufferedWriter().write(client.getId());
-//                            clientQuit.getBufferedWriter().newLine();
-//                            clientQuit.getBufferedWriter().write(client.getName());
-//                            clientQuit.getBufferedWriter().newLine();
-//                            clientQuit.getBufferedWriter().flush();
-//                        }
-//                    }
+            if(this.client!=null){// !SocketController.getSocketController() && viết lại
+                try{
+                    for (HandlerController clientQuit : SocketController.getClientHandlers()) {
+                        if (!(clientQuit.getClient().getId()).equals(this.client.getId())) {
+                            clientQuit.getBufferedWriter().write("user quit");
+                            clientQuit.getBufferedWriter().newLine();
+                            clientQuit.getBufferedWriter().write(this.client.getId());
+                            clientQuit.getBufferedWriter().newLine();
+                            clientQuit.getBufferedWriter().write(this.client.getName());
+                            clientQuit.getBufferedWriter().newLine();
+                            clientQuit.getBufferedWriter().flush();
+                        }
+                    }
 //
 ////                    for (Room room : Main.socketController.allRooms)
 ////                        room.users.remove(thisClient.userName);
 //                    socketHandler.close();
 //                    System.out.println(client.getName() + " đã rời khỏi đoạn chat");
-//                }
-//                catch (IOException e){
-//                    e.printStackTrace();
-//                }
-//                SocketController.removeClient(this);
-//                ClientController.Logout(client.getId());
-//                StartScreen.updateClient();
-//            }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                SocketController.removeClient(this);
+                ClientController.Logout(client.getId());
+                SocketController.updateClient();
+            }
         }
     }
 }
