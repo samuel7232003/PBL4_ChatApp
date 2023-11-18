@@ -111,18 +111,25 @@ public class HomeController implements Initializable{
         if(mouseEvent.getSource().equals(us1)){
             System.out.println(nameus1.getText());
             System.out.println(idClientList.get(0));
+            StartEverything.getSocketController().selectUser(idClientList.get(0));
         }
         else if(mouseEvent.getSource().equals(us2)){
             System.out.println(nameus2.getText());
             System.out.println(idClientList.get(1));
+            StartEverything.getSocketController().selectUser(idClientList.get(1));
+
         }
         else if (mouseEvent.getSource().equals(us3)) {
             System.out.println(nameus3.getText());
             System.out.println(idClientList.get(2));
+            StartEverything.getSocketController().selectUser(idClientList.get(2));
+
         }
         else if (mouseEvent.getSource().equals(us4)) {
             System.out.println(nameus4.getText());
             System.out.println(idClientList.get(3));
+            StartEverything.getSocketController().selectUser(idClientList.get(3));
+
         }
     }
 }

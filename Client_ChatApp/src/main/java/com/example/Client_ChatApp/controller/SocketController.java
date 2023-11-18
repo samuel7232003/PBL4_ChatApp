@@ -182,28 +182,29 @@ public class SocketController {
                                 String Name_user = bufferedReader.readLine();
 
                                 System.out.println(Name_user + " đã rời khỏi cuộc trò chuyện");
-
+                                Client clientQuit = new Client();
                                 for(Client client1 : connectedServer.getClients()){
                                     if(client1.getId().equals(Id_user)){
+                                        clientQuit = client1;
                                         connectedServer.removeClient(client1);
                                         break;
                                     }
-
                                 }
-                                updateUserOnlineList();
-//                            for (Room room : allRooms) {
-//                                if (room.users.contains(whoQuit)) {
-//                                    Main.mainScreen.addNewMessage(room.id, "notify", whoQuit, "Đã thoát ứng dụng");
-//                                    room.users.remove(whoQuit);
-//                                }
-//                            }
-//                            Main.mainScreen.updateRoomUsersJList();
+                                connectedServer.removeClient(clientQuit);
 
+//                                for (Room room : connectedServer.getRooms()) {
+//                                    if (room.getClients().contains(clientQuit))) {
+//                                        room.getClients().remove(clientQuit);
+//                                    }
+//                                }
+                                updateUserOnlineList();
                                 break;
 
                             }
                             case "new private room": {
-                                int roomID = Integer.parseInt(bufferedReader.readLine());
+                                String roomIDstr = bufferedReader.readLine();
+                                System.out.println(roomIDstr);
+                                int roomID = Integer.parseInt(roomIDstr);
                                 String id_userRequest = bufferedReader.readLine();
                                 String type = bufferedReader.readLine();
                                 ArrayList<Client> clientlist = new ArrayList<Client>();
@@ -219,6 +220,7 @@ public class SocketController {
                                 // tên đây tức là ngươi phía kia khi nhắn sẽ laf tên thawngf kia
                                 Room newRoom = new Room(roomID, name, type, clientlist);
                                 connectedServer.AddRoom(newRoom);
+                                System.out.println("Mã phòng: " + roomID);
                                 break;
                             }
                         }
@@ -241,11 +243,6 @@ public class SocketController {
             bufferedWriter.newLine();
             bufferedWriter.write(id_user); // room name
             bufferedWriter.newLine();
-            bufferedWriter.write("private"); // room type
-            bufferedWriter.newLine();
-            bufferedWriter.write(client.getId());
-            bufferedWriter.newLine();
-            bufferedWriter.write(id_user);
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (IOException ex) {
@@ -255,8 +252,7 @@ public class SocketController {
     }
 
     //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này
-    public void SauClickVao1User(){
-        String id_user=""; // id lấy được khi kick vào 1 user nào đó
+    public void selectUser(String id_user){
         Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
         if(foundRoom == null){
             createPrivateRoom(id_user);

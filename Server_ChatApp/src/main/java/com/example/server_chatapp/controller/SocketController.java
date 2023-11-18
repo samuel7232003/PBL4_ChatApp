@@ -48,6 +48,7 @@ public class SocketController{
     }
     public SocketController(){
         clients = new ArrayList<HandlerController>();
+        allRooms = new ArrayList<Room>();
     }
     public void OpenSocket(int port, TextArea tbtxt) {
         try {
