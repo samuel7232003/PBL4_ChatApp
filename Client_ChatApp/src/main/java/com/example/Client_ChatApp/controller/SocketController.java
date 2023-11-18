@@ -286,20 +286,13 @@ public class SocketController {
         Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
         if(foundRoom == null){
             createPrivateRoom(id_user);
-            // sau khi tạo th tự động đưa vào main chat với người đó
         }
         else{
-            // đưa vaào màn hình chat với người đó
-
             updateRoomUsersJList(foundRoom.getId());
         }
     }
     public void clickEnterChat(int roomId, String content){
-        String idSend = client.getId();
-//        LocalTime timenow = LocalTime.now();
-//        MessageData messageData = new MessageData(idSend, content,timenow);
         Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
-//        receiveRoom.getMessageDatas().add(messageData);
         System.out.println(roomId + ": " + content);
         sendTextToRoom(receiveRoom.getId(), content);
     }
