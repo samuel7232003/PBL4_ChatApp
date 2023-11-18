@@ -223,6 +223,24 @@ public class SocketController {
                                 System.out.println("Mã phòng: " + roomID);
                                 break;
                             }
+                            case "text from user to room": {
+                                String idUserSend = bufferedReader.readLine();
+                                int roomID = Integer.parseInt(bufferedReader.readLine());
+                                String content = "";
+                                char c;
+                                do {
+                                    c = (char) bufferedReader.read();
+                                    if (c != '\0')
+                                        content += c;
+                                } while (c != '\0');
+                                System.out.println(idUserSend + ": " + content);
+                                // Main.mainScreen.addNewMessage(roomID, "text", user, content);
+                                LocalTime timenow = LocalTime.now();
+                                MessageData messageData = new MessageData(idUserSend, content,timenow);
+                                Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
+                                receiveRoom.getMessageDatas().add(messageData);
+                                break;
+                            }
                         }
                     }
                 }catch (IOException e){
@@ -250,7 +268,19 @@ public class SocketController {
         }
 
     }
-
+    public void sendTextToRoom(int roomID, String content) {
+        try {
+            bufferedWriter.write("text to room");
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + roomID);
+            bufferedWriter.newLine();
+            bufferedWriter.write(content);
+            bufferedWriter.write('\0');
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này
     public void selectUser(String id_user){
         Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
@@ -260,19 +290,22 @@ public class SocketController {
         }
         else{
             // đưa vaào màn hình chat với người đó
-            updateRoomUsersJList();
+
+            updateRoomUsersJList(foundRoom.getId());
         }
     }
-    public void SauKhiNhanEnterChat(int roomId, String idSend, String content){
+    public void clickEnterChat(int roomId, String content){
+        String idSend = client.getId();
         LocalTime timenow = LocalTime.now();
         MessageData messageData = new MessageData(idSend, content,timenow);
         Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
         receiveRoom.getMessageDatas().add(messageData);
+        System.out.println(roomId + ": " + content);
+        sendTextToRoom(receiveRoom.getId(), content);
     }
 
-    public void updateRoomUsersJList() {
+    public void updateRoomUsersJList(int id_room) {
         System.out.println("updateRoomUsersJList");
-        int id_room = 0; // id room khi được get
         Room theChattingRoom = RoomController.findRoom(connectedServer.getRooms(), id_room);
         String name ="";
         if (theChattingRoom != null) {
@@ -289,13 +322,15 @@ public class SocketController {
             }
         }
     }
-    ////////////////
-//    public void SauClick(){
-//        String id_user="";
-//        Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
-//        if(foundRoom == null){
-//            createPrivateRoom(id_user);
-//        }
-//    }
+    public int returnRoomId(String idClient){
+        for(Room room : connectedServer.getRooms()){
+            for(Client client1 : room.getClients()){
+                if(client1.getId().equals(idClient)){
+                    return room.getId();
+                }
+            }
+        }
+        return 0;
+    }
 
 }

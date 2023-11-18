@@ -165,9 +165,10 @@ public class HomeController implements Initializable{
     }
     static ArrayList<String> ListMessage;
     public void send(MouseEvent mouseEvent) {
+        int idroom = StartEverything.getSocketController().returnRoomId(mainID);
+        String contentChat = content.getText();
         System.out.println(mainID+":");
-        System.out.println(content.getText());
-        ListMessage = new ArrayList<String>();
-        ListMessage.add(content.getText());
+        System.out.println(contentChat);
+        StartEverything.getSocketController().clickEnterChat(idroom, contentChat);
     }
 }

@@ -56,4 +56,5 @@ public class ServerData {
         this.isOpen = isOpen;
         this.connectAccountCount = connectAccountCount;
     }
+
 }
