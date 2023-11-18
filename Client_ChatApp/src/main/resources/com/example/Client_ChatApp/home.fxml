@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.HomeController">
+<AnchorPane onMouseClicked="#reload" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.HomeController">
     <children>
         <Pane prefHeight="800.0" prefWidth="70.0" style="-fx-background-color: #dd4131;">
             <children>
@@ -64,7 +64,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Pane id="us1" fx:id="us1" layoutY="23.0" prefHeight="75.0" prefWidth="260.0">
+                        <Pane onMouseClicked="#openChat" id="us1" fx:id="us1" layoutY="23.0" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -79,14 +79,14 @@
                                 <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
                             </children>
                         </Pane>
-                        <Pane id="us2" fx:id="us2" layoutY="98.0" prefHeight="75.0" prefWidth="260.0">
+                        <Pane onMouseClicked="#openChat" id="us2" fx:id="us2" layoutY="98.0" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@image/VT.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                <Label id="nameus2" fx:id="nameus2" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -94,14 +94,14 @@
                                 <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
                             </children>
                         </Pane>
-                        <Pane id="us3" fx:id="us3" layoutY="173.0" prefHeight="75.0" prefWidth="260.0">
+                        <Pane onMouseClicked="#openChat" id="us3" fx:id="us3" layoutY="173.0" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@image/VT.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                <Label id="nameus3" fx:id="nameus3" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -109,14 +109,14 @@
                                 <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
                             </children>
                         </Pane>
-                        <Pane id="us4" fx:id="us4" layoutY="248.0" prefHeight="75.0" prefWidth="260.0">
+                        <Pane onMouseClicked="#openChat" id="us4" fx:id="us4" layoutY="248.0" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@image/VT.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                <Label id="nameus4" fx:id="nameus4" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
