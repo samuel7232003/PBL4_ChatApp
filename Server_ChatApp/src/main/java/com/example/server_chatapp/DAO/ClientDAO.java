@@ -87,7 +87,7 @@ public class ClientDAO extends connectMySQL{
                                                                                                         ",'" + client.getUsername() + "'" +
                                                                                                         ",'" + client.getPassword() + "'" +
                                                                                                         ",'" + client.getEmail() + "'" +
-                                                                                                        ",'" + 0 + "')";
+                                                                                                        ",'" + 1 + "')";
             Statement statement = conn.createStatement();
             statement.executeUpdate(sql);
             return true;

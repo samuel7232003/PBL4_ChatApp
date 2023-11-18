@@ -91,8 +91,10 @@ public class SocketController{
     public boolean checkSocketController(){return  serverSocket.isClosed();}
     public void CloseSocket() {
         try {
-            for (HandlerController handlerController : clients)
+            for (HandlerController handlerController : clients) {
+                ClientController.Logout(handlerController.getClient().getId());
                 handlerController.getClient().getSocket().close();
+            }
             serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();

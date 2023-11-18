@@ -106,6 +106,10 @@ public class SocketController {
                 System.out.println("Đăng kí thành công!");
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
+                connectedServer.setOpen(true);
+                connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
+                getOnlineUserss();
+                updateUserOnlineList();
                 StartAll();
                 return "Success";
             }
@@ -155,7 +159,6 @@ public class SocketController {
     }
 
     public void StartAll() throws IOException {
-        // loadHome();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -289,14 +292,6 @@ public class SocketController {
                 System.out.println(name + ": " +messageData.getContent()); // sysout ra người gửi và content
             }
         }
-    }
-    public void loadHome() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-        Stage stage = new Stage();
-        stage.setTitle("Home");
-        stage.setScene(scene);
-        stage.show();
     }
     ////////////////
 //    public void SauClick(){
