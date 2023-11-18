@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,6 +32,8 @@ public class HomeController implements Initializable{
     private Pane titlep;
     @FXML
     private Pane footerp;
+    @FXML
+    private VBox ChatList;
     @FXML
     private Label labletxt;
     @FXML
@@ -81,6 +84,7 @@ public class HomeController implements Initializable{
         us4.setVisible(false);
         titlep.setVisible(start);
         footerp.setVisible(start);
+        ChatList.setVisible(start);
         main_name.setText(mainName);
         int i = 1;
         idClientList = new ArrayList<String>();
@@ -106,6 +110,9 @@ public class HomeController implements Initializable{
                 idClientList.add(client.getId());
             }
             i++;
+        }
+        if(start){
+            addMessage();
         }
     }
     public void reload(MouseEvent e) throws IOException {
@@ -146,12 +153,21 @@ public class HomeController implements Initializable{
             mainID = idClientList.get(3);
             System.out.println(idClientList.get(3));
             StartEverything.getSocketController().selectUser(idClientList.get(3));
-
         }
     }
-
+    public void addMessage(){
+        if(ListMessage!=null){
+            for(String message : ListMessage){
+                Label lb = new Label(message);
+                ChatList.getChildren().add(lb);
+            }
+        }
+    }
+    static ArrayList<String> ListMessage;
     public void send(MouseEvent mouseEvent) {
         System.out.println(mainID+":");
         System.out.println(content.getText());
+        ListMessage = new ArrayList<String>();
+        ListMessage.add(content.getText());
     }
 }

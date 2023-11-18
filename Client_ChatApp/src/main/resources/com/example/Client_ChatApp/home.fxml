@@ -173,7 +173,7 @@
                         <Font size="16.0" />
                     </font>
                 </TextField>
-                <Pane onMouseClicked="#send" id="send" fx:id="send" layoutX="750.0" layoutY="9.0" prefHeight="40.0" prefWidth="61.0" style="-fx-background-color: #dd4131; -fx-background-radius: 8;">
+                <Pane id="send" fx:id="send" layoutX="750.0" layoutY="9.0" onMouseClicked="#send" prefHeight="40.0" prefWidth="61.0" style="-fx-background-color: #dd4131; -fx-background-radius: 8;">
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="16.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -189,5 +189,9 @@
                     </children></Pane>
             </children>
         </Pane>
+      <VBox id="ChatList" fx:id="ChatList" layoutX="330.0" layoutY="75.0" prefHeight="661.0" prefWidth="823.0" style="-fx-background-color: #fff;">
+         <children>
+            <Label text="Label" />
+         </children></VBox>
     </children>
 </AnchorPane>
