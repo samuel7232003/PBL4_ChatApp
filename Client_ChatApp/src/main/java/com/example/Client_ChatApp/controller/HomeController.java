@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable{
@@ -63,7 +64,7 @@ public class HomeController implements Initializable{
 //            i++;
 //        }
     }
-
+    ArrayList<String> idClientList;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         us1.setVisible(false);
@@ -73,22 +74,27 @@ public class HomeController implements Initializable{
         titlep.setVisible(false);
         footerp.setVisible(false);
         int i = 1;
+        idClientList = new ArrayList<String>();
         for(Client client : StartEverything.getSocketController().getConnectedServer().getClients()){
             if(i==1){
                 us1.setVisible(true);
                 nameus1.setText(client.getName());
+                idClientList.add(client.getId());
             }
             else if(i==2){
                 us2.setVisible(true);
                 nameus2.setText(client.getName());
+                idClientList.add(client.getId());
             }
             else if(i==3){
                 us3.setVisible(true);
                 nameus3.setText(client.getName());
+                idClientList.add(client.getId());
             }
             else if(i==3){
                 us4.setVisible(true);
                 nameus4.setText(client.getName());
+                idClientList.add(client.getId());
             }
             i++;
         }
@@ -104,15 +110,19 @@ public class HomeController implements Initializable{
     public void openChat(MouseEvent mouseEvent) {
         if(mouseEvent.getSource().equals(us1)){
             System.out.println(nameus1.getText());
+            System.out.println(idClientList.get(0));
         }
         else if(mouseEvent.getSource().equals(us2)){
-            System.out.println(nameus2);
+            System.out.println(nameus2.getText());
+            System.out.println(idClientList.get(1));
         }
         else if (mouseEvent.getSource().equals(us3)) {
-            System.out.println(nameus3);
+            System.out.println(nameus3.getText());
+            System.out.println(idClientList.get(2));
         }
         else if (mouseEvent.getSource().equals(us4)) {
-            System.out.println(nameus4);
+            System.out.println(nameus4.getText());
+            System.out.println(idClientList.get(3));
         }
     }
 }
