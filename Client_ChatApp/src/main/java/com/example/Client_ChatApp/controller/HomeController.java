@@ -141,7 +141,10 @@ public class HomeController implements Initializable{
         ListMessage = StartEverything.getSocketController().getMessageData(idroom);
         for(MessageData message : ListMessage){
             String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
-            Label lb = new Label(StartEverything.getSocketController().getNameById(message.getId_user())+": "+ message.getContent()+" "+time);
+            String name =StartEverything.getSocketController().getNameById(message.getId_user());
+            if(name == null) name = "Me";
+            Label lb = new Label(name +": "+ message.getContent()+" "+time);
+            //StartEverything.getSocketController().getNameById(message.getId_user())
             ChatList.getChildren().add(lb);
         }
     }

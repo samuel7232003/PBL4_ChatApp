@@ -337,7 +337,7 @@ public class SocketController {
         for(Client client1 : connectedServer.getClients()){
             if(client1.getId().equals(iduser)) return  client1.getName();
         }
-        return  "";
+        return  null;
     }
 
 }
