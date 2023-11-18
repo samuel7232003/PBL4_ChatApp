@@ -129,7 +129,6 @@ public class HandlerController extends Thread{
                         String username = bufferedReader.readLine();
                         String password = bufferedReader.readLine();
                         String email = bufferedReader.readLine();
-                        System.out.println(name + username + password + email);
 
                         Client clientSignUp = new Client(name, username, password, email);
                         clientSignUp.setLogin(true);
