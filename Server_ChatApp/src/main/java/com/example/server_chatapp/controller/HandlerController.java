@@ -197,11 +197,12 @@ public class HandlerController extends Thread{
 
                         Room newRoom = new Room("private", this, handlerControllerFinal);
                         SocketController.addRoom(newRoom);
-
+                        System.out.println(newRoom.getId());
+                        String idRoom = newRoom.getId() + "";
                         // gửi cho người được yêu cầu tạo room
                         handlerControllerFinal.getBufferedWriter().write("new private room");
                         handlerControllerFinal.getBufferedWriter().newLine();
-                        handlerControllerFinal.getBufferedWriter().write(newRoom.getId());
+                        handlerControllerFinal.getBufferedWriter().write(idRoom);
                         handlerControllerFinal.getBufferedWriter().newLine();
                         handlerControllerFinal.getBufferedWriter().write(this.client.getId());
                         handlerControllerFinal.getBufferedWriter().newLine();
@@ -211,7 +212,7 @@ public class HandlerController extends Thread{
                         // gửi về cho chính nó
                         this.bufferedWriter.write("new private room");
                         this.bufferedWriter.newLine();
-                        this.bufferedWriter.write(newRoom.getId());
+                        this.bufferedWriter.write(idRoom);
                         this.bufferedWriter.newLine();
                         this.bufferedWriter.write(handlerControllerFinal.getClient().getId());
                         this.bufferedWriter.newLine();
@@ -316,8 +317,8 @@ public class HandlerController extends Thread{
 //
 ////                    for (Room room : Main.socketController.allRooms)
 ////                        room.users.remove(thisClient.userName);
-//                    socketHandler.close();
-//                    System.out.println(client.getName() + " đã rời khỏi đoạn chat");
+                    socketHandler.close();
+                    System.out.println(client.getName() + " đã rời khỏi đoạn chat");
                 }
                 catch (IOException e){
                     e.printStackTrace();

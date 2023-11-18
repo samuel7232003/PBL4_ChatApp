@@ -122,24 +122,31 @@ public class HomeController implements Initializable{
             mainName = nameus1.getText();
             mainID = idClientList.get(0);
             System.out.println(idClientList.get(0));
+            StartEverything.getSocketController().selectUser(idClientList.get(0));
         }
         else if(mouseEvent.getSource().equals(us2)){
             start = true;
             mainName = nameus2.getText();
             mainID = idClientList.get(1);
             System.out.println(idClientList.get(1));
+            StartEverything.getSocketController().selectUser(idClientList.get(1));
+
         }
         else if (mouseEvent.getSource().equals(us3)) {
             start = true;
             mainName = nameus3.getText();
             mainID = idClientList.get(2);
             System.out.println(idClientList.get(2));
+            StartEverything.getSocketController().selectUser(idClientList.get(2));
+
         }
         else if (mouseEvent.getSource().equals(us4)) {
             start = true;
             mainName = nameus4.getText();
             mainID = idClientList.get(3);
             System.out.println(idClientList.get(3));
+            StartEverything.getSocketController().selectUser(idClientList.get(3));
+
         }
     }
 

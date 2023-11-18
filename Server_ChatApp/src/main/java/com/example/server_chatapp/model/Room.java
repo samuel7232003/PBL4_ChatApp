@@ -13,6 +13,7 @@ public class Room {
     private ArrayList<HandlerController> handlerclientList;
 
     public Room(String roomType, HandlerController client1, HandlerController client2) {
+        handlerclientList = new ArrayList<HandlerController>();
         this.id = currentRoomID++;
         this.roomType = roomType;
         this.handlerclientList.add(client1);
