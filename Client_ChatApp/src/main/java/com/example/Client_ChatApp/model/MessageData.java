@@ -3,6 +3,7 @@ package com.example.Client_ChatApp.model;
 import java.time.LocalTime;
 
 public class MessageData {
+    private int idMessage = 1;
     private String id_user;
     private String content;
     private LocalTime send_time;

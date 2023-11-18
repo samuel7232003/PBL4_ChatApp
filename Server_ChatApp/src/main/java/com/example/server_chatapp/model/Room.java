@@ -24,4 +24,14 @@ public class Room {
         return id;
     }
 
+    public ArrayList<HandlerController> getHandlerclientList() {
+        return handlerclientList;
+    }
+
+    public static Room findRoom(ArrayList<Room> roomList, int id) {
+        for (Room room : roomList)
+            if (room.id == id)
+                return room;
+        return null;
+    }
 }

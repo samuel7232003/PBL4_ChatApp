@@ -38,6 +38,7 @@ public class SocketController{
     public static void addRoom(Room room){
         allRooms.add(room);
     }
+    public static ArrayList<Room> getAllRooms(){return  allRooms;}
     public static void removeRoom(Room room){ allRooms.remove(room);}
     public static ArrayList<Client> getClientInfors(){
         ArrayList<Client> clientList= new ArrayList<Client>();

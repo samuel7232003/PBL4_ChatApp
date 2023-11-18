@@ -197,7 +197,6 @@ public class HandlerController extends Thread{
 
                         Room newRoom = new Room("private", this, handlerControllerFinal);
                         SocketController.addRoom(newRoom);
-                        System.out.println(newRoom.getId());
                         String idRoom = newRoom.getId() + "";
                         // gửi cho người được yêu cầu tạo room
                         handlerControllerFinal.getBufferedWriter().write("new private room");
@@ -207,6 +206,7 @@ public class HandlerController extends Thread{
                         handlerControllerFinal.getBufferedWriter().write(this.client.getId());
                         handlerControllerFinal.getBufferedWriter().newLine();
                         handlerControllerFinal.getBufferedWriter().write("private");
+                        handlerControllerFinal.getBufferedWriter().newLine();
                         handlerControllerFinal.getBufferedWriter().flush();
 
                         // gửi về cho chính nó
@@ -252,34 +252,36 @@ public class HandlerController extends Thread{
                         break;
                     }
                     // gửi text
-//                    case "text to room": {
-//                        int roomID = Integer.parseInt(this.bufferedReader.readLine());
-//                        String content = "";
-//                        char c;
-//                        do {
-//                            c = (char) thisClient.receiver.read();
-//                            if (c != '\0')
-//                                content += c;
-//                        } while (c != '\0');
-//
-//                        Room room = Room.findRoom(Main.socketController.allRooms, roomID);
-//                        for (String user : room.users) {
-//                            System.out.println("Send text from " + thisClient.userName + " to " + user);
-//                            Client currentClient = Client.findClient(Main.socketController.connectedClient, user);
-//                            if (currentClient != null) {
-//                                currentClient.sender.write("text from user to room");
-//                                currentClient.sender.newLine();
-//                                currentClient.sender.write(thisClient.userName);
-//                                currentClient.sender.newLine();
-//                                currentClient.sender.write("" + roomID);
-//                                currentClient.sender.newLine();
-//                                currentClient.sender.write(content);
-//                                currentClient.sender.write('\0');
-//                                currentClient.sender.flush();
-//                            }
-//                        }
-//                        break;
-//                    }
+                    case "text to room": {
+                        String roomIDstr = bufferedReader.readLine();
+                        System.out.println(roomIDstr);
+                        int roomID = Integer.parseInt(roomIDstr);
+                        String content = "";
+                        char c;
+                        do {
+                            c = (char) bufferedReader.read();
+                            if (c != '\0')
+                                content += c;
+                        } while (c != '\0');
+                        System.out.println(content);
+
+                        Room room = Room.findRoom(SocketController.getAllRooms(), roomID);
+                        for (HandlerController clientRecieve : room.getHandlerclientList()) {
+                            System.out.println("Send text from " + client.getName() + " to " + clientRecieve.getClient().getName());
+                            if (clientRecieve != null) {
+                                clientRecieve.getBufferedWriter().write("text from user to room");
+                                clientRecieve.getBufferedWriter().newLine();
+                                clientRecieve.getBufferedWriter().write(client.getId());
+                                clientRecieve.getBufferedWriter().newLine();
+                                clientRecieve.getBufferedWriter().write("" + roomID);
+                                clientRecieve.getBufferedWriter().newLine();
+                                clientRecieve.getBufferedWriter().write(content);
+                                clientRecieve.getBufferedWriter().write('\0');
+                                clientRecieve.getBufferedWriter().flush();
+                            }
+                        }
+                        break;
+                    }
                     case "Get id user":{
                         String id = client.getId();
                         bufferedWriter.write(id);
