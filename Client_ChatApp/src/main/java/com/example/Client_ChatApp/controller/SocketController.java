@@ -296,10 +296,10 @@ public class SocketController {
     }
     public void clickEnterChat(int roomId, String content){
         String idSend = client.getId();
-        LocalTime timenow = LocalTime.now();
-        MessageData messageData = new MessageData(idSend, content,timenow);
+//        LocalTime timenow = LocalTime.now();
+//        MessageData messageData = new MessageData(idSend, content,timenow);
         Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
-        receiveRoom.getMessageDatas().add(messageData);
+//        receiveRoom.getMessageDatas().add(messageData);
         System.out.println(roomId + ": " + content);
         sendTextToRoom(receiveRoom.getId(), content);
     }
