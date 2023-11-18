@@ -50,36 +50,14 @@ public class HomeController implements Initializable{
     private Label main_name;
     @FXML
     private TextField content;
-    public void load(MouseEvent mouseEvent) {
-//        us1.setVisible(false);
-//        us2.setVisible(false);
-//        us3.setVisible(false);
-//        us4.setVisible(false);
-//        titlep.setVisible(false);
-//        footerp.setVisible(false);
-//        int num_us = connectedServer.getNum();
-//        int i = 1;
-////        System.out.println(num_us);
-//        for(Client client : connectedServer.getClients()){
-//            if(i==1){
-//                us1.setVisible(true);
-//                nameus1.setText(client.getName());
-//            }
-//            else if(i==2){
-//                us2.setVisible(true);
-//            }
-//            else if(i==3){
-//                us3.setVisible(true);
-//            }
-//            i++;
-//        }
-    }
+
     ArrayList<String> idClientList;
     static boolean start = false;
     static String mainName = "";
     static String mainID = "";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         us1.setVisible(false);
         us2.setVisible(false);
         us3.setVisible(false);
@@ -121,7 +99,7 @@ public class HomeController implements Initializable{
         Stage stage1 = (Stage)((Node) e.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-        stage1.setTitle("Home");
+        stage1.setTitle(StartEverything.getSocketController().getClient().getName());
         stage1.setScene(scene);
     }
 
@@ -162,7 +140,8 @@ public class HomeController implements Initializable{
         int idroom = StartEverything.getSocketController().returnRoomId(mainID);
         ListMessage = StartEverything.getSocketController().getMessageData(idroom);
         for(MessageData message : ListMessage){
-            Label lb = new Label(message.getId_user()+": "+ message.getContent()+" "+message.getSend_time().toString());
+            String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
+            Label lb = new Label(StartEverything.getSocketController().getNameById(message.getId_user())+": "+ message.getContent()+" "+time);
             ChatList.getChildren().add(lb);
         }
     }

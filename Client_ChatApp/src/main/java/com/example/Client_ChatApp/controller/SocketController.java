@@ -325,6 +325,11 @@ public class SocketController {
             }
         }
     }
+
+    public Client getClient() {
+        return client;
+    }
+
     public int returnRoomId(String idClient){
         for(Room room : connectedServer.getRooms()){
             for(Client client1 : room.getClients()){
@@ -334,6 +339,12 @@ public class SocketController {
             }
         }
         return 0;
+    }
+    public String getNameById(String iduser){
+        for(Client client1 : connectedServer.getClients()){
+            if(client1.getId().equals(iduser)) return  client1.getName();
+        }
+        return  "";
     }
 
 }
