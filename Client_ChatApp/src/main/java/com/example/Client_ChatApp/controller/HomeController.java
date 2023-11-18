@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -40,6 +41,10 @@ public class HomeController implements Initializable{
     private Label nameus3;
     @FXML
     private Label nameus4;
+    @FXML
+    private Label main_name;
+    @FXML
+    private TextField content;
     public void load(MouseEvent mouseEvent) {
 //        us1.setVisible(false);
 //        us2.setVisible(false);
@@ -65,14 +70,18 @@ public class HomeController implements Initializable{
 //        }
     }
     ArrayList<String> idClientList;
+    static boolean start = false;
+    static String mainName = "";
+    static String mainID = "";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         us1.setVisible(false);
         us2.setVisible(false);
         us3.setVisible(false);
         us4.setVisible(false);
-        titlep.setVisible(false);
-        footerp.setVisible(false);
+        titlep.setVisible(start);
+        footerp.setVisible(start);
+        main_name.setText(mainName);
         int i = 1;
         idClientList = new ArrayList<String>();
         for(Client client : StartEverything.getSocketController().getConnectedServer().getClients()){
@@ -109,20 +118,33 @@ public class HomeController implements Initializable{
 
     public void openChat(MouseEvent mouseEvent) {
         if(mouseEvent.getSource().equals(us1)){
-            System.out.println(nameus1.getText());
+            start = true;
+            mainName = nameus1.getText();
+            mainID = idClientList.get(0);
             System.out.println(idClientList.get(0));
         }
         else if(mouseEvent.getSource().equals(us2)){
-            System.out.println(nameus2.getText());
+            start = true;
+            mainName = nameus2.getText();
+            mainID = idClientList.get(1);
             System.out.println(idClientList.get(1));
         }
         else if (mouseEvent.getSource().equals(us3)) {
-            System.out.println(nameus3.getText());
+            start = true;
+            mainName = nameus3.getText();
+            mainID = idClientList.get(2);
             System.out.println(idClientList.get(2));
         }
         else if (mouseEvent.getSource().equals(us4)) {
-            System.out.println(nameus4.getText());
+            start = true;
+            mainName = nameus4.getText();
+            mainID = idClientList.get(3);
             System.out.println(idClientList.get(3));
         }
+    }
+
+    public void send(MouseEvent mouseEvent) {
+        System.out.println(mainID+":");
+        System.out.println(content.getText());
     }
 }
