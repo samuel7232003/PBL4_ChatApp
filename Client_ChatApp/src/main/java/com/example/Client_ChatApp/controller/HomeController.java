@@ -2,6 +2,8 @@ package com.example.Client_ChatApp.controller;
 
 import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
+import com.example.Client_ChatApp.model.MessageData;
+import com.example.Client_ChatApp.model.Room;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -155,15 +157,15 @@ public class HomeController implements Initializable{
             StartEverything.getSocketController().selectUser(idClientList.get(3));
         }
     }
+    static ArrayList<MessageData> ListMessage;
     public void addMessage(){
-        if(ListMessage!=null){
-            for(String message : ListMessage){
-                Label lb = new Label(message);
-                ChatList.getChildren().add(lb);
-            }
+        int idroom = StartEverything.getSocketController().returnRoomId(mainID);
+        ListMessage = StartEverything.getSocketController().getMessageData(idroom);
+        for(MessageData message : ListMessage){
+            Label lb = new Label(message.getId_user()+": "+ message.getContent()+" "+message.getSend_time().toString());
+            ChatList.getChildren().add(lb);
         }
     }
-    static ArrayList<String> ListMessage;
     public void send(MouseEvent mouseEvent) {
         int idroom = StartEverything.getSocketController().returnRoomId(mainID);
         String contentChat = content.getText();

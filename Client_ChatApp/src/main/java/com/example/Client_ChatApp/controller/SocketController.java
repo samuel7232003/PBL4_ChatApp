@@ -303,7 +303,10 @@ public class SocketController {
         System.out.println(roomId + ": " + content);
         sendTextToRoom(receiveRoom.getId(), content);
     }
-
+    public ArrayList<MessageData> getMessageData(int roomId){
+        Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
+        return receiveRoom.getMessageDatas();
+    }
     public void updateRoomUsersJList(int id_room) {
         System.out.println("updateRoomUsersJList");
         Room theChattingRoom = RoomController.findRoom(connectedServer.getRooms(), id_room);

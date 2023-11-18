@@ -22,7 +22,9 @@ public class MessageData {
     public String getContent() {
         return content;
     }
-
+    public LocalTime getSend_time(){
+        return send_time;
+    }
     public void setContent(String content) {
         this.content = content;
     }
