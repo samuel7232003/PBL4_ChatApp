@@ -33,6 +33,8 @@ public class ClientController {
             }
             id_last = clientL.getId();
         }
+        System.out.println(client.getUsername() + " " + client.getEmail());
+
         int numUser = Integer.parseInt(id_last.substring(2));
         String ID_newUser = "US";
         numUser++;

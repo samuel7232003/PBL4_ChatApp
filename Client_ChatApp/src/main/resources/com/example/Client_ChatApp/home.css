@@ -1,0 +1,23 @@
+#BoxMessageMe{
+    -fx-background-radius: 8;
+    -fx-background-color: #f1c40f;
+    -fx-padding: 15px;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+#BoxMessage{
+    -fx-background-radius: 8;
+    -fx-background-color:  #d9d9d9;
+    -fx-padding: 15px;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+#time{
+    -fx-font-size: 14px;
+}
+
+#vb{
+    -fx-padding: 10px;
+}

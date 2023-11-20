@@ -189,9 +189,7 @@
                     </children></Pane>
             </children>
         </Pane>
-      <VBox id="ChatList" fx:id="ChatList" layoutX="330.0" layoutY="75.0" prefHeight="661.0" prefWidth="823.0" style="-fx-background-color: #fff;">
-         <children>
-
-         </children></VBox>
+      <VBox id="ChatList" fx:id="ChatList" alignment="BOTTOM_CENTER" layoutX="330.0" layoutY="75.0" prefHeight="661.0" prefWidth="823.0" style="-fx-background-color: #fff;">
+      </VBox>
     </children>
 </AnchorPane>

@@ -7,6 +7,7 @@ import com.example.Client_ChatApp.model.Room;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -99,6 +100,7 @@ public class HomeController implements Initializable{
         Stage stage1 = (Stage)((Node) e.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+        scene.getStylesheets().add(index.class.getResource("home.css").toExternalForm());
         stage1.setTitle(StartEverything.getSocketController().getClient().getName());
         stage1.setScene(scene);
     }
@@ -141,11 +143,29 @@ public class HomeController implements Initializable{
         ListMessage = StartEverything.getSocketController().getMessageData(idroom);
         for(MessageData message : ListMessage){
             String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
-            String name =StartEverything.getSocketController().getNameById(message.getId_user());
-            if(name == null) name = "Me";
-            Label lb = new Label(name +": "+ message.getContent()+" "+time);
-            //StartEverything.getSocketController().getNameById(message.getId_user())
-            ChatList.getChildren().add(lb);
+            String name = StartEverything.getSocketController().getNameById(message.getId_user());
+            if(name == null){
+                VBox vb = new VBox();
+                vb.setAlignment(Pos.BOTTOM_RIGHT);
+                vb.setId("vb");
+                Label lb = new Label(message.getContent());
+                lb.setId("BoxMessageMe");
+                vb.getChildren().add(lb);
+                Label lb1 = new Label(time);
+                vb.getChildren().add(lb1);
+                ChatList.getChildren().add(vb);
+            }
+            else {
+                VBox vb = new VBox();
+                vb.setAlignment(Pos.BOTTOM_LEFT);
+                vb.setId("vb");
+                Label lb = new Label(name +": "+ message.getContent());
+                lb.setId("BoxMessage");
+                vb.getChildren().add(lb);
+                Label lb1 = new Label(time);
+                vb.getChildren().add(lb1);
+                ChatList.getChildren().add(vb);
+            }
         }
     }
     public void send(MouseEvent mouseEvent) {
