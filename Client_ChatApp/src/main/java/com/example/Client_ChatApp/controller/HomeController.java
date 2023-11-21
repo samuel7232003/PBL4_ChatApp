@@ -58,7 +58,6 @@ public class HomeController implements Initializable{
     static String mainID = "";
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         us1.setVisible(false);
         us2.setVisible(false);
         us3.setVisible(false);
@@ -139,7 +138,7 @@ public class HomeController implements Initializable{
     }
     static ArrayList<MessageData> ListMessage;
     public void addMessage(){
-        int idroom = StartEverything.getSocketController().returnRoomId(mainID);
+        String idroom = StartEverything.getSocketController().returnRoomId(mainID);
         ListMessage = StartEverything.getSocketController().getMessageData(idroom);
         for(MessageData message : ListMessage){
             String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
@@ -169,7 +168,7 @@ public class HomeController implements Initializable{
         }
     }
     public void send(MouseEvent mouseEvent) {
-        int idroom = StartEverything.getSocketController().returnRoomId(mainID);
+        String idroom = StartEverything.getSocketController().returnRoomId(mainID);
         String contentChat = content.getText();
         System.out.println(mainID+":");
         System.out.println(contentChat);

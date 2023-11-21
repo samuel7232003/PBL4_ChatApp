@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RoomController {
-    public static Room findRoom(ArrayList<Room> roomList, int idRoom) {
+    public static Room findRoom(ArrayList<Room> roomList, String idRoom) {
         for (Room room : roomList)
-            if (room.getId() == idRoom)
+            if (room.getId().equals(idRoom))
                 return room;
         return null;
     }

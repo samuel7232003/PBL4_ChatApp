@@ -5,33 +5,56 @@ import com.example.server_chatapp.controller.HandlerController;
 import java.util.ArrayList;
 
 public class Room {
-    public static int currentRoomID = 1;
-
-    private int id;
+    private String ID_room;
+    private String roomName;
+    private int clientNum;
     private String roomType;
-    private  String name; // nếu là nhắn tin 1-1 thì name là tên người nhận, multi client thì là tên nhóm
-    private ArrayList<HandlerController> handlerclientList;
-
-    public Room(String roomType, HandlerController client1, HandlerController client2) {
-        handlerclientList = new ArrayList<HandlerController>();
-        this.id = currentRoomID++;
+    private ArrayList<HandlerController> clients;
+    public Room(String roomName, int clientNum, String roomType, ArrayList<HandlerController> clients) {
+        this.roomName = roomName;
+        this.clientNum = clientNum;
         this.roomType = roomType;
-        this.handlerclientList.add(client1);
-        this.handlerclientList.add(client2);
+        this.clients = clients;
     }
 
-    public int getId() {
-        return id;
+    public String getID_room() {
+        return ID_room;
     }
 
-    public ArrayList<HandlerController> getHandlerclientList() {
-        return handlerclientList;
+    public void setID_room(String ID_room) {
+        this.ID_room = ID_room;
     }
 
-    public static Room findRoom(ArrayList<Room> roomList, int id) {
-        for (Room room : roomList)
-            if (room.id == id)
-                return room;
-        return null;
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public int getClientNum() {
+        return clientNum;
+    }
+
+    public void setClientNum(int clientNum) {
+        this.clientNum = clientNum;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public ArrayList<HandlerController> getClients() {
+        return clients;
+    }
+
+    public void setClients(ArrayList<HandlerController> clients) {
+        this.clients = clients;
     }
 }
+

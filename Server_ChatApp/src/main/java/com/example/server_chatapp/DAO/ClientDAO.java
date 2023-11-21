@@ -140,5 +140,4 @@ public class ClientDAO extends connectMySQL{
             throw new RuntimeException(ex);
         }
     }
-    // đăng kí
 }

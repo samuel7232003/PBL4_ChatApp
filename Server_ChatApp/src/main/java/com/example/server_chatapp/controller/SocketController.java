@@ -40,13 +40,6 @@ public class SocketController{
     }
     public static ArrayList<Room> getAllRooms(){return  allRooms;}
     public static void removeRoom(Room room){ allRooms.remove(room);}
-    public static ArrayList<Client> getClientInfors(){
-        ArrayList<Client> clientList= new ArrayList<Client>();
-        for(HandlerController handlerController : clients){
-            clientList.add(handlerController.getClient());
-        }
-        return clientList;
-    }
     public SocketController(){
         clients = new ArrayList<HandlerController>();
         allRooms = new ArrayList<Room>();
@@ -90,7 +83,6 @@ public class SocketController{
             System.out.println(handlerController.getClient().getName());
         }
     }
-    public boolean checkSocketController(){return  serverSocket.isClosed();}
     public void CloseSocket() {
         try {
             for (HandlerController handlerController : clients) {

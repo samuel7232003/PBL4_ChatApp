@@ -35,7 +35,7 @@ public class SingupController {
         String username = usernametxt.getText().trim();
         String pwd = pwdtxt.getText().trim();
         String repwd = repwdtxt.getText().trim();
-        Client client = new Client(fullname, gmail, username, pwd);
+        Client client = new Client(fullname,username, pwd, gmail);
         String s = StartEverything.getSocketController().singupSocket(client);
         if (s == "Success") {
             Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();

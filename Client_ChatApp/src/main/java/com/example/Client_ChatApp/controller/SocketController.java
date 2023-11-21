@@ -201,31 +201,35 @@ public class SocketController {
                                 break;
 
                             }
-                            case "new private room": {
-                                String roomIDstr = bufferedReader.readLine();
-                                System.out.println(roomIDstr);
-                                int roomID = Integer.parseInt(roomIDstr);
-                                String id_userRequest = bufferedReader.readLine();
-                                String type = bufferedReader.readLine();
+
+                            case "new room": {
+                                String roomID = bufferedReader.readLine();
+                                String roomType = bufferedReader.readLine();
+                                String roomName = bufferedReader.readLine();
+
+                                int roomUserCount = Integer.parseInt(bufferedReader.readLine());
+                                ArrayList<String> userIDs = new ArrayList<String>();
+                                for (int i = 0; i < roomUserCount; i++)
+                                    userIDs.add(bufferedReader.readLine());
+
                                 ArrayList<Client> clientlist = new ArrayList<Client>();
-                                clientlist.add(client);
-                                String name = "";
-                                for(Client client1 : connectedServer.getClients()){
-                                    if(client1.getId().equals(id_userRequest)){
-                                        name = client1.getName();
-                                        clientlist.add(client1);
-                                        break;
+                                for(String userID : userIDs){
+                                    for(Client client1 : connectedServer.getClients()){
+                                        if(client1.getId().equals(userID)){
+                                            clientlist.add(client1);
+                                            System.out.println(client1.getName());
+                                            continue;
+                                        }
                                     }
                                 }
-                                // tên đây tức là ngươi phía kia khi nhắn sẽ laf tên thawngf kia
-                                Room newRoom = new Room(roomID, name, type, clientlist);
+                                Room newRoom = new Room(roomID, roomName, roomType, clientlist);
+                                System.out.println("Room id: " + roomID);
                                 connectedServer.AddRoom(newRoom);
-                                System.out.println("Mã phòng: " + roomID);
                                 break;
                             }
                             case "text from user to room": {
                                 String idUserSend = bufferedReader.readLine();
-                                int roomID = Integer.parseInt(bufferedReader.readLine());
+                                String roomID = bufferedReader.readLine();
                                 String content = "";
                                 char c;
                                 do {
@@ -255,24 +259,41 @@ public class SocketController {
             }
         }).start();
     }
-    public void createPrivateRoom(String id_user) {
+    public void createPrivateRoom1(String id_user) {
         try {
             bufferedWriter.write("request create private room");
             bufferedWriter.newLine();
             bufferedWriter.write(id_user); // room name
             bufferedWriter.newLine();
+            bufferedWriter.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void createPrivateRoom(String id_userFinal) {
+        try {
+            bufferedWriter.write("request create room");
+            bufferedWriter.newLine();
+            bufferedWriter.write("");
+            bufferedWriter.newLine();
+            bufferedWriter.write("private");
+            bufferedWriter.newLine();
+            bufferedWriter.write("2");
+            bufferedWriter.newLine();
+            bufferedWriter.write(client.getId());
+            bufferedWriter.newLine();
+            bufferedWriter.write(id_userFinal);
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
-    public void sendTextToRoom(int roomID, String content) {
+    public void sendTextToRoom(String roomID, String content) {
         try {
             bufferedWriter.write("text to room");
             bufferedWriter.newLine();
-            bufferedWriter.write("" + roomID);
+            bufferedWriter.write(roomID);
             bufferedWriter.newLine();
             bufferedWriter.write(content);
             bufferedWriter.write('\0');
@@ -291,16 +312,16 @@ public class SocketController {
             updateRoomUsersJList(foundRoom.getId());
         }
     }
-    public void clickEnterChat(int roomId, String content){
+    public void clickEnterChat(String roomId, String content){
         Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
         System.out.println(roomId + ": " + content);
         sendTextToRoom(receiveRoom.getId(), content);
     }
-    public ArrayList<MessageData> getMessageData(int roomId){
+    public ArrayList<MessageData> getMessageData(String roomId){
         Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
         return receiveRoom.getMessageDatas();
     }
-    public void updateRoomUsersJList(int id_room) {
+    public void updateRoomUsersJList(String id_room) {
         System.out.println("updateRoomUsersJList");
         Room theChattingRoom = RoomController.findRoom(connectedServer.getRooms(), id_room);
         String name ="";
@@ -323,7 +344,7 @@ public class SocketController {
         return client;
     }
 
-    public int returnRoomId(String idClient){
+    public String returnRoomId(String idClient){
         for(Room room : connectedServer.getRooms()){
             for(Client client1 : room.getClients()){
                 if(client1.getId().equals(idClient)){
@@ -331,7 +352,7 @@ public class SocketController {
                 }
             }
         }
-        return 0;
+        return "";
     }
     public String getNameById(String iduser){
         for(Client client1 : connectedServer.getClients()){

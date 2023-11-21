@@ -3,30 +3,23 @@ package com.example.Client_ChatApp.model;
 import java.util.ArrayList;
 
 public class Room {
-    private int idRoom;
+    private String idRoom;
     private String name;
     private String type; //kiểu là chat 1 1 hay chat room
     private ArrayList<Client> clients;
     private ArrayList<MessageData> messageDatas;
-
-    public Room(int idRoom, String type, ArrayList<Client> clients) {
-        this.idRoom = idRoom;
-        this.type = type;
-        this.clients = clients;
-    }
-
-    public Room(int idRoom, String name, String type, ArrayList<Client> clients) {
+    public Room(String idRoom, String name, String type, ArrayList<Client> clients) {
         this.idRoom = idRoom;
         this.name = name;
         this.type = type;
         this.clients = clients;
         this.messageDatas = new ArrayList<MessageData>();
     }
-    public int getId() {
+    public String getId() {
         return idRoom;
     }
 
-    public void setId(int idRoom) {
+    public void setId(String idRoom) {
         this.idRoom = idRoom;
     }
 
