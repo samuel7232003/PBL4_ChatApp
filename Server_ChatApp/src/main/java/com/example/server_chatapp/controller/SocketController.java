@@ -23,6 +23,7 @@ public class SocketController{
     public void setServerPort(int serverPort) {
         this.serverPort = serverPort;
     }
+
     public static ArrayList<HandlerController> getClientHandlers() {
         return clients;
     }
@@ -35,11 +36,11 @@ public class SocketController{
     public static int getClientSize(){
         return clients.size();
     }
-    public static void addRoom(Room room){
-        allRooms.add(room);
-    }
+
+    public static void addRoom(Room room){allRooms.add(room);}
     public static ArrayList<Room> getAllRooms(){return  allRooms;}
     public static void removeRoom(Room room){ allRooms.remove(room);}
+
     public SocketController(){
         clients = new ArrayList<HandlerController>();
         allRooms = new ArrayList<Room>();
@@ -93,5 +94,11 @@ public class SocketController{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static HandlerController getHandlerClient(String id_user){
+        for (HandlerController handlerController: clients){
+            if(handlerController.getClient().getId().equals(id_user)) return handlerController;
+        }
+        return null;
     }
 }

@@ -103,7 +103,6 @@ public class HomeController implements Initializable{
         stage1.setTitle(StartEverything.getSocketController().getClient().getName());
         stage1.setScene(scene);
     }
-
     public void openChat(MouseEvent mouseEvent) {
         if(mouseEvent.getSource().equals(us1)){
             start = true;

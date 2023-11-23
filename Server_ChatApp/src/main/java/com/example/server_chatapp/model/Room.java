@@ -9,12 +9,19 @@ public class Room {
     private String roomName;
     private int clientNum;
     private String roomType;
-    private ArrayList<HandlerController> clients;
-    public Room(String roomName, int clientNum, String roomType, ArrayList<HandlerController> clients) {
+    private ArrayList<Client> clients;
+    public Room(String roomName, int clientNum, String roomType, ArrayList<Client> clients) {
         this.roomName = roomName;
         this.clientNum = clientNum;
         this.roomType = roomType;
         this.clients = clients;
+    }
+
+    public Room(String ID_room, String roomName, int clientNum, String roomType) {
+        this.ID_room = ID_room;
+        this.roomName = roomName;
+        this.clientNum = clientNum;
+        this.roomType = roomType;
     }
 
     public String getID_room() {
@@ -49,11 +56,11 @@ public class Room {
         this.roomType = roomType;
     }
 
-    public ArrayList<HandlerController> getClients() {
+    public ArrayList<Client> getClients() {
         return clients;
     }
 
-    public void setClients(ArrayList<HandlerController> clients) {
+    public void setClients(ArrayList<Client> clients) {
         this.clients = clients;
     }
 }
