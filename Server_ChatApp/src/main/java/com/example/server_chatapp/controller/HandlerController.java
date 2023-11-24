@@ -83,6 +83,7 @@ public class HandlerController extends Thread {
 
                                 SocketController.addHandlerClient(this);
                                 SocketController.updateClient();
+                                RoomController.searchExistedRoom(client.getId());
 
                                 this.bufferedWriter.write("Login success");
                                 this.bufferedWriter.newLine();
@@ -144,7 +145,6 @@ public class HandlerController extends Thread {
                         bufferedWriter.flush();
 
                         SocketController.addHandlerClient(this);
-                        //StartScreen.updateClient();
 
                         this.bufferedWriter.write(client.getId());
                         this.bufferedWriter.newLine();
@@ -190,34 +190,38 @@ public class HandlerController extends Thread {
                         ArrayList<String> clientId = new ArrayList<String>();
 
                         for (int i = 0; i < userCount; i++) clientId.add(bufferedReader.readLine());
+                        // viết hàm tìm kiếm trong csdl đã có room hay chưa, nếu đã cos room thì show ra như cũ
 
                         Room newRoom = RoomController.createRoom(roomName, clientId, roomType);
                         SocketController.addRoom(newRoom);
 
                         int i = 0;
                         // gửi về cho các client
-                        for (HandlerController handlerControllerFinal : newRoom.getClients()) {
-                            handlerControllerFinal.getBufferedWriter().write("new room");
-                            handlerControllerFinal.getBufferedWriter().newLine();
-                            handlerControllerFinal.getBufferedWriter().write(newRoom.getID_room());
-                            handlerControllerFinal.getBufferedWriter().newLine();
-                            handlerControllerFinal.getBufferedWriter().write("private");
-                            handlerControllerFinal.getBufferedWriter().newLine();
-
-                            if (newRoom.getRoomType().equals("private"))
-                                handlerControllerFinal.getBufferedWriter().write(clientId.get(1 - i));
-                            else handlerControllerFinal.getBufferedWriter().write(newRoom.getRoomName());
-                            handlerControllerFinal.getBufferedWriter().newLine();
-
-                            handlerControllerFinal.getBufferedWriter().write("" + userCount);
-                            handlerControllerFinal.getBufferedWriter().newLine();
-
-                            for (HandlerController handlerController : newRoom.getClients()) {
-                                handlerControllerFinal.getBufferedWriter().write(handlerController.getClient().getId());
+                        for (Client client1 : newRoom.getClients()) {
+                            HandlerController handlerControllerFinal = SocketController.getHandlerClient(client1.getId());
+                            if(handlerControllerFinal != null){
+                                handlerControllerFinal.getBufferedWriter().write("new room");
                                 handlerControllerFinal.getBufferedWriter().newLine();
-                            }
+                                handlerControllerFinal.getBufferedWriter().write(newRoom.getID_room());
+                                handlerControllerFinal.getBufferedWriter().newLine();
+                                handlerControllerFinal.getBufferedWriter().write("private");
+                                handlerControllerFinal.getBufferedWriter().newLine();
 
-                            handlerControllerFinal.getBufferedWriter().flush();
+                                if (newRoom.getRoomType().equals("private"))
+                                    handlerControllerFinal.getBufferedWriter().write(clientId.get(1 - i));
+                                else handlerControllerFinal.getBufferedWriter().write(newRoom.getRoomName());
+                                handlerControllerFinal.getBufferedWriter().newLine();
+
+                                handlerControllerFinal.getBufferedWriter().write("" + userCount);
+                                handlerControllerFinal.getBufferedWriter().newLine();
+
+                                for (Client clientOnRoom : newRoom.getClients()) {
+                                    handlerControllerFinal.getBufferedWriter().write(clientOnRoom.getId());
+                                    handlerControllerFinal.getBufferedWriter().newLine();
+                                }
+
+                                handlerControllerFinal.getBufferedWriter().flush();
+                            }
                         }
                         break;
                     }
@@ -235,19 +239,23 @@ public class HandlerController extends Thread {
                         System.out.println(roomID + ": " + content);
 
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
-                        for (HandlerController clientRecieve : room.getClients()) {
-                            System.out.println("Send text from " + client.getName() + " to " + clientRecieve.getClient().getName());
-                            if (clientRecieve != null) {
-                                clientRecieve.getBufferedWriter().write("text from user to room");
-                                clientRecieve.getBufferedWriter().newLine();
-                                clientRecieve.getBufferedWriter().write(client.getId());
-                                clientRecieve.getBufferedWriter().newLine();
-                                clientRecieve.getBufferedWriter().write(roomID);
-                                clientRecieve.getBufferedWriter().newLine();
-                                clientRecieve.getBufferedWriter().write(content);
-                                clientRecieve.getBufferedWriter().write('\0');
-                                clientRecieve.getBufferedWriter().flush();
+                        for (Client client1 : room.getClients()) {
+                            HandlerController clientRecieve = SocketController.getHandlerClient(client1.getId());
+                            if(clientRecieve != null){
+                                System.out.println("Send text from " + client.getName() + " to " + client1.getName());
+                                if (clientRecieve != null) {
+                                    clientRecieve.getBufferedWriter().write("text from user to room");
+                                    clientRecieve.getBufferedWriter().newLine();
+                                    clientRecieve.getBufferedWriter().write(client.getId());
+                                    clientRecieve.getBufferedWriter().newLine();
+                                    clientRecieve.getBufferedWriter().write(roomID);
+                                    clientRecieve.getBufferedWriter().newLine();
+                                    clientRecieve.getBufferedWriter().write(content);
+                                    clientRecieve.getBufferedWriter().write('\0');
+                                    clientRecieve.getBufferedWriter().flush();
+                                }
                             }
+
                         }
                         break;
                     }

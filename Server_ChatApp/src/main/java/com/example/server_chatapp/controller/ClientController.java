@@ -4,6 +4,8 @@ package com.example.server_chatapp.controller;
 import com.example.server_chatapp.DAO.ClientDAO;
 import com.example.server_chatapp.model.Client;
 
+import java.util.ArrayList;
+
 public class ClientController {
     public static String Login(String username, String password){
         String result = ClientDAO.Login(username, password);
@@ -32,6 +34,15 @@ public class ClientController {
 
         boolean result = ClientDAO.SignUp(client);
         return "Sign up success";
+    }
+    public static ArrayList<Client> getClients(){
+        return ClientDAO.getClients();
+    }
+    public static Client getClient(ArrayList<Client> clients, String id_user){
+        for(Client client : clients) {
+            if(client.getId().equals(id_user)) return client;
+        }
+        return null;
     }
     public static boolean checkClientIsLogin(String idUser){
         return ClientDAO.CheckLogin(idUser);

@@ -13,8 +13,6 @@ public class Client {
     private String email;
     private  boolean isLogin;
     private Socket socket;
-    public BufferedReader bufferedReader;
-    public BufferedWriter bufferedWriter;
 
     public Client(String id, String name, String username, String password, String email, boolean isLogin) {
         this.id = id;
@@ -96,19 +94,4 @@ public class Client {
         this.socket = socket;
     }
 
-    public BufferedReader getBufferedReader() {
-        return bufferedReader;
-    }
-
-    public void setBufferedReader(BufferedReader bufferedReader) {
-        this.bufferedReader = bufferedReader;
-    }
-
-    public BufferedWriter getBufferedWriter() {
-        return bufferedWriter;
-    }
-
-    public void setBufferedWriter(BufferedWriter bufferedWriter) {
-        this.bufferedWriter = bufferedWriter;
-    }
 }

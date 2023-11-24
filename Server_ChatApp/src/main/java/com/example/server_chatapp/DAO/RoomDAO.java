@@ -1,9 +1,7 @@
 package com.example.server_chatapp.DAO;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 
 import com.example.server_chatapp.controller.RoomController;
 import com.example.server_chatapp.model.Room;
@@ -33,6 +31,28 @@ public class RoomDAO {
             Statement statement2 = conn.createStatement();
             statement2.executeUpdate(sql);
             return room;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static ArrayList<Room> searchRoom(ArrayList<String> roomIDs){
+        try {
+            Connection conn = connectMySQL.connectSQL();
+            ArrayList<Room> rooms = new ArrayList<Room>();
+            for(String roomID : roomIDs) {
+                String sql = "SELECT * FROM room WHERE ID_room = '" + roomID + "';";
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                while(resultSet.next()){
+                    String roomId = resultSet.getString("ID_room");
+                    String roomName = resultSet.getString("Name_room");
+                    int clientNum = Integer.parseInt(resultSet.getString("ClientNum"));
+                    String roomType = resultSet.getString("Type");
+                    Room room = new Room(roomID, roomName, clientNum, roomType);
+                    rooms.add(room);
+                }
+            }
+            return rooms;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
