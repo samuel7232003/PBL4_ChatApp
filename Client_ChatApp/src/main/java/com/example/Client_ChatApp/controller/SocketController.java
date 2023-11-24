@@ -175,6 +175,7 @@ public class SocketController {
                                 Client clientVari = new Client(Id_user, Name_user);
                                 connectedServer.addClient(clientVari);
                                 updateUserOnlineList();
+                                //HomeController.reload_();
                                 break;
                             }
                             case "user quit": {
