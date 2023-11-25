@@ -3,7 +3,6 @@ package com.example.Client_ChatApp.controller;
 import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
 import com.example.Client_ChatApp.model.MessageData;
-import com.example.Client_ChatApp.model.Room;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -52,10 +52,15 @@ public class HomeController implements Initializable{
     @FXML
     private TextField content;
 
+    @FXML
+    AnchorPane main;
+
     ArrayList<String> idClientList;
     static boolean start = false;
     static String mainName = "";
     static String mainID = "";
+
+    static Stage stage;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         us1.setVisible(false);
@@ -66,6 +71,7 @@ public class HomeController implements Initializable{
         footerp.setVisible(start);
         ChatList.setVisible(start);
         main_name.setText(mainName);
+        //System.out.println(main.getScene());
         int i = 1;
         idClientList = new ArrayList<String>();
         for(Client client : StartEverything.getSocketController().getConnectedServer().getClients()){
@@ -95,6 +101,14 @@ public class HomeController implements Initializable{
             addMessage();
         }
     }
+
+//    public static void reload_() throws IOException {
+//        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+//        scene.getStylesheets().add(index.class.getResource("home.css").toExternalForm());
+//        stage.setTitle(StartEverything.getSocketController().getClient().getName());
+//        stage.setScene(scene);
+//    }
     public void reload(MouseEvent e) throws IOException {
         Stage stage1 = (Stage)((Node) e.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
