@@ -3,6 +3,7 @@ package com.example.server_chatapp.controller;
 import com.example.server_chatapp.DAO.ClientDAO;
 import com.example.server_chatapp.model.Client;
 import com.example.server_chatapp.model.Room;
+import com.example.server_chatapp.model.RoomMessage;
 
 import java.io.*;
 import java.net.Socket;
@@ -83,7 +84,6 @@ public class HandlerController extends Thread {
 
                                 SocketController.addHandlerClient(this);
                                 SocketController.updateClient();
-                                RoomController.searchExistedRoom(client.getId());
 
                                 this.bufferedWriter.write("Login success");
                                 this.bufferedWriter.newLine();
@@ -109,7 +109,37 @@ public class HandlerController extends Thread {
                                     this.bufferedWriter.newLine();
                                     this.bufferedWriter.flush();
                                 }
-//                              //Gửi thông tin từ this client về các client khác
+
+
+                                // gửi thông tin những cái room mà this client đang tham gia về cho chính nó:
+                                ArrayList<Room> rooms = RoomController.searchExistedRoom(client.getId());
+                                this.bufferedWriter.write("" + rooms.size());
+                                this.bufferedWriter.newLine();
+                                this.bufferedWriter.flush();
+
+                                for(Room room : rooms){
+                                    this.bufferedWriter.write(room.getID_room());
+                                    this.bufferedWriter.newLine();
+                                    this.bufferedWriter.write(room.getRoomName());
+                                    this.bufferedWriter.newLine();
+                                    this.bufferedWriter.write(room.getRoomType());
+                                    this.bufferedWriter.newLine();
+                                    this.bufferedWriter.write("" + room.getClientNum());
+                                    this.bufferedWriter.newLine();
+                                    for(Client clientInRoom : room.getClients()){
+                                        this.bufferedWriter.write(clientInRoom.getId());
+                                        this.bufferedWriter.newLine();
+                                        this.bufferedWriter.write(clientInRoom.getName());
+                                        this.bufferedWriter.newLine();
+                                    }
+                                    System.out.println(room.getID_room() + ":" );
+                                    for(RoomMessage roomMessage : room.getMessages()){
+                                        System.out.println(roomMessage.getMessageOrder() + ". " + roomMessage.getId_userSend() + ": " + roomMessage.getContent());
+                                    }
+                                    this.bufferedWriter.flush();
+                                }
+
+                                //Gửi thông tin từ this client về các client khác
                                 for (HandlerController handlerController : SocketController.getClientHandlers()) {
 
                                     if ((handlerController.getClient().getId()).equals(this.client.getId()))
@@ -255,8 +285,11 @@ public class HandlerController extends Thread {
                                     clientRecieve.getBufferedWriter().flush();
                                 }
                             }
-
                         }
+                        room.setMessageOrder();
+                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), content);
+                        RoomMessageController roomMessageController = new RoomMessageController();
+                        roomMessageController.insertMessage(roomMessage);
                         break;
                     }
                     case "Get id user": {
@@ -271,12 +304,6 @@ public class HandlerController extends Thread {
                         bufferedWriter.flush();
                         break;
                     }
-//                    case "get connected count": {
-//                        bufferedWriter.write("" + StartScreen.getSizeClient());
-//                        bufferedWriter.newLine();
-//                        bufferedWriter.flush();
-//                        break;
-//                    }
                 }
             }
         } catch (IOException ex) {

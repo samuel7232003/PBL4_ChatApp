@@ -10,6 +10,8 @@ public class Room {
     private int clientNum;
     private String roomType;
     private ArrayList<Client> clients;
+    private ArrayList<RoomMessage> messages;
+    private int messageOrder = 0;
     public Room(String roomName, int clientNum, String roomType, ArrayList<Client> clients) {
         this.roomName = roomName;
         this.clientNum = clientNum;
@@ -63,5 +65,22 @@ public class Room {
     public void setClients(ArrayList<Client> clients) {
         this.clients = clients;
     }
+
+    public ArrayList<RoomMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<RoomMessage> messages) {
+        this.messages = messages;
+    }
+
+    public int getMessageOrder() {
+        return messageOrder;
+    }
+
+    public void setMessageOrder() {
+        this.messageOrder++;
+    }
+
 }
 

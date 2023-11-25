@@ -2,8 +2,10 @@ package com.example.server_chatapp.controller;
 
 import com.example.server_chatapp.DAO.RoomDAO;
 import com.example.server_chatapp.DAO.RoomDetailDAO;
+import com.example.server_chatapp.DAO.RoomMessageDAO;
 import com.example.server_chatapp.model.Client;
 import com.example.server_chatapp.model.Room;
+import com.example.server_chatapp.model.RoomMessage;
 
 import java.util.ArrayList;
 
@@ -32,32 +34,43 @@ public class RoomController {
         return ID_newRoom;
     }
     public static Room findRoom(ArrayList<Room> roomList, String idRoom) {
-        for (Room room : roomList)
-            if (room.getID_room().equals(idRoom))
+        System.out.println("tới đây");
+        for (Room room : roomList){
+            System.out.println("test room: "+room.getID_room());
+            if (room.getID_room().equals(idRoom)){
                 return room;
+            }
+        }
         return null;
     }
-    public static void searchExistedRoom(String id_user){
-        ArrayList<String> roomIDs = RoomDetailDAO.returnMyRooms(id_user);
-        ArrayList<Room> rooms = RoomDAO.searchRoom(roomIDs);
+    public static ArrayList<Room> getAllRoom(){
+        ArrayList<Room> rooms = RoomDAO.getAll();
         ArrayList<String> idUserinRooms;
-        ArrayList<Client> clientInRoom = new ArrayList<Client>();
         ArrayList<Client> clients = ClientController.getClients();
         for(Room room : rooms){
+            ArrayList<Client> clientInRoom = new ArrayList<Client>();
             idUserinRooms = RoomDetailDAO.returnIDuserExsitRoom(room.getID_room());
             int i = 0;
             for(String idUser : idUserinRooms){
                 clientInRoom.add(ClientController.getClient(clients, idUser));
             }
-            for(Client client:clientInRoom) System.out.println(client.getId() + ": " + client.getName());
+            ArrayList<RoomMessage> roomMessages = RoomMessageDAO.getMessagebByIdRoom(room.getID_room());
             room.setClients(clientInRoom);
-            clientInRoom.clear();
+            room.setMessages(roomMessages);
         }
-        for(Room room : rooms){
-            System.out.println(room.getID_room() + " có " + room.getClientNum() + " user:");
-            for(Client client : room.getClients()) System.out.println(client.getId() + ": " + client.getName());
-        }
-        // chạy vòng lặp để lấy lên các handlerController để add vào rooms, trả về cho handlerController
+        return rooms;
     }
-
+    public static ArrayList<Room> searchExistedRoom(String id_user){
+        ArrayList<Room> rooms = SocketController.getAllRooms();
+        ArrayList<Room> roomReturns = new ArrayList<Room>();
+        for(Room room : rooms){
+            for(Client client : room.getClients()){
+                if(client.getId().equals(id_user)){
+                    roomReturns.add(room);
+                    continue;
+                }
+            }
+        }
+        return roomReturns;
+    }
 }

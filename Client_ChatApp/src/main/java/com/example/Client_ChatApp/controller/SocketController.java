@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -24,8 +25,6 @@ public class SocketController {
     private static Socket socket;
     private static BufferedWriter bufferedWriter;
     private static BufferedReader bufferedReader;
-    private static Scanner sc = new Scanner(System.in);
-
     public ServerData getConnectedServer(){
         return connectedServer;
     }
@@ -59,8 +58,28 @@ public class SocketController {
             }
         }
     }
-    public void setClient(Client client) {
-        this.client = client;
+
+    public void getRoomExisted(){
+        try{
+            int roomCount = Integer.parseInt(bufferedReader.readLine());
+            for(int i = 0; i < roomCount ; i++){
+                String idRoom = bufferedReader.readLine();
+                String nameRoom = bufferedReader.readLine();
+                String typeRoom = bufferedReader.readLine();
+                int clientCount = Integer.parseInt(bufferedReader.readLine());
+                ArrayList<Client> clients = new ArrayList<Client>();
+                for(int j = 0; j <clientCount; j++){
+                    Client clientInRoom = new Client();
+                    clientInRoom.setId(bufferedReader.readLine());
+                    clientInRoom.setName(bufferedReader.readLine());
+                    clients.add(clientInRoom);
+                }
+                Room room = new Room(idRoom, nameRoom, typeRoom, clients);
+                connectedServer.AddRoom(room);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public static void updateUserOnlineList(){
@@ -148,7 +167,9 @@ public class SocketController {
                 connectedServer.setOpen(true);
                 connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
                 getOnlineUserss();
+                getRoomExisted();
                 updateUserOnlineList();
+                showRoom();
                 StartAll();
                 return "Login success";
             }
@@ -238,7 +259,6 @@ public class SocketController {
                                         content += c;
                                 } while (c != '\0');
                                 System.out.println(idUserSend + ": " + content);
-                                // Main.mainScreen.addNewMessage(roomID, "text", user, content);
                                 LocalTime timenow = LocalTime.now();
                                 MessageData messageData = new MessageData(idUserSend, content,timenow);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
@@ -349,5 +369,13 @@ public class SocketController {
         }
         return  null;
     }
-
+    public void showRoom(){
+        for(Room room : connectedServer.getRooms()){
+            System.out.println(room.getId() + " có các user: ");
+            for(Client client1 : room.getClients()){
+                System.out.print(client1.getName() + " ");
+            }
+            System.out.println();
+        }
+    }
 }

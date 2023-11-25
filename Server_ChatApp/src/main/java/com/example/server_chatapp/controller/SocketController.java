@@ -41,9 +41,14 @@ public class SocketController{
     public static ArrayList<Room> getAllRooms(){return  allRooms;}
     public static void removeRoom(Room room){ allRooms.remove(room);}
 
+    public static void setAllRooms(ArrayList<Room> allRooms_) {
+        allRooms = allRooms_;
+    }
+
     public SocketController(){
         clients = new ArrayList<HandlerController>();
         allRooms = new ArrayList<Room>();
+        allRooms = RoomController.getAllRoom();
     }
     public void OpenSocket(int port, TextArea tbtxt) {
         try {
