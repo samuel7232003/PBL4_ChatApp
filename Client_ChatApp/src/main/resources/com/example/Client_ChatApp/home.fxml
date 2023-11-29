@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane id="main" fx:id="main" onMouseClicked="#reload" prefHeight="801.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.HomeController">
@@ -44,17 +45,51 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@image/DT.jpg" />
-                            </image>
-                        </ImageView>
-                        <Label layoutX="17.0" layoutY="68.0" text="Thành" />
-                        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="73.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@image/DT.jpg" />
-                            </image></ImageView>
-                        <Label layoutX="76.0" layoutY="68.0" text="Thắng" />
+                        <Pane onMouseClicked="#openChatUser" id="userOnl1" fx:id="userOnl1" layoutX="6.0" layoutY="21.0" prefHeight="68.0" prefWidth="70.0">
+                            <children>
+                                <Label id="nameus1" fx:id="nameus1" layoutX="16.0" layoutY="48.0" text="Thành" />
+                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@image/DT.jpg" />
+                                    </image>
+                                </ImageView>
+                        <Circle fill="#37b916" layoutX="53.0" layoutY="43.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                            </children>
+                        </Pane>
+                        <Pane onMouseClicked="#openChatUser" id="userOnl2" fx:id="userOnl2" layoutX="65.0" layoutY="21.0" prefHeight="68.0" prefWidth="70.0">
+                            <children>
+                                <Label id="nameus2" fx:id="nameus2" layoutX="16.0" layoutY="48.0" text="Thành" />
+                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@image/DT.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Circle fill="#37b916" layoutX="53.0" layoutY="43.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                            </children>
+                        </Pane>
+                        <Pane onMouseClicked="#openChatUser" id="userOnl3" fx:id="userOnl3" layoutX="126.0" layoutY="21.0" prefHeight="68.0" prefWidth="70.0">
+                            <children>
+                                <Label id="nameus3" fx:id="nameus3" layoutX="16.0" layoutY="48.0" text="Thành" />
+                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@image/DT.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Circle fill="#37b916" layoutX="53.0" layoutY="43.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                            </children>
+                        </Pane>
+                        <Pane onMouseClicked="#openChatUser" id="userOnl4" fx:id="userOnl4" layoutX="191.0" layoutY="21.0" prefHeight="68.0" prefWidth="70.0">
+                            <children>
+                                <Label id="nameus4" fx:id="nameus4" layoutX="16.0" layoutY="48.0" text="Thành" />
+                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@image/DT.jpg" />
+                                    </image>
+                                </ImageView>
+                                <Circle fill="#37b916" layoutX="53.0" layoutY="43.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                            </children>
+                        </Pane>
+
                     </children>
                 </Pane>
                 <Pane id="list" fx:id="list" layoutY="185.0" prefHeight="488.0" prefWidth="260.0">
@@ -64,14 +99,14 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Pane id="us1" fx:id="us1" layoutY="23.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
+                        <Pane id="ro1" fx:id="ro1" layoutY="23.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@image/VT.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label id="nameus1" fx:id="nameus1" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                <Label id="namero1" fx:id="namero1" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -79,14 +114,14 @@
                                 <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
                             </children>
                         </Pane>
-                        <Pane id="us2" fx:id="us2" layoutY="98.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
+                        <Pane id="ro2" fx:id="ro2" layoutY="98.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@image/VT.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label id="nameus2" fx:id="nameus2" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                <Label id="namero2" fx:id="namero2" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -94,14 +129,14 @@
                                 <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
                             </children>
                         </Pane>
-                        <Pane id="us3" fx:id="us3" layoutY="173.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
+                        <Pane id="ro3" fx:id="ro3" layoutY="173.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@image/VT.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label id="nameus3" fx:id="nameus3" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                <Label id="namero3" fx:id="namero3" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -109,14 +144,14 @@
                                 <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
                             </children>
                         </Pane>
-                        <Pane id="us4" fx:id="us4" layoutY="248.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
+                        <Pane id="ro4" fx:id="ro4" layoutY="248.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@image/VT.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label id="nameus4" fx:id="nameus4" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
+                                <Label id="namero4" fx:id="namero4" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -168,7 +203,7 @@
                                 <Image url="@icon/audio.png" />
                             </image></ImageView>
                     </children></Pane>
-                <TextField onKeyPressed="#send_" id="content" fx:id="content" layoutX="166.0" layoutY="9.0" prefHeight="40.0" prefWidth="571.0" promptText="Nhập tin nhắn gửi tới bạn của bạn..." style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;">
+                <TextField id="content" fx:id="content" layoutX="166.0" layoutY="9.0" onKeyPressed="#send_" prefHeight="40.0" prefWidth="571.0" promptText="Nhập tin nhắn gửi tới bạn của bạn..." style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;">
                     <font>
                         <Font size="16.0" />
                     </font>

@@ -342,6 +342,11 @@ public class SocketController {
             updateRoomUsersJList(foundRoom.getId());
         }
     }
+
+    public void selectRoom(String id_room){
+        updateRoomUsersJList(id_room);
+    }
+
     public void clickEnterChat(String roomId, String content){
         Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
         System.out.println(roomId + ": " + content);
@@ -398,5 +403,8 @@ public class SocketController {
             }
             System.out.println();
         }
+    }
+    public ArrayList<Room> getRoomList(){
+        return connectedServer.getRooms();
     }
 }

@@ -3,6 +3,7 @@ package com.example.Client_ChatApp.controller;
 import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
 import com.example.Client_ChatApp.model.MessageData;
+import com.example.Client_ChatApp.model.Room;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,21 +27,13 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable{
     @FXML
-    private Pane us1;
+    private Pane userOnl1;
     @FXML
-    private Pane us2;
+    private Pane userOnl2;
     @FXML
-    private Pane us3;
+    private Pane userOnl3;
     @FXML
-    private Pane us4;
-    @FXML
-    private Pane titlep;
-    @FXML
-    private Pane footerp;
-    @FXML
-    private VBox ChatList;
-    @FXML
-    private Label labletxt;
+    private Pane userOnl4;
     @FXML
     private Label nameus1;
     @FXML
@@ -50,58 +43,107 @@ public class HomeController implements Initializable{
     @FXML
     private Label nameus4;
     @FXML
+    private Pane ro1;
+    @FXML
+    private Pane ro2;
+    @FXML
+    private Pane ro3;
+    @FXML
+    private Pane ro4;
+    @FXML
+    private Pane titlep;
+    @FXML
+    private Pane footerp;
+    @FXML
+    private VBox ChatList;
+    @FXML
+    private Label labletxt;
+    @FXML
+    private Label namero1;
+    @FXML
+    private Label namero2;
+    @FXML
+    private Label namero3;
+    @FXML
+    private Label namero4;
+    @FXML
     private Label main_name;
     @FXML
     private TextField content;
-
     @FXML
     AnchorPane main;
 
-    ArrayList<String> idClientList;
+    ArrayList<String> idRoomList;
+    ArrayList<String> idUserList;
     static boolean start = false;
-    static String mainName = "";
-    static String mainID = "";
+    static String mainNameRoom = "";
+    static String mainIDRoom = "";
+    public Client client;
 
-    static Stage stage;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        us1.setVisible(false);
-        us2.setVisible(false);
-        us3.setVisible(false);
-        us4.setVisible(false);
-        titlep.setVisible(start);
-        footerp.setVisible(start);
-        ChatList.setVisible(start);
-        main_name.setText(mainName);
+        client = StartEverything.getSocketController().getClient();
+        main_name.setText(mainNameRoom);
+        setup();
         //System.out.println(main.getScene());
         int i = 1;
-        idClientList = new ArrayList<String>();
-        for(Client client : StartEverything.getSocketController().getConnectedServer().getClients()){
-            if(i==1){
-                us1.setVisible(true);
-                nameus1.setText(client.getName());
-                idClientList.add(client.getId());
-            }
-            else if(i==2){
-                us2.setVisible(true);
-                nameus2.setText(client.getName());
-                idClientList.add(client.getId());
-            }
-            else if(i==3){
-                us3.setVisible(true);
-                nameus3.setText(client.getName());
-                idClientList.add(client.getId());
-            }
-            else if(i==3){
-                us4.setVisible(true);
-                nameus4.setText(client.getName());
-                idClientList.add(client.getId());
-            }
+        idRoomList = new ArrayList<String>();
+        for(Room room : StartEverything.getSocketController().getConnectedServer().getRooms()){
+            if(i==1) setupListRoom(room, ro1, namero1);
+            else if(i==2) setupListRoom(room, ro2, namero2);
+            else if(i==3)setupListRoom (room, ro3, namero3);
+            else if(i==4)setupListRoom (room, ro4, namero4);
+            i++;
+        }
+        i=1;
+        idUserList = new ArrayList<String>();
+        for(Client client1 : StartEverything.getSocketController().getConnectedServer().getClients()){
+            if(i==1) setupListUser(client1, userOnl1, nameus1);
+            else if(i==2) setupListUser(client1, userOnl2, nameus2);
+            else if(i==3) setupListUser(client1, userOnl3, nameus3);
+            else if(i==4) setupListUser(client1, userOnl4, nameus4);
             i++;
         }
         if(start){
             addMessage();
         }
+    }
+    public void setupListRoom(Room room, Pane ro, Label namero){
+        ro.setVisible(true);
+        namero.setText(findRoomName(room));
+        idRoomList.add(room.getId());
+    }
+    public void setupListUser(Client client, Pane us, Label nameus){
+        us.setVisible(true);
+        nameus.setText(client.getName());
+        idUserList.add(client.getId());
+    }
+    public void setup(){
+        ro1.setVisible(false);
+        ro2.setVisible(false);
+        ro3.setVisible(false);
+        ro4.setVisible(false);
+        userOnl1.setVisible(false);
+        userOnl2.setVisible(false);
+        userOnl3.setVisible(false);
+        userOnl4.setVisible(false);
+        titlep.setVisible(start);
+        footerp.setVisible(start);
+        ChatList.setVisible(start);
+        Stage stage1 = StartEverything.getSocketController().getStage();
+        stage1.setTitle(client.getName());
+    }
+
+    public String findRoomName(Room room){
+        if (room.getType().equals("private")){
+            for(Client client1 : room.getClients()){
+                if (!client1.getId().equals(client.getId())){
+                    return client1.getName();
+                }
+            }
+        }
+        else return room.getName();
+        return "loi";
     }
 
 //    public static void reload_() throws IOException {
@@ -118,42 +160,35 @@ public class HomeController implements Initializable{
         Stage stage1 = StartEverything.getSocketController().getStage();
         stage1.setScene(scene);
     }
+    public void openChatUser(MouseEvent e){
+        if(e.getSource().equals(userOnl1)) openByUser(nameus1, 0);
+        else if(e.getSource().equals(userOnl2)) openByUser(nameus2, 1);
+        else if(e.getSource().equals(userOnl3)) openByUser(nameus3, 2);
+        else if(e.getSource().equals(userOnl4)) openByUser(nameus4, 3);
+    }
+    public void openByUser(Label nameus, int index){
+        start = true;
+        mainNameRoom = nameus.getText();
+        mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
+        System.out.println(mainIDRoom);
+        StartEverything.getSocketController().selectUser(idUserList.get(index));
+    }
     public void openChat(MouseEvent mouseEvent) {
-        if(mouseEvent.getSource().equals(us1)){
-            start = true;
-            mainName = nameus1.getText();
-            mainID = idClientList.get(0);
-            System.out.println(idClientList.get(0));
-            StartEverything.getSocketController().selectUser(idClientList.get(0));
-        }
-        else if(mouseEvent.getSource().equals(us2)){
-            start = true;
-            mainName = nameus2.getText();
-            mainID = idClientList.get(1);
-            System.out.println(idClientList.get(1));
-            StartEverything.getSocketController().selectUser(idClientList.get(1));
-
-        }
-        else if (mouseEvent.getSource().equals(us3)) {
-            start = true;
-            mainName = nameus3.getText();
-            mainID = idClientList.get(2);
-            System.out.println(idClientList.get(2));
-            StartEverything.getSocketController().selectUser(idClientList.get(2));
-
-        }
-        else if (mouseEvent.getSource().equals(us4)) {
-            start = true;
-            mainName = nameus4.getText();
-            mainID = idClientList.get(3);
-            System.out.println(idClientList.get(3));
-            StartEverything.getSocketController().selectUser(idClientList.get(3));
-        }
+        if(mouseEvent.getSource().equals(ro1)) openByRoom(namero1, 0);
+        else if(mouseEvent.getSource().equals(ro2)) openByRoom(namero2, 1);
+        else if (mouseEvent.getSource().equals(ro3)) openByRoom(namero3, 2);
+        else if (mouseEvent.getSource().equals(ro4)) openByRoom(namero4, 3);
+    }
+    public void openByRoom(Label namero,int index){
+        start = true;
+        mainNameRoom = namero.getText();
+        mainIDRoom = idRoomList.get(index);
+        System.out.println(mainIDRoom);
+        StartEverything.getSocketController().selectRoom(mainIDRoom);
     }
     static ArrayList<MessageData> ListMessage;
     public void addMessage() {
-        String idroom = StartEverything.getSocketController().returnRoomId(mainID);
-        ListMessage = StartEverything.getSocketController().getMessageData(idroom);
+        ListMessage = StartEverything.getSocketController().getMessageData(mainIDRoom);
         for (MessageData message : ListMessage) {
             String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
             String name = StartEverything.getSocketController().getNameById(message.getId_user());
@@ -189,10 +224,8 @@ public class HomeController implements Initializable{
     }
 
     public void send() {
-        String idroom = StartEverything.getSocketController().returnRoomId(mainID);
         String contentChat = content.getText();
-        System.out.println(mainID+":");
         System.out.println(contentChat);
-        StartEverything.getSocketController().clickEnterChat(idroom, contentChat);
+        StartEverything.getSocketController().clickEnterChat(mainIDRoom, contentChat);
     }
 }
