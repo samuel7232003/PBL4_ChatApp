@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -109,12 +111,11 @@ public class HomeController implements Initializable{
 //        stage.setTitle(StartEverything.getSocketController().getClient().getName());
 //        stage.setScene(scene);
 //    }
-    public void reload(MouseEvent e) throws IOException {
-        Stage stage1 = (Stage)((Node) e.getSource()).getScene().getWindow();
+    public void reload() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
         scene.getStylesheets().add(index.class.getResource("home.css").toExternalForm());
-        stage1.setTitle(StartEverything.getSocketController().getClient().getName());
+        Stage stage1 = StartEverything.getSocketController().getStage();
         stage1.setScene(scene);
     }
     public void openChat(MouseEvent mouseEvent) {
@@ -150,13 +151,13 @@ public class HomeController implements Initializable{
         }
     }
     static ArrayList<MessageData> ListMessage;
-    public void addMessage(){
+    public void addMessage() {
         String idroom = StartEverything.getSocketController().returnRoomId(mainID);
         ListMessage = StartEverything.getSocketController().getMessageData(idroom);
-        for(MessageData message : ListMessage){
+        for (MessageData message : ListMessage) {
             String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
             String name = StartEverything.getSocketController().getNameById(message.getId_user());
-            if(name == null){
+            if (name == null) {
                 VBox vb = new VBox();
                 vb.setAlignment(Pos.BOTTOM_RIGHT);
                 vb.setId("vb");
@@ -166,12 +167,11 @@ public class HomeController implements Initializable{
                 Label lb1 = new Label(time);
                 vb.getChildren().add(lb1);
                 ChatList.getChildren().add(vb);
-            }
-            else {
+            } else {
                 VBox vb = new VBox();
                 vb.setAlignment(Pos.BOTTOM_LEFT);
                 vb.setId("vb");
-                Label lb = new Label(name +": "+ message.getContent());
+                Label lb = new Label(name + ": " + message.getContent());
                 lb.setId("BoxMessage");
                 vb.getChildren().add(lb);
                 Label lb1 = new Label(time);
@@ -180,7 +180,15 @@ public class HomeController implements Initializable{
             }
         }
     }
-    public void send(MouseEvent mouseEvent) {
+
+    public void send_(KeyEvent e) throws IOException {
+        if(e.getCode() == KeyCode.ENTER){
+            send();
+            reload();
+        }
+    }
+
+    public void send() {
         String idroom = StartEverything.getSocketController().returnRoomId(mainID);
         String contentChat = content.getText();
         System.out.println(mainID+":");

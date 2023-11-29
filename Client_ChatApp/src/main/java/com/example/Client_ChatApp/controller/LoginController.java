@@ -48,23 +48,22 @@ public class LoginController implements Initializable {
         }
         else if(s.equals("Login success")){
             Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();
-            loadHome(stage1);
+            stage1.close();
+            loadHome(startEverything.getSocketController().getStage());
         }
     }
     public void onSignupClick(MouseEvent mouseEvent) throws IOException {
         Stage stage1 = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
-        stage1.close();
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("signup.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-        Stage stage = new Stage();
-        stage.setTitle("Sign up");
-        stage.setScene(scene);
-        stage.show();
+        stage1.setTitle("Sign up");
+        stage1.setScene(scene);
     }
     public void loadHome(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
         stage.setTitle("Home");
         stage.setScene(scene);
+        stage.show();
     }
 }

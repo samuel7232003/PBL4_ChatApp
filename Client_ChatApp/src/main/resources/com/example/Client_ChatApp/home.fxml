@@ -168,7 +168,7 @@
                                 <Image url="@icon/audio.png" />
                             </image></ImageView>
                     </children></Pane>
-                <TextField id="content" fx:id="content" layoutX="166.0" layoutY="9.0" prefHeight="40.0" prefWidth="571.0" promptText="Nhập tin nhắn gửi tới bạn của bạn..." style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;">
+                <TextField onKeyPressed="#send_" id="content" fx:id="content" layoutX="166.0" layoutY="9.0" prefHeight="40.0" prefWidth="571.0" promptText="Nhập tin nhắn gửi tới bạn của bạn..." style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;">
                     <font>
                         <Font size="16.0" />
                     </font>

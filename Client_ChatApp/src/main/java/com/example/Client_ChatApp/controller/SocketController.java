@@ -5,6 +5,7 @@ import com.example.Client_ChatApp.model.Client;
 import com.example.Client_ChatApp.model.MessageData;
 import com.example.Client_ChatApp.model.Room;
 import com.example.Client_ChatApp.model.ServerData;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -25,6 +26,10 @@ public class SocketController {
     private static Socket socket;
     private static BufferedWriter bufferedWriter;
     private static BufferedReader bufferedReader;
+    private static Stage stage;
+    public Stage getStage(){
+        return stage;
+    }
     public ServerData getConnectedServer(){
         return connectedServer;
     }
@@ -32,6 +37,8 @@ public class SocketController {
     public SocketController() {
         this.client = new Client();
         String ipAddress = getThisIP();
+        Stage stage1 = new Stage();
+        stage = stage1;
         int port = 2119;
         connectedServer = new ServerData(ipAddress, port);
         try {
@@ -196,7 +203,13 @@ public class SocketController {
                                 Client clientVari = new Client(Id_user, Name_user);
                                 connectedServer.addClient(clientVari);
                                 updateUserOnlineList();
-                                //HomeController.reload_();
+                                Platform.runLater(() ->{
+                                    try {
+                                        StartEverything.getHomeController().reload();
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
                                 break;
                             }
                             case "user quit": {
@@ -264,6 +277,13 @@ public class SocketController {
                                 MessageData messageData = new MessageData(idUserSend, content,timenow);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
                                 receiveRoom.getMessageDatas().add(messageData);
+                                Platform.runLater(() ->{
+                                    try {
+                                        StartEverything.getHomeController().reload();
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
                                 break;
                             }
                         }

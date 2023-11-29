@@ -39,7 +39,8 @@ public class SingupController {
         String s = StartEverything.getSocketController().singupSocket(client);
         if (s == "Success") {
             Stage stage1 = (Stage)((Node) event.getSource()).getScene().getWindow();
-            loadHome(stage1);
+            stage1.close();
+            loadHome(StartEverything.getSocketController().getStage());
             System.out.println("Đăng kí thành công");
         }
         else if(s=="User name existed"){
@@ -50,18 +51,16 @@ public class SingupController {
 
     public void onLoginClick(MouseEvent mouseEvent) throws IOException {
         Stage stage1 = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
-        stage1.close();
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-        Stage stage = new Stage();
-        stage.setTitle("Login");
-        stage.setScene(scene);
-        stage.show();
+        stage1.setTitle("Login");
+        stage1.setScene(scene);
     }
     public void loadHome(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
         stage.setTitle("Home");
         stage.setScene(scene);
+        stage.show();
     }
 }
