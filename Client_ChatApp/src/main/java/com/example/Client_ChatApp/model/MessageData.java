@@ -9,6 +9,13 @@ public class MessageData {
     private String content;
     private LocalDateTime send_time;
 
+    public MessageData(int messageOrder, String id_user, String content, LocalDateTime send_time) {
+        this.messageOrder = messageOrder;
+        this.id_user = id_user;
+        this.content = content;
+        this.send_time = send_time;
+    }
+
     public MessageData(String id_user, String content, LocalDateTime send_time) {
         this.id_user = id_user;
         this.content = content;

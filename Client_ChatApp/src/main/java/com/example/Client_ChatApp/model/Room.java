@@ -16,6 +16,14 @@ public class Room {
         this.messageDatas = new ArrayList<MessageData>();
     }
 
+    public Room(String idRoom, String name, String type, ArrayList<Client> clients, ArrayList<MessageData> messageDatas) {
+        this.idRoom = idRoom;
+        this.name = name;
+        this.type = type;
+        this.clients = clients;
+        this.messageDatas = messageDatas;
+    }
+
     public String getId() {
         return idRoom;
     }
