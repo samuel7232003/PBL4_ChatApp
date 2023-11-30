@@ -1,14 +1,15 @@
 package com.example.Client_ChatApp.model;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class MessageData {
-    private int idMessage = 1;
+    private int messageOrder = 1;
     private String id_user;
     private String content;
-    private LocalTime send_time;
+    private LocalDateTime send_time;
 
-    public MessageData(String id_user, String content, LocalTime send_time) {
+    public MessageData(String id_user, String content, LocalDateTime send_time) {
         this.id_user = id_user;
         this.content = content;
         this.send_time = send_time;
@@ -22,7 +23,7 @@ public class MessageData {
     public String getContent() {
         return content;
     }
-    public LocalTime getSend_time(){
+    public LocalDateTime getSend_time(){
         return send_time;
     }
     public void setContent(String content) {

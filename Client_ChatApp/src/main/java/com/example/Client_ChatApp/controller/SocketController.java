@@ -15,6 +15,7 @@ import java.lang.reflect.Array;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -81,6 +82,7 @@ public class SocketController {
                     clientInRoom.setName(bufferedReader.readLine());
                     clients.add(clientInRoom);
                 }
+
                 Room room = new Room(idRoom, nameRoom, typeRoom, clients);
                 connectedServer.AddRoom(room);
             }
@@ -273,7 +275,7 @@ public class SocketController {
                                         content += c;
                                 } while (c != '\0');
                                 System.out.println(idUserSend + ": " + content);
-                                LocalTime timenow = LocalTime.now();
+                                LocalDateTime timenow = LocalDateTime.now();
                                 MessageData messageData = new MessageData(idUserSend, content,timenow);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
                                 receiveRoom.getMessageDatas().add(messageData);

@@ -34,9 +34,7 @@ public class RoomController {
         return ID_newRoom;
     }
     public static Room findRoom(ArrayList<Room> roomList, String idRoom) {
-        System.out.println("tới đây");
         for (Room room : roomList){
-            System.out.println("test room: "+room.getID_room());
             if (room.getID_room().equals(idRoom)){
                 return room;
             }

@@ -126,17 +126,19 @@ public class HandlerController extends Thread {
                                     this.bufferedWriter.newLine();
                                     this.bufferedWriter.write("" + room.getClientNum());
                                     this.bufferedWriter.newLine();
+                                    this.bufferedWriter.flush();
                                     for(Client clientInRoom : room.getClients()){
                                         this.bufferedWriter.write(clientInRoom.getId());
                                         this.bufferedWriter.newLine();
                                         this.bufferedWriter.write(clientInRoom.getName());
                                         this.bufferedWriter.newLine();
                                     }
-                                    System.out.println(room.getID_room() + ":" );
-                                    for(RoomMessage roomMessage : room.getMessages()){
-                                        System.out.println(roomMessage.getMessageOrder() + ". " + roomMessage.getId_userSend() + ": " + roomMessage.getContent());
-                                    }
                                     this.bufferedWriter.flush();
+                                    // gửi thông tin về những cái chat cho room
+//                                    for(RoomMessage roomMessage : room.getMessages()){
+//                                        System.out.println(roomMessage.getMessageOrder() + ". " + roomMessage.getId_userSend() + ": " + roomMessage.getContent());
+//                                    }
+//                                    this.bufferedWriter.flush();
                                 }
 
                                 //Gửi thông tin từ this client về các client khác
