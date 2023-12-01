@@ -80,6 +80,10 @@ public class HomeController implements Initializable{
     static String mainIDRoom = "";
     public Client client;
 
+    public void setMainIDRoom(String mainIDRoom) {
+        HomeController.mainIDRoom = mainIDRoom;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         client = StartEverything.getSocketController().getClient();
@@ -169,10 +173,12 @@ public class HomeController implements Initializable{
     public void openByUser(Label nameus, int index) throws IOException {
         start = true;
         mainNameRoom = nameus.getText();
-        StartEverything.getSocketController().selectUser(idUserList.get(index));
-        mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
-        System.out.println(mainIDRoom);
+        boolean check = StartEverything.getSocketController().selectUser(idUserList.get(index));
+        if(check){
+            mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
+        }
     }
+
     public void openChat(MouseEvent mouseEvent) {
         if(mouseEvent.getSource().equals(ro1)) openByRoom(namero1, 0);
         else if(mouseEvent.getSource().equals(ro2)) openByRoom(namero2, 1);

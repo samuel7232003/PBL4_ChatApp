@@ -263,14 +263,14 @@ public class SocketController {
                                     for(Client client1 : connectedServer.getClients()){
                                         if(client1.getId().equals(userID)){
                                             clientlist.add(client1);
-                                            System.out.println(client1.getName());
                                             continue;
                                         }
                                     }
-                                }
-                                Room newRoom = new Room(roomID, roomName, roomType, clientlist);
+                                }ArrayList<MessageData> messageDatas = new ArrayList<MessageData>();
+                                Room newRoom = new Room(roomID, roomName, roomType, clientlist, messageDatas);
                                 System.out.println("Room id: " + roomID);
                                 connectedServer.AddRoom(newRoom);
+                                StartEverything.getHomeController().setMainIDRoom(roomID);
                                 break;
                             }
                             case "text from user to room": {
@@ -344,13 +344,14 @@ public class SocketController {
         }
     }
     //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này
-    public void selectUser(String id_user){
+    public boolean selectUser(String id_user){
         Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
         if(foundRoom == null){
             createPrivateRoom(id_user);
+            return  false;
         }
         else{
-            updateRoomUsersJList(foundRoom.getId());
+            return true;
         }
     }
 
