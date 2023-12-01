@@ -35,7 +35,7 @@ public class ClientController {
         boolean result = ClientDAO.SignUp(client);
         return "Sign up success";
     }
-    public static ArrayList<Client> getClients(){
+    public static ArrayList<Client> getAllClients(){
         return ClientDAO.getClients();
     }
     public static Client getClient(ArrayList<Client> clients, String id_user){

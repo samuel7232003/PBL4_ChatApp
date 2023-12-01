@@ -44,7 +44,7 @@ public class RoomController {
     public static ArrayList<Room> getAllRoom(){
         ArrayList<Room> rooms = RoomDAO.getAll();
         ArrayList<String> idUserinRooms;
-        ArrayList<Client> clients = ClientController.getClients();
+        ArrayList<Client> clients = ClientController.getAllClients();
         for(Room room : rooms){
             ArrayList<Client> clientInRoom = new ArrayList<Client>();
             idUserinRooms = RoomDetailDAO.returnIDuserExsitRoom(room.getID_room());

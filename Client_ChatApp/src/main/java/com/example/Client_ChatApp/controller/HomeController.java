@@ -108,11 +108,13 @@ public class HomeController implements Initializable{
         i=1;
         idUserList = new ArrayList<String>();
         for(Client client1 : StartEverything.getSocketController().getConnectedServer().getClients()){
-            if(i==1) setupListUser(client1, userOnl1, nameus1);
-            else if(i==2) setupListUser(client1, userOnl2, nameus2);
-            else if(i==3) setupListUser(client1, userOnl3, nameus3);
-            else if(i==4) setupListUser(client1, userOnl4, nameus4);
-            i++;
+            if(client1.isStatus()){
+                if(i==1) setupListUser(client1, userOnl1, nameus1);
+                else if(i==2) setupListUser(client1, userOnl2, nameus2);
+                else if(i==3) setupListUser(client1, userOnl3, nameus3);
+                else if(i==4) setupListUser(client1, userOnl4, nameus4);
+                i++;
+            }
         }
         if(start){
             addMessage();
