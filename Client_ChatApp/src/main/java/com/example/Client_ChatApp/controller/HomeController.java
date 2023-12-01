@@ -170,7 +170,6 @@ public class HomeController implements Initializable{
         start = true;
         mainNameRoom = nameus.getText();
         StartEverything.getSocketController().selectUser(idUserList.get(index));
-        reload();
         mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
         System.out.println(mainIDRoom);
     }
