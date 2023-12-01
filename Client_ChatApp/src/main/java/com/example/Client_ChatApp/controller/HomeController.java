@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -247,18 +248,19 @@ public class HomeController implements Initializable{
 
     @FXML
     private VBox listUser;
+
+    private static ArrayList<CheckBox> CBList;
     public void openMenu(){
         if (addUserMenu.getLayoutX() == 1160){
             addUserMenu.setLayoutX(850);
         }
         else addUserMenu.setLayoutX(1160);
+        CBList = new ArrayList<CheckBox>();
         for(Client client1 : StartEverything.getSocketController().getConnectedServer().getClients()){
-            System.out.println(client1.getName());
             HBox itemUserHBox = new HBox();
             itemUserHBox.setId("itemUserHBox");
             itemUserHBox.setAlignment(Pos.CENTER_LEFT);
-            Image img = new Image(getClass().getResource("../image/VT.jpg").toString());
-            ImageView ava = new ImageView(img);
+            ImageView ava = new ImageView();
             ava.setFitWidth(40);
             ava.setFitHeight(40);
             itemUserHBox.getChildren().add(ava);
@@ -268,6 +270,17 @@ public class HomeController implements Initializable{
             CheckBox CB = new CheckBox();
             itemUserHBox.getChildren().add(CB);
             listUser.getChildren().add(itemUserHBox);
+            CBList.add(CB);
+        }
+    }
+    public void addUsers(){
+        int i = 0;
+        ArrayList<Client> clients = StartEverything.getSocketController().getConnectedServer().getClients();
+        for(CheckBox CB:CBList){
+            if(CB.isSelected()==true){
+                System.out.println(clients.get(i).getId());
+            }
+            i++;
         }
     }
 }
