@@ -168,8 +168,8 @@ public class HomeController implements Initializable{
     }
     public void openByUser(Label nameus, int index){
         start = true;
-        mainNameRoom = nameus.getText();
-        mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
+//        mainNameRoom = nameus.getText();
+//        mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
         System.out.println(mainIDRoom);
         StartEverything.getSocketController().selectUser(idUserList.get(index));
     }

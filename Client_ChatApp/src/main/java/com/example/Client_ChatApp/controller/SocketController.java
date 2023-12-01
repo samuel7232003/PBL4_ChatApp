@@ -99,14 +99,6 @@ public class SocketController {
             e.printStackTrace();
         }
     }
-    public void TestMessageInRoom(){
-        for(Room room : connectedServer.getRooms()){
-            System.out.println(room.getId());
-            for(MessageData messageData : room.getMessageDatas()){
-                System.out.println(messageData.getId_user() + ": " + messageData.getContent());
-            }
-        }
-    }
     public static void updateUserOnlineList(){
         System.out.println("Số user đang online: " + connectedServer.getNumClients());
         int i = 1;
