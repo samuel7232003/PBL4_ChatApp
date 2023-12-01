@@ -21,3 +21,14 @@
 #vb{
     -fx-padding: 10px;
 }
+
+#itemUserHBox{
+    -fx-padding: 7px;
+}
+
+#nameLable{
+    -fx-padding: 10px;
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-min-width: 186;
+}

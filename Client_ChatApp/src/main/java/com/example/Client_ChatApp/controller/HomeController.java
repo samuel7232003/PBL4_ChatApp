@@ -10,12 +10,16 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -72,6 +76,8 @@ public class HomeController implements Initializable{
     private TextField content;
     @FXML
     AnchorPane main;
+    @FXML
+    Pane addUserMenu;
 
     ArrayList<String> idRoomList;
     ArrayList<String> idUserList;
@@ -169,6 +175,7 @@ public class HomeController implements Initializable{
         else if(e.getSource().equals(userOnl2)) openByUser(nameus2, 1);
         else if(e.getSource().equals(userOnl3)) openByUser(nameus3, 2);
         else if(e.getSource().equals(userOnl4)) openByUser(nameus4, 3);
+        reload();
     }
     public void openByUser(Label nameus, int index) throws IOException {
         start = true;
@@ -179,11 +186,12 @@ public class HomeController implements Initializable{
         }
     }
 
-    public void openChat(MouseEvent mouseEvent) {
+    public void openChat(MouseEvent mouseEvent) throws IOException {
         if(mouseEvent.getSource().equals(ro1)) openByRoom(namero1, 0);
         else if(mouseEvent.getSource().equals(ro2)) openByRoom(namero2, 1);
         else if (mouseEvent.getSource().equals(ro3)) openByRoom(namero3, 2);
         else if (mouseEvent.getSource().equals(ro4)) openByRoom(namero4, 3);
+        reload();
     }
     public void openByRoom(Label namero,int index){
         start = true;
@@ -233,5 +241,31 @@ public class HomeController implements Initializable{
         String contentChat = content.getText();
         System.out.println(contentChat);
         StartEverything.getSocketController().clickEnterChat(mainIDRoom, contentChat);
+    }
+
+    @FXML
+    private VBox listUser;
+    public void openMenu(){
+        if (addUserMenu.getLayoutX() == 1160){
+            addUserMenu.setLayoutX(850);
+        }
+        else addUserMenu.setLayoutX(1160);
+        for(Client client1 : StartEverything.getSocketController().getConnectedServer().getClients()){
+            System.out.println(client1.getName());
+            HBox itemUserHBox = new HBox();
+            itemUserHBox.setId("itemUserHBox");
+            itemUserHBox.setAlignment(Pos.CENTER_LEFT);
+            Image img = new Image(getClass().getResource("../image/VT.jpg").toString());
+            ImageView ava = new ImageView(img);
+            ava.setFitWidth(40);
+            ava.setFitHeight(40);
+            itemUserHBox.getChildren().add(ava);
+            Label nameLable = new Label(client1.getName());
+            nameLable.setId("nameLable");
+            itemUserHBox.getChildren().add(nameLable);
+            CheckBox CB = new CheckBox();
+            itemUserHBox.getChildren().add(CB);
+            listUser.getChildren().add(itemUserHBox);
+        }
     }
 }
