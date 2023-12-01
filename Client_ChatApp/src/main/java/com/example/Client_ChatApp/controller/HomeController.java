@@ -160,18 +160,18 @@ public class HomeController implements Initializable{
         Stage stage1 = StartEverything.getSocketController().getStage();
         stage1.setScene(scene);
     }
-    public void openChatUser(MouseEvent e){
+    public void openChatUser(MouseEvent e) throws IOException {
         if(e.getSource().equals(userOnl1)) openByUser(nameus1, 0);
         else if(e.getSource().equals(userOnl2)) openByUser(nameus2, 1);
         else if(e.getSource().equals(userOnl3)) openByUser(nameus3, 2);
         else if(e.getSource().equals(userOnl4)) openByUser(nameus4, 3);
     }
-    public void openByUser(Label nameus, int index){
+    public void openByUser(Label nameus, int index) throws IOException {
         start = true;
-//        mainNameRoom = nameus.getText();
-//        mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
-        System.out.println(mainIDRoom);
+        mainNameRoom = nameus.getText();
         StartEverything.getSocketController().selectUser(idUserList.get(index));
+        mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
+        System.out.println(mainIDRoom);
     }
     public void openChat(MouseEvent mouseEvent) {
         if(mouseEvent.getSource().equals(ro1)) openByRoom(namero1, 0);
