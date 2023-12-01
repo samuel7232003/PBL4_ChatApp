@@ -54,12 +54,18 @@ public class SocketController {
         }
     }
 
-    public void getOnlineUserss(){
+    public void getAllUsers(){
+        try {
+            connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         for(int i = 0; i < connectedServer.getConnectAccountCount(); i++ ){
             try {
                 String id_user = bufferedReader.readLine();
                 String NameUser = bufferedReader.readLine();
-                Client clientVari = new Client(id_user, NameUser);
+                boolean isLogin = Boolean.parseBoolean(bufferedReader.readLine());
+                Client clientVari = new Client(id_user, NameUser, isLogin);
                 connectedServer.addClient(clientVari);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -100,10 +106,10 @@ public class SocketController {
         }
     }
     public static void updateUserOnlineList(){
-        System.out.println("Số user đang online: " + connectedServer.getNumClients());
+        System.out.println("Số user đang online: " + connectedServer.getClients().size());
         int i = 1;
         for(Client client : connectedServer.getClients()){
-            System.out.println(i++ + ". " + client.getName());
+            if(client.isStatus()) System.out.println(i++ + ". " + client.getName());
         }
     }
 
@@ -143,8 +149,7 @@ public class SocketController {
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
                 connectedServer.setOpen(true);
-                connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
-                getOnlineUserss();
+                getAllUsers();
                 updateUserOnlineList();
                 StartAll();
                 return "Success";
@@ -182,10 +187,8 @@ public class SocketController {
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
                 connectedServer.setOpen(true);
-                connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
-                getOnlineUserss();
+                getAllUsers();
                 getRoomExisted();
-                // TestMessageInRoom();
                 updateUserOnlineList();
                 showRoom();
                 StartAll();
@@ -211,8 +214,20 @@ public class SocketController {
                             case "new user online": {
                                 String Id_user = bufferedReader.readLine();
                                 String Name_user = bufferedReader.readLine();
-                                Client clientVari = new Client(Id_user, Name_user);
-                                connectedServer.addClient(clientVari);
+                                boolean check = false;
+                                int i = 0;
+                                for(Client client1 : connectedServer.getClients()){
+                                    if(client1.getId().equals(Id_user)){
+                                        check = true;
+                                        connectedServer.getClients().get(i).setStatus(true);
+                                        break;
+                                    }
+                                    i++;
+                                }
+                                if(!check){
+                                    Client clientVari = new Client(Id_user, Name_user,true);
+                                    connectedServer.addClient(clientVari);
+                                }
                                 updateUserOnlineList();
                                 Platform.runLater(() ->{
                                     try {

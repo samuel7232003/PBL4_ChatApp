@@ -8,13 +8,6 @@ public class Room {
     private String type; //kiểu là chat 1 1 hay chat room
     private ArrayList<Client> clients;
     private ArrayList<MessageData> messageDatas;
-    public Room(String idRoom, String name, String type, ArrayList<Client> clients) {
-        this.idRoom = idRoom;
-        this.name = name;
-        this.type = type;
-        this.clients = clients;
-        this.messageDatas = new ArrayList<MessageData>();
-    }
 
     public Room(String idRoom, String name, String type, ArrayList<Client> clients, ArrayList<MessageData> messageDatas) {
         this.idRoom = idRoom;

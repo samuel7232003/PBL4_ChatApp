@@ -95,17 +95,20 @@ public class HandlerController extends Thread {
                                 this.bufferedWriter.newLine();
                                 this.bufferedWriter.flush();
 
-//                            Hiện số lượng người đang onl - 1 nghĩa là trừ thằng thằng mà đang nhắn
-                                this.bufferedWriter.write("" + (SocketController.getClientSize() - 1));
+//                              Hiện số lượng người đang onl - 1 nghĩa là trừ thằng thằng mà đang nhắn
+                                ArrayList<Client> clients = ClientController.getAllClients();
+                                this.bufferedWriter.write("" + (clients.size() - 1));
                                 this.bufferedWriter.newLine();
                                 this.bufferedWriter.flush();
                                 // cập nhật lại danh sách user đang online cho thằng this client
-                                for (HandlerController handlerController : SocketController.getClientHandlers()) {
-                                    if ((handlerController.getClient().getId()).equals(this.client.getId()))
+                                for (Client client1 : clients) {
+                                    if ((client1.getId()).equals(this.client.getId()))
                                         continue;
-                                    this.bufferedWriter.write(handlerController.getClient().getId());
+                                    this.bufferedWriter.write(client1.getId());
                                     this.bufferedWriter.newLine();
-                                    this.bufferedWriter.write(handlerController.getClient().getName());
+                                    this.bufferedWriter.write(client1.getName());
+                                    this.bufferedWriter.newLine();
+                                    this.bufferedWriter.write(""+client1.isLogin());
                                     this.bufferedWriter.newLine();
                                     this.bufferedWriter.flush();
                                 }
