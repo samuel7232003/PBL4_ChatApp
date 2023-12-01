@@ -82,15 +82,31 @@ public class SocketController {
                     clientInRoom.setName(bufferedReader.readLine());
                     clients.add(clientInRoom);
                 }
-
-                Room room = new Room(idRoom, nameRoom, typeRoom, clients);
+                int roomMessageCount = Integer.parseInt(bufferedReader.readLine());
+                ArrayList<MessageData> messageDatas = new ArrayList<MessageData>();
+                for(int j = 0; j < roomMessageCount; j++){
+                    int messageOrder = Integer.parseInt(bufferedReader.readLine());
+                    String idUserSend = bufferedReader.readLine();
+                    String content = bufferedReader.readLine();
+                    LocalDateTime timeSend = LocalDateTime.parse(bufferedReader.readLine());
+                    MessageData messageData = new MessageData(messageOrder, idUserSend, content, timeSend);
+                    messageDatas.add(messageData);
+                }
+                Room room = new Room(idRoom, nameRoom, typeRoom, clients,messageDatas);
                 connectedServer.AddRoom(room);
             }
         }catch (IOException e){
             e.printStackTrace();
         }
     }
-
+    public void TestMessageInRoom(){
+        for(Room room : connectedServer.getRooms()){
+            System.out.println(room.getId());
+            for(MessageData messageData : room.getMessageDatas()){
+                System.out.println(messageData.getId_user() + ": " + messageData.getContent());
+            }
+        }
+    }
     public static void updateUserOnlineList(){
         System.out.println("Số user đang online: " + connectedServer.getNumClients());
         int i = 1;
@@ -177,6 +193,7 @@ public class SocketController {
                 connectedServer.setConnectAccountCount(Integer.parseInt(bufferedReader.readLine()));
                 getOnlineUserss();
                 getRoomExisted();
+                // TestMessageInRoom();
                 updateUserOnlineList();
                 showRoom();
                 StartAll();
