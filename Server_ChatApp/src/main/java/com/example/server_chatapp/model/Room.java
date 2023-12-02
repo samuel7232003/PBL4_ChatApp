@@ -17,6 +17,7 @@ public class Room {
         this.clientNum = clientNum;
         this.roomType = roomType;
         this.clients = clients;
+        messages = new ArrayList<RoomMessage>();
     }
 
     public Room(String ID_room, String roomName, int clientNum, String roomType) {

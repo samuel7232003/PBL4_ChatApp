@@ -286,6 +286,11 @@ public class HandlerController extends Thread {
                         System.out.println(roomID + ": " + content);
 
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
+                        room.setMessageOrder();
+                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), content);
+                        RoomMessageController roomMessageController = new RoomMessageController();
+                        roomMessageController.insertMessage(roomMessage);
+                        room.getMessages().add(roomMessage);
                         for (Client client1 : room.getClients()) {
                             HandlerController clientRecieve = SocketController.getHandlerClient(client1.getId());
                             if(clientRecieve != null){
@@ -303,10 +308,7 @@ public class HandlerController extends Thread {
                                 }
                             }
                         }
-                        room.setMessageOrder();
-                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), content);
-                        RoomMessageController roomMessageController = new RoomMessageController();
-                        roomMessageController.insertMessage(roomMessage);
+
                         break;
                     }
                     case "Get id user": {

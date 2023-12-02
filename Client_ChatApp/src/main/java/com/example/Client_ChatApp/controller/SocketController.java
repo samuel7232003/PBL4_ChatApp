@@ -286,7 +286,13 @@ public class SocketController {
                                 System.out.println("Room id: " + roomID);
                                 connectedServer.AddRoom(newRoom);
                                 StartEverything.getHomeController().setMainRoom(newRoom);
-                                StartEverything.getHomeController().reload();
+                                Platform.runLater(() ->{
+                                    try {
+                                        StartEverything.getHomeController().reload();
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
                                 break;
                             }
                             case "text from user to room": {
