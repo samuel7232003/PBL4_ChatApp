@@ -96,8 +96,9 @@ public class SocketController {
                     int messageOrder = Integer.parseInt(bufferedReader.readLine());
                     String idUserSend = bufferedReader.readLine();
                     String content = bufferedReader.readLine();
+                    String messType = bufferedReader.readLine();
                     LocalDateTime timeSend = LocalDateTime.parse(bufferedReader.readLine());
-                    MessageData messageData = new MessageData(messageOrder, idUserSend, content, timeSend);
+                    MessageData messageData = new MessageData(messageOrder, idUserSend, content, messType, timeSend);
                     messageDatas.add(messageData);
                 }
                 Room room = new Room(idRoom, nameRoom, typeRoom, clients,messageDatas);
@@ -298,10 +299,28 @@ public class SocketController {
                                 } while (c != '\0');
                                 System.out.println(idUserSend + ": " + content);
                                 LocalDateTime timenow = LocalDateTime.now();
-                                MessageData messageData = new MessageData(idUserSend, content,timenow);
+                                MessageData messageData = new MessageData(idUserSend, content, "text",timenow);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
                                 receiveRoom.getMessageDatas().add(messageData);
                                 reloadOnSocket();
+                                break;
+                            }
+                            case "file from user to room": {
+                                String userID = bufferedReader.readLine();
+                                String roomID = bufferedReader.readLine();
+                                String fileName = bufferedReader.readLine();
+                                System.out.println("Recevie file " + fileName + " from " + userID + " to room " + roomID);
+                                Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
+                                LocalDateTime timenow = LocalDateTime.now();
+                                MessageData messageData = new MessageData(userID, fileName, "file", timenow);
+                                receiveRoom.getMessageDatas().add(messageData);
+                                Platform.runLater(() ->{
+                                    try {
+                                        StartEverything.getHomeController().reload();
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
                                 break;
                             }
                         }
@@ -373,11 +392,6 @@ public class SocketController {
             ex.printStackTrace();
         }
     }
-//    public String getLastName(String name){
-//        String Lastname = "";
-//        for(String e : name.split(" ")) Lastname = e;
-//        return Lastname;
-//    }
     public void sendTextToRoom(String roomID, String content) {
         try {
             bufferedWriter.write("text to room");
@@ -387,6 +401,40 @@ public class SocketController {
             bufferedWriter.write(content);
             bufferedWriter.write('\0');
             bufferedWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void sendFileToRoom(String roomID, String fileName, String filePath) {
+        try {
+            System.out.println("Send file " + fileName + " to room " + roomID);
+
+            File file = new File(filePath);
+            Room room = RoomController.findRoom(connectedServer.getRooms(), roomID);
+
+            bufferedWriter.write("file to room");
+            bufferedWriter.newLine();
+            bufferedWriter.write(roomID);
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + room.getMessageDatas().size());
+            bufferedWriter.newLine();
+            bufferedWriter.write(fileName);
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + file.length());
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            byte[] buffer = new byte[1024];
+            InputStream in = new FileInputStream(file);
+            OutputStream out = socket.getOutputStream();
+
+            int count;
+            while ((count = in.read(buffer)) > 0) {
+                out.write(buffer, 0, count);
+            }
+
+            in.close();
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -466,5 +514,10 @@ public class SocketController {
     }
     public ArrayList<Room> getRoomList(){
         return connectedServer.getRooms();
+    }
+    public String getLastName(String name){
+        String Lastname = "";
+        for(String e : name.split(" ")) Lastname = e;
+        return Lastname;
     }
 }

@@ -7,18 +7,21 @@ public class MessageData {
     private int messageOrder = 1;
     private String id_user;
     private String content;
+    private String messType;
     private LocalDateTime send_time;
 
-    public MessageData(int messageOrder, String id_user, String content, LocalDateTime send_time) {
+    public MessageData(int messageOrder, String id_user, String content, String messType, LocalDateTime send_time) {
         this.messageOrder = messageOrder;
         this.id_user = id_user;
         this.content = content;
+        this.messType = messType;
         this.send_time = send_time;
     }
 
-    public MessageData(String id_user, String content, LocalDateTime send_time) {
+    public MessageData(String id_user, String content, String messType , LocalDateTime send_time) {
         this.id_user = id_user;
         this.content = content;
+        this.messType = messType;
         this.send_time = send_time;
     }
     public String getId_user() {

@@ -11,6 +11,7 @@ public class RoomMessage {
     private String Id_userSend;
     private int MessageOrder;
     private String Content;
+    private String messType;
     private LocalDateTime timeSend;
 
     public String getId_room() {
@@ -53,19 +54,25 @@ public class RoomMessage {
         this.timeSend = timeSend;
     }
 
-    public RoomMessage(String id_room, String id_userSend, int messageOrder, String content) {
+    public String getMessType() {
+        return messType;
+    }
+
+    public RoomMessage(String id_room, String id_userSend, int messageOrder, String content, String messType) {
         Id_room = id_room;
         Id_userSend = id_userSend;
         MessageOrder = messageOrder;
         Content = content;
+        this.messType = messType;
         this.timeSend = LocalDateTime.now();
     }
 
-    public RoomMessage(String id_room, String id_userSend, int messageOrder, String content, LocalDateTime timeSend) {
+    public RoomMessage(String id_room, String id_userSend, int messageOrder, String content, String messType, LocalDateTime timeSend) {
         Id_room = id_room;
         Id_userSend = id_userSend;
         MessageOrder = messageOrder;
         Content = content;
+        this.messType = messType;
         this.timeSend = timeSend;
     }
 

@@ -16,10 +16,11 @@ public class RoomMessageDAO {
         try{
             Connection conn = connectMySQL.connectSQL();
             String setTime = timeToString(message.getTimeSend());
-            String sql = "INSERT INTO room_message(ID_room, ID_userSend, MessageOrder, Content, SendTime) VALUES ('" + message.getId_room() + "'" +
+            String sql = "INSERT INTO room_message(ID_room, ID_userSend, MessageOrder, Content, messageType, SendTime) VALUES ('" + message.getId_room() + "'" +
                                                                                                                 ",'" + message.getId_userSend() + "'" +
                                                                                                                 ",'" + message.getMessageOrder() + "'" +
                                                                                                                 ",'" + message.getContent() + "'" +
+                                                                                                                ",'" + message.getMessType() + "'" +
                                                                                                                 ",'" + setTime + "')";
             Statement statement = conn.createStatement();
             statement.executeUpdate(sql);
@@ -42,7 +43,8 @@ public class RoomMessageDAO {
                 int messOrder = Integer.parseInt(resultSet.getString("MessageOrder"));
                 String content = resultSet.getString("Content");
                 String sendTime = resultSet.getString("SendTime");
-                RoomMessage roomMessage = new RoomMessage(roomId, ID_userSend, messOrder,content, timeToLocalDateTime(sendTime));
+                String messType = resultSet.getString("messageType");
+                RoomMessage roomMessage = new RoomMessage(roomId, ID_userSend, messOrder,content,messType, timeToLocalDateTime(sendTime));
                 roomMessages.add(roomMessage);
             }
         } catch (SQLException e) {

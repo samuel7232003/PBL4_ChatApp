@@ -147,6 +147,8 @@ public class HandlerController extends Thread {
                                         this.bufferedWriter.newLine();
                                         this.bufferedWriter.write(roomMessage.getContent());
                                         this.bufferedWriter.newLine();
+                                        this.bufferedWriter.write(roomMessage.getMessType());
+                                        this.bufferedWriter.newLine();
                                         this.bufferedWriter.write("" + roomMessage.getTimeSend());
                                         this.bufferedWriter.newLine();
                                     }
@@ -287,7 +289,7 @@ public class HandlerController extends Thread {
 
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
                         room.setMessageOrder();
-                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), content);
+                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), content, "text");
                         RoomMessageController roomMessageController = new RoomMessageController();
                         roomMessageController.insertMessage(roomMessage);
                         room.getMessages().add(roomMessage);
@@ -309,6 +311,61 @@ public class HandlerController extends Thread {
                             }
                         }
 
+                        break;
+                    }
+                    case "file to room": {
+                        String roomID = bufferedReader.readLine();
+                        int roomMessagesCount = Integer.parseInt(bufferedReader.readLine());
+                        String fileName = bufferedReader.readLine();
+                        int fileSize = Integer.parseInt(bufferedReader.readLine());
+
+                        File filesFolder = new File("files");
+                        if (!filesFolder.exists())
+                            filesFolder.mkdir();
+
+                        int dotIndex = fileName.lastIndexOf('.');
+                        String saveFileName = "files/" + fileName.substring(0, dotIndex)
+                                + String.format("%s%03d", roomID, roomMessagesCount) + fileName.substring(dotIndex);
+
+                        File file = new File(saveFileName);
+                        byte[] buffer = new byte[1024];
+                        InputStream in = socketHandler.getInputStream();
+                        OutputStream out = new FileOutputStream(file);
+
+                        int receivedSize = 0;
+                        int count;
+                        while ((count = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, count);
+                            receivedSize += count;
+                            if (receivedSize >= fileSize)
+                                break;
+                        }
+
+                        out.close();
+
+                        // gửi cho các client
+                        Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
+                        room.setMessageOrder();
+                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), file.getPath(), "file");
+                        RoomMessageController roomMessageController = new RoomMessageController();
+                        roomMessageController.insertMessage(roomMessage);
+                        room.getMessages().add(roomMessage);
+                        for (Client client1 : room.getClients()) {
+                            HandlerController clientRecieve = SocketController.getHandlerClient(client1.getId());
+                            if(clientRecieve != null){
+                                if (clientRecieve != null) {
+                                    clientRecieve.bufferedWriter.write("file from user to room");
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write(this.client.getId());
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write("" + roomID);
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write(file.getName());
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.flush();
+                                }
+                            }
+                        }
                         break;
                     }
                     case "Get id user": {
