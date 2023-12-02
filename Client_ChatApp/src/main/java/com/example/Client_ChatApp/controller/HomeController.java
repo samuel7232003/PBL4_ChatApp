@@ -320,4 +320,14 @@ public class HomeController implements Initializable{
             System.out.println(file.getPath());
         }
     }
+    public void uploadImage(){
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Chọn ảnh để tải lên");
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("Kiểu tệp", "*.png", "*.jpg");
+        fc.getExtensionFilters().add(fileFilter);
+        File file = fc.showOpenDialog(StartEverything.getSocketController().getStage());
+        if (file != null){
+            System.out.println(file.getPath());
+        }
+    }
 }

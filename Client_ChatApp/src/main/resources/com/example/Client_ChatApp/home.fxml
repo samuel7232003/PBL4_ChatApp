@@ -45,7 +45,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                  <ScrollPane layoutX="13.0" layoutY="19.0" prefHeight="75.0" prefWidth="233.0" style="-fx-border-color: #fff;">
+                  <ScrollPane layoutX="13.0" layoutY="19.0" prefHeight="82.0" prefWidth="233.0" style="-fx-border-color: #fff;">
                      <content>
                         <HBox fx:id="listUserOnlHBox" fillHeight="false" prefHeight="62.0" />
                      </content>
@@ -94,7 +94,7 @@
         </Pane>
         <Pane id="footerp" fx:id="footerp" layoutX="330.0" layoutY="743.0" prefHeight="57.0" prefWidth="870.0">
             <children>
-                <Pane onMouseClicked="#uploadFile" layoutX="14.0" layoutY="9.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+                <Pane layoutX="14.0" layoutY="9.0" onMouseClicked="#uploadFile" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
                     <children>
                         <ImageView fitHeight="25.0" fitWidth="20.0" layoutX="10.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -121,7 +121,7 @@
                                 <Image url="@icon/send_yellow.png" />
                             </image></ImageView>
                     </children></Pane>
-                <Pane layoutX="115.0" layoutY="9.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 8; -fx-background-color: #f1c40f;">
+                <Pane layoutX="115.0" layoutY="9.0" onMouseClicked="#uploadImage" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 8; -fx-background-color: #f1c40f;">
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -130,8 +130,6 @@
                     </children></Pane>
             </children>
         </Pane>
-      <VBox id="ChatList" fx:id="ChatList" alignment="BOTTOM_CENTER" layoutX="330.0" layoutY="75.0" prefHeight="661.0" prefWidth="823.0" style="-fx-background-color: #fff;">
-      </VBox>
       <Pane fx:id="addUserMenu" layoutX="1160.0" layoutY="75.0" prefHeight="337.0" prefWidth="298.0" style="-fx-border-color: #d6d6d6;">
          <children>
             <Label layoutX="14.0" layoutY="10.0" text="Thêm người vào đoạn chat">
@@ -154,5 +152,11 @@
             <Insets />
          </opaqueInsets>
       </Pane>
+      <ScrollPane layoutX="331.0" layoutY="76.0" prefHeight="665.0" prefWidth="823.0" style="-fx-background-color: #fff;" vbarPolicy="NEVER">
+         <content>
+            <VBox id="ChatList" fx:id="ChatList" alignment="BOTTOM_CENTER" prefHeight="662.0" prefWidth="807.0" style="-fx-background-color: #fff;">
+      </VBox>
+         </content>
+      </ScrollPane>
     </children>
 </AnchorPane>
