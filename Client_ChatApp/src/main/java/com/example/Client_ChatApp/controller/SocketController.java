@@ -94,8 +94,9 @@ public class SocketController {
                     int messageOrder = Integer.parseInt(bufferedReader.readLine());
                     String idUserSend = bufferedReader.readLine();
                     String content = bufferedReader.readLine();
+                    String messType = bufferedReader.readLine();
                     LocalDateTime timeSend = LocalDateTime.parse(bufferedReader.readLine());
-                    MessageData messageData = new MessageData(messageOrder, idUserSend, content, timeSend);
+                    MessageData messageData = new MessageData(messageOrder, idUserSend, content, messType, timeSend);
                     messageDatas.add(messageData);
                 }
                 Room room = new Room(idRoom, nameRoom, typeRoom, clients,messageDatas);
@@ -307,7 +308,7 @@ public class SocketController {
                                 } while (c != '\0');
                                 System.out.println(idUserSend + ": " + content);
                                 LocalDateTime timenow = LocalDateTime.now();
-                                MessageData messageData = new MessageData(idUserSend, content,timenow);
+                                MessageData messageData = new MessageData(idUserSend, content, "text",timenow);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
                                 receiveRoom.getMessageDatas().add(messageData);
                                 Platform.runLater(() ->{
@@ -326,7 +327,7 @@ public class SocketController {
                                 System.out.println("Recevie file " + fileName + " from " + userID + " to room " + roomID);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
                                 LocalDateTime timenow = LocalDateTime.now();
-                                MessageData messageData = new MessageData(userID, fileName, timenow);
+                                MessageData messageData = new MessageData(userID, fileName, "file", timenow);
                                 receiveRoom.getMessageDatas().add(messageData);
                                 Platform.runLater(() ->{
                                     try {

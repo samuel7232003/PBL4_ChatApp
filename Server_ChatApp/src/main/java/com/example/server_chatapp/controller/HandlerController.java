@@ -147,6 +147,8 @@ public class HandlerController extends Thread {
                                         this.bufferedWriter.newLine();
                                         this.bufferedWriter.write(roomMessage.getContent());
                                         this.bufferedWriter.newLine();
+                                        this.bufferedWriter.write(roomMessage.getMessType());
+                                        this.bufferedWriter.newLine();
                                         this.bufferedWriter.write("" + roomMessage.getTimeSend());
                                         this.bufferedWriter.newLine();
                                     }
@@ -287,7 +289,7 @@ public class HandlerController extends Thread {
 
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
                         room.setMessageOrder();
-                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), content);
+                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), content, "text");
                         RoomMessageController roomMessageController = new RoomMessageController();
                         roomMessageController.insertMessage(roomMessage);
                         room.getMessages().add(roomMessage);
@@ -344,7 +346,7 @@ public class HandlerController extends Thread {
                         // gửi cho các client
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
                         room.setMessageOrder();
-                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), file.getPath());
+                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), file.getPath(), "file");
                         RoomMessageController roomMessageController = new RoomMessageController();
                         roomMessageController.insertMessage(roomMessage);
                         room.getMessages().add(roomMessage);
