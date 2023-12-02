@@ -7,6 +7,7 @@ public class MessageData {
     private int messageOrder = 1;
     private String id_user;
     private String content;
+    private String type;
     private LocalDateTime send_time;
 
     public MessageData(int messageOrder, String id_user, String content, LocalDateTime send_time) {
