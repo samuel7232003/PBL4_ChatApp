@@ -285,7 +285,7 @@ public class SocketController {
                                 Room newRoom = new Room(roomID, roomName, roomType, clientlist, messageDatas);
                                 System.out.println("Room id: " + roomID);
                                 connectedServer.AddRoom(newRoom);
-                                StartEverything.getHomeController().setMainIDRoom(roomID);
+                                StartEverything.getHomeController().setMainRoom(newRoom);
                                 break;
                             }
                             case "text from user to room": {

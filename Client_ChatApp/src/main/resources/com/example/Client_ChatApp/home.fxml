@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane id="main" fx:id="main" prefHeight="801.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.HomeController">
@@ -27,7 +26,7 @@
                     </children></Pane>
                 <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@image/DT.jpg" />
+                        <Image fx:id="imageDT" url="@image/DT.jpg" />
                     </image>
                 </ImageView>
             </children>
@@ -46,120 +45,26 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Pane id="userOnl1" fx:id="userOnl1" layoutX="6.0" layoutY="21.0" onMouseClicked="#openChatUser" prefHeight="68.0" prefWidth="70.0">
-                            <children>
-                                <Label id="nameus1" fx:id="nameus1" layoutX="16.0" layoutY="48.0" text="Thành" />
-                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@image/DT.jpg" />
-                                    </image>
-                                </ImageView>
-                        <Circle fill="#37b916" layoutX="53.0" layoutY="43.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                            </children>
-                        </Pane>
-                        <Pane id="userOnl2" fx:id="userOnl2" layoutX="65.0" layoutY="21.0" onMouseClicked="#openChatUser" prefHeight="68.0" prefWidth="70.0">
-                            <children>
-                                <Label id="nameus2" fx:id="nameus2" layoutX="16.0" layoutY="48.0" text="Thành" />
-                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@image/DT.jpg" />
-                                    </image>
-                                </ImageView>
-                                <Circle fill="#37b916" layoutX="53.0" layoutY="43.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                            </children>
-                        </Pane>
-                        <Pane id="userOnl3" fx:id="userOnl3" layoutX="126.0" layoutY="21.0" onMouseClicked="#openChatUser" prefHeight="68.0" prefWidth="70.0">
-                            <children>
-                                <Label id="nameus3" fx:id="nameus3" layoutX="16.0" layoutY="48.0" text="Thành" />
-                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@image/DT.jpg" />
-                                    </image>
-                                </ImageView>
-                                <Circle fill="#37b916" layoutX="53.0" layoutY="43.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                            </children>
-                        </Pane>
-                        <Pane id="userOnl4" fx:id="userOnl4" layoutX="191.0" layoutY="21.0" onMouseClicked="#openChatUser" prefHeight="68.0" prefWidth="70.0">
-                            <children>
-                                <Label id="nameus4" fx:id="nameus4" layoutX="16.0" layoutY="48.0" text="Thành" />
-                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@image/DT.jpg" />
-                                    </image>
-                                </ImageView>
-                                <Circle fill="#37b916" layoutX="53.0" layoutY="43.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                            </children>
-                        </Pane>
+                  <ScrollPane layoutX="13.0" layoutY="19.0" prefHeight="75.0" prefWidth="233.0" style="-fx-border-color: #fff;">
+                     <content>
+                        <HBox fx:id="listUserOnlHBox" fillHeight="false" prefHeight="62.0" />
+                     </content>
+                  </ScrollPane>
 
                     </children>
                 </Pane>
-                <Pane id="list" fx:id="list" layoutY="185.0" prefHeight="488.0" prefWidth="260.0">
+                <Pane id="list" fx:id="list" layoutY="192.0" prefHeight="488.0" prefWidth="260.0">
                     <children>
-                        <Label layoutX="13.0" layoutY="-15.0" prefHeight="45.0" prefWidth="197.0" text="Các cuộc trò chuyện gần đây">
+                        <Label layoutX="13.0" layoutY="-5.0" prefHeight="45.0" prefWidth="197.0" text="Các cuộc trò chuyện gần đây">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Pane id="ro1" fx:id="ro1" layoutY="23.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
-                            <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@image/VT.jpg" />
-                                    </image>
-                                </ImageView>
-                                <Label id="namero1" fx:id="namero1" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
-                            </children>
-                        </Pane>
-                        <Pane id="ro2" fx:id="ro2" layoutY="98.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
-                            <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@image/VT.jpg" />
-                                    </image>
-                                </ImageView>
-                                <Label id="namero2" fx:id="namero2" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
-                            </children>
-                        </Pane>
-                        <Pane id="ro3" fx:id="ro3" layoutY="173.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
-                            <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@image/VT.jpg" />
-                                    </image>
-                                </ImageView>
-                                <Label id="namero3" fx:id="namero3" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
-                            </children>
-                        </Pane>
-                        <Pane id="ro4" fx:id="ro4" layoutY="248.0" onMouseClicked="#openChat" prefHeight="75.0" prefWidth="260.0">
-                            <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@image/VT.jpg" />
-                                    </image>
-                                </ImageView>
-                                <Label id="namero4" fx:id="namero4" layoutX="81.0" layoutY="12.0" text="Lê Việt Thanh">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="81.0" layoutY="39.0" text="20:00 - 08/09/2023" textFill="#6d6d6d" />
-                            </children>
-                        </Pane>
+                  <ScrollPane layoutX="2.0" layoutY="34.0" prefHeight="571.0" prefWidth="253.0" style="-fx-border-color: #fff;">
+                     <content>
+                        <VBox fx:id="listRoomVBox" prefWidth="245.0" />
+                     </content>
+                  </ScrollPane>
                     </children>
                 </Pane>
             </children></Pane>
@@ -167,7 +72,7 @@
             <children>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@image/VT.jpg" />
+                        <Image fx:id="imageVT" url="@image/VT.jpg" />
                     </image>
                 </ImageView>
                 <Label id="main_name" fx:id="main_name" layoutX="95.0" layoutY="13.0" text="Lê Việt Thanh">
