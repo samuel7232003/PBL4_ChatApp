@@ -16,7 +16,7 @@ public class SocketController{
     ServerSocket serverSocket;
     private static ArrayList<HandlerController> clients;
     private static ArrayList<Room> allRooms;
-
+    private static ArrayList<Client> allClient;
 
 
     public void setServerName(String serverName){this.serverName = serverName;}
@@ -41,6 +41,10 @@ public class SocketController{
     public static ArrayList<Room> getAllRooms(){return  allRooms;}
     public static void removeRoom(Room room){ allRooms.remove(room);}
 
+    public static ArrayList<Client> getAllClient() {
+        return allClient;
+    }
+
     public static void setAllRooms(ArrayList<Room> allRooms_) {
         allRooms = allRooms_;
     }
@@ -49,6 +53,8 @@ public class SocketController{
         clients = new ArrayList<HandlerController>();
         allRooms = new ArrayList<Room>();
         allRooms = RoomController.getAllRoom();
+        allClient = new ArrayList<Client>();
+        allClient = ClientController.getAllClients();
     }
     public void OpenSocket(int port, TextArea tbtxt) {
         try {

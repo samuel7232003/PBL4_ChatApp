@@ -13,9 +13,9 @@ public class RoomController {
     public static Room createRoom(String nameRoom,ArrayList<String> clientId, String roomType){
         ArrayList<Client> clients = new ArrayList<Client>();
         for(String clientID : clientId){
-            for(HandlerController handlerController : SocketController.getClientHandlers()){
-                if(handlerController.getClient().getId().equals(clientID)){
-                    clients.add(handlerController.getClient());
+            for(Client client : SocketController.getAllClient()){
+                if(client.getId().equals(clientID)){
+                    clients.add(client);
                     continue;
                 }
             }

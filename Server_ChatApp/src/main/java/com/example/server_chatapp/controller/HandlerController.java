@@ -248,13 +248,16 @@ public class HandlerController extends Thread {
                                 handlerControllerFinal.getBufferedWriter().newLine();
                                 handlerControllerFinal.getBufferedWriter().write(newRoom.getID_room());
                                 handlerControllerFinal.getBufferedWriter().newLine();
-                                handlerControllerFinal.getBufferedWriter().write("private");
+                                handlerControllerFinal.getBufferedWriter().write(newRoom.getRoomType());
                                 handlerControllerFinal.getBufferedWriter().newLine();
-
-                                if (newRoom.getRoomType().equals("private"))
+                                if (newRoom.getRoomType().equals("private")){
                                     handlerControllerFinal.getBufferedWriter().write(clientId.get(1 - i));
-                                else handlerControllerFinal.getBufferedWriter().write(newRoom.getRoomName());
-                                handlerControllerFinal.getBufferedWriter().newLine();
+                                    handlerControllerFinal.getBufferedWriter().newLine();
+                                }
+                                else {
+                                    handlerControllerFinal.getBufferedWriter().write(newRoom.getRoomName());
+                                    handlerControllerFinal.getBufferedWriter().newLine();
+                                }
 
                                 handlerControllerFinal.getBufferedWriter().write("" + userCount);
                                 handlerControllerFinal.getBufferedWriter().newLine();

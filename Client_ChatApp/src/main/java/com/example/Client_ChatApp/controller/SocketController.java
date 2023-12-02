@@ -286,6 +286,7 @@ public class SocketController {
                                 System.out.println("Room id: " + roomID);
                                 connectedServer.AddRoom(newRoom);
                                 StartEverything.getHomeController().setMainRoom(newRoom);
+                                StartEverything.getHomeController().reload();
                                 break;
                             }
                             case "text from user to room": {
@@ -344,6 +345,38 @@ public class SocketController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    public void createGroup(ArrayList<Client> clientSelected){
+        clientSelected.add(client);
+        String nameRoomBase = "";
+        for(Client client1 : clientSelected){
+            String lastName = getLastName(client1.getName());
+            nameRoomBase += lastName;
+            nameRoomBase += ", ";
+        }
+        nameRoomBase = nameRoomBase.substring(0, nameRoomBase.length()-2); // xoá dấu "," cuối cùng
+        try {
+            bufferedWriter.write("request create room");
+            bufferedWriter.newLine();
+            bufferedWriter.write(nameRoomBase);
+            bufferedWriter.newLine();
+            bufferedWriter.write("group");
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + clientSelected.size());
+            bufferedWriter.newLine();
+            for(Client client1 : clientSelected){
+                bufferedWriter.write(client1.getId());
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public String getLastName(String name){
+        String Lastname = "";
+        for(String e : name.split(" ")) Lastname = e;
+        return Lastname;
     }
     public void sendTextToRoom(String roomID, String content) {
         try {

@@ -300,13 +300,15 @@ public class HomeController implements Initializable{
     public void addUsers(){
         int i = 0;
         ArrayList<Client> clients = StartEverything.getSocketController().getConnectedServer().getClients();
+        ArrayList<Client> clientSelected = new ArrayList<Client>();
         for(CheckBox CB:CBList){
             if(CB.isSelected()==true){
                 System.out.println(clients.get(i).getId());
+                clientSelected.add(clients.get(i));
             }
             i++;
         }
-
+        StartEverything.getSocketController().createGroup(clientSelected);
     }
     public void uploadFile(){
         FileChooser fc = new FileChooser();
