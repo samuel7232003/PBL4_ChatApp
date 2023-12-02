@@ -26,8 +26,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -307,5 +309,15 @@ public class HomeController implements Initializable{
             i++;
         }
         StartEverything.getSocketController().createGroup(clientSelected);
+    }
+    public void uploadFile(){
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Chọn file để tải lên");
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("Kiểu tệp", "*.pdf", "*.txt", "*.docx", "*.xlsx");
+        fc.getExtensionFilters().add(fileFilter);
+        File file = fc.showOpenDialog(StartEverything.getSocketController().getStage());
+        if (file != null){
+            System.out.println(file.getPath());
+        }
     }
 }
