@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,6 +54,8 @@ public class HomeController implements Initializable{
     private HBox listUserOnlHBox;
     @FXML
     private VBox listRoomVBox;
+    @FXML
+    private ScrollPane chatListScroll;
     static boolean start = false;
     static Room mainRoom;
     public Client client;
@@ -151,7 +154,7 @@ public class HomeController implements Initializable{
         }
         else System.out.println("rong");
     }
-    public String getLastName(String name){
+    public static String getLastName(String name){
         String Lastname = "";
         for(String e : name.split(" ")) Lastname = e;
         return Lastname;
@@ -275,10 +278,11 @@ public class HomeController implements Initializable{
 
     private static ArrayList<CheckBox> CBList;
     public void openMenu(){
-        if (addUserMenu.getLayoutX() == 1160){
+        if (addUserMenu.getLayoutX() != 850){
             addUserMenu.setLayoutX(850);
         }
         else addUserMenu.setLayoutX(1160);
+        addUserMenu.toFront();
         CBList = new ArrayList<CheckBox>();
         for(Client client1 : StartEverything.getSocketController().getConnectedServer().getClients()){
             HBox itemUserHBox = new HBox();

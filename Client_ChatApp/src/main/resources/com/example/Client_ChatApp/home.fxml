@@ -45,7 +45,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                  <ScrollPane layoutX="13.0" layoutY="19.0" prefHeight="82.0" prefWidth="233.0" style="-fx-border-color: #fff;">
+                  <ScrollPane layoutX="13.0" layoutY="19.0" prefHeight="82.0" prefWidth="233.0" style="-fx-border-color: #fff;" vbarPolicy="NEVER">
                      <content>
                         <HBox fx:id="listUserOnlHBox" fillHeight="false" prefHeight="62.0" />
                      </content>
@@ -60,7 +60,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                  <ScrollPane layoutX="2.0" layoutY="34.0" prefHeight="571.0" prefWidth="253.0" style="-fx-border-color: #fff;">
+                  <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="34.0" prefHeight="571.0" prefWidth="253.0" style="-fx-border-color: #fff;">
                      <content>
                         <VBox fx:id="listRoomVBox" prefWidth="245.0" />
                      </content>
@@ -130,7 +130,7 @@
                     </children></Pane>
             </children>
         </Pane>
-      <Pane fx:id="addUserMenu" layoutX="1160.0" layoutY="75.0" prefHeight="337.0" prefWidth="298.0" style="-fx-border-color: #d6d6d6;">
+      <Pane fx:id="addUserMenu" layoutX="1160.0" layoutY="75.0" prefHeight="337.0" prefWidth="298.0" style="-fx-border-color: #d6d6d6; -fx-background-color: #fff;">
          <children>
             <Label layoutX="14.0" layoutY="10.0" text="Thêm người vào đoạn chat">
                <font>
@@ -152,9 +152,9 @@
             <Insets />
          </opaqueInsets>
       </Pane>
-      <ScrollPane layoutX="331.0" layoutY="76.0" prefHeight="665.0" prefWidth="823.0" style="-fx-background-color: #fff;" vbarPolicy="NEVER">
+      <ScrollPane id="chatListScroll" fx:id="chatListScroll" layoutX="331.0" layoutY="76.0" prefHeight="665.0" prefWidth="823.0" style="-fx-background-color: #fff;" vbarPolicy="NEVER">
          <content>
-            <VBox id="ChatList" fx:id="ChatList" alignment="BOTTOM_CENTER" prefHeight="662.0" prefWidth="807.0" style="-fx-background-color: #fff;">
+            <VBox id="ChatList" fx:id="ChatList" alignment="BOTTOM_CENTER" prefHeight="662.0" prefWidth="818.0" style="-fx-background-color: #fff;">
       </VBox>
          </content>
       </ScrollPane>

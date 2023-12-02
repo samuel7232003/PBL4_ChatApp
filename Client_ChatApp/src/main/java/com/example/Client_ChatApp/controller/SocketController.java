@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import static com.example.Client_ChatApp.controller.HomeController.getLastName;
+
 public class SocketController {
     private static Client client;
     private static ServerData connectedServer;
@@ -229,13 +231,7 @@ public class SocketController {
                                     connectedServer.addClient(clientVari);
                                 }
                                 updateUserOnlineList();
-                                Platform.runLater(() ->{
-                                    try {
-                                        StartEverything.getHomeController().reload();
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
+                                reloadOnSocket();
                                 break;
                             }
                             case "user quit": {
@@ -259,6 +255,7 @@ public class SocketController {
 //                                    }
 //                                }
                                 updateUserOnlineList();
+                                reloadOnSocket();
                                 break;
 
                             }
@@ -286,13 +283,7 @@ public class SocketController {
                                 System.out.println("Room id: " + roomID);
                                 connectedServer.AddRoom(newRoom);
                                 StartEverything.getHomeController().setMainRoom(newRoom);
-                                Platform.runLater(() ->{
-                                    try {
-                                        StartEverything.getHomeController().reload();
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
+                                reloadOnSocket();
                                 break;
                             }
                             case "text from user to room": {
@@ -310,13 +301,7 @@ public class SocketController {
                                 MessageData messageData = new MessageData(idUserSend, content,timenow);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
                                 receiveRoom.getMessageDatas().add(messageData);
-                                Platform.runLater(() ->{
-                                    try {
-                                        StartEverything.getHomeController().reload();
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
+                                reloadOnSocket();
                                 break;
                             }
                         }
@@ -332,6 +317,15 @@ public class SocketController {
                 System.exit(0);
             }
         }).start();
+    }
+    public void reloadOnSocket(){
+        Platform.runLater(() ->{
+            try {
+                StartEverything.getHomeController().reload();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
     public void createPrivateRoom(String id_userFinal) {
         try {
@@ -379,11 +373,11 @@ public class SocketController {
             ex.printStackTrace();
         }
     }
-    public String getLastName(String name){
-        String Lastname = "";
-        for(String e : name.split(" ")) Lastname = e;
-        return Lastname;
-    }
+//    public String getLastName(String name){
+//        String Lastname = "";
+//        for(String e : name.split(" ")) Lastname = e;
+//        return Lastname;
+//    }
     public void sendTextToRoom(String roomID, String content) {
         try {
             bufferedWriter.write("text to room");
