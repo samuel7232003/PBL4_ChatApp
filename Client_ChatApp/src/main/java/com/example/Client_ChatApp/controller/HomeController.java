@@ -4,9 +4,11 @@ import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
 import com.example.Client_ChatApp.model.MessageData;
 import com.example.Client_ChatApp.model.Room;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,6 +24,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,114 +36,52 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable{
     @FXML
-    private Pane userOnl1;
-    @FXML
-    private Pane userOnl2;
-    @FXML
-    private Pane userOnl3;
-    @FXML
-    private Pane userOnl4;
-    @FXML
-    private Label nameus1;
-    @FXML
-    private Label nameus2;
-    @FXML
-    private Label nameus3;
-    @FXML
-    private Label nameus4;
-    @FXML
-    private Pane ro1;
-    @FXML
-    private Pane ro2;
-    @FXML
-    private Pane ro3;
-    @FXML
-    private Pane ro4;
-    @FXML
     private Pane titlep;
     @FXML
     private Pane footerp;
     @FXML
     private VBox ChatList;
     @FXML
-    private Label labletxt;
-    @FXML
-    private Label namero1;
-    @FXML
-    private Label namero2;
-    @FXML
-    private Label namero3;
-    @FXML
-    private Label namero4;
-    @FXML
     private Label main_name;
     @FXML
     private TextField content;
     @FXML
-    AnchorPane main;
-    @FXML
     Pane addUserMenu;
-
-    ArrayList<String> idRoomList;
-    ArrayList<String> idUserList;
+    @FXML
+    private HBox listUserOnlHBox;
+    @FXML
+    private VBox listRoomVBox;
     static boolean start = false;
-    static String mainNameRoom = "";
-    static String mainIDRoom = "";
+    static Room mainRoom;
     public Client client;
+    @FXML
+    private Image imageVT;
+    @FXML
+    private Image imageDT;
 
-    public void setMainIDRoom(String mainIDRoom) {
-        HomeController.mainIDRoom = mainIDRoom;
+    public void setMainRoom(Room mainRoom) {
+        HomeController.mainRoom = mainRoom;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         client = StartEverything.getSocketController().getClient();
-        main_name.setText(mainNameRoom);
         setup();
-        //System.out.println(main.getScene());
+        if(mainRoom == null) main_name.setText("room trong");
+        else main_name.setText(findRoomName(mainRoom));
         int i = 1;
-        idRoomList = new ArrayList<String>();
         for(Room room : StartEverything.getSocketController().getConnectedServer().getRooms()){
-            if(i==1) setupListRoom(room, ro1, namero1);
-            else if(i==2) setupListRoom(room, ro2, namero2);
-            else if(i==3)setupListRoom (room, ro3, namero3);
-            else if(i==4)setupListRoom (room, ro4, namero4);
-            i++;
+            viewListRoom(room);
         }
-        i=1;
-        idUserList = new ArrayList<String>();
         for(Client client1 : StartEverything.getSocketController().getConnectedServer().getClients()){
-            if(client1.isStatus()){
-                if(i==1) setupListUser(client1, userOnl1, nameus1);
-                else if(i==2) setupListUser(client1, userOnl2, nameus2);
-                else if(i==3) setupListUser(client1, userOnl3, nameus3);
-                else if(i==4) setupListUser(client1, userOnl4, nameus4);
-                i++;
-            }
+            viewItemUserOnl(client1);
         }
         if(start){
             addMessage();
         }
     }
-    public void setupListRoom(Room room, Pane ro, Label namero){
-        ro.setVisible(true);
-        namero.setText(findRoomName(room));
-        idRoomList.add(room.getId());
-    }
-    public void setupListUser(Client client, Pane us, Label nameus){
-        us.setVisible(true);
-        nameus.setText(client.getName());
-        idUserList.add(client.getId());
-    }
+
     public void setup(){
-        ro1.setVisible(false);
-        ro2.setVisible(false);
-        ro3.setVisible(false);
-        ro4.setVisible(false);
-        userOnl1.setVisible(false);
-        userOnl2.setVisible(false);
-        userOnl3.setVisible(false);
-        userOnl4.setVisible(false);
         titlep.setVisible(start);
         footerp.setVisible(start);
         ChatList.setVisible(start);
@@ -158,14 +100,123 @@ public class HomeController implements Initializable{
         else return room.getName();
         return "loi";
     }
+    public void viewItemUserOnl(Client client1){
+        if(client1.isStatus()){
+            VBox itemUser = new VBox();
+            itemUser.setPrefWidth(65);
+            itemUser.setPrefHeight(60);
+            itemUser.setAlignment(Pos.TOP_CENTER);
+            ImageView imageView = new ImageView(imageDT);
+            imageView.setFitHeight(40);
+            imageView.setFitWidth(40);
+            Circle cir = new Circle();
+            cir.setRadius(5);
+            Pane ava = new Pane();
+            ava.setPrefHeight(45);
+            ava.setPrefWidth(45);
+            ava.getChildren().add(imageView);
+            imageView.setLayoutX(12);
+            ava.getChildren().add(cir);
+            cir.setLayoutX(50);
+            cir.setLayoutY(40);
+            cir.setFill(Paint.valueOf("#37b916"));
+            itemUser.getChildren().add(ava);
+            Label name = new Label(getLastName(client1.getName()));
+            itemUser.getChildren().add(name);
+            itemUser.setId(client1.getId());
+            itemUser.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    try {
+                        openByUser(client1.getName(), client1.getId());
+                        start = true;
+                        reload();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(client1.getId());
+                }
+            });
+            listUserOnlHBox.getChildren().add(itemUser);
+        }
+    }
 
-//    public static void reload_() throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
-//        scene.getStylesheets().add(index.class.getResource("home.css").toExternalForm());
-//        stage.setTitle(StartEverything.getSocketController().getClient().getName());
-//        stage.setScene(scene);
-//    }
+    public void openByUser(String userName, String idUser) throws IOException {
+        start = true;
+        boolean check = StartEverything.getSocketController().selectUser(idUser);
+        if(check){
+            mainRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUser);
+        }
+        else System.out.println("rong");
+    }
+    public String getLastName(String name){
+        String Lastname = "";
+        for(String e : name.split(" ")) Lastname = e;
+        return Lastname;
+    }
+
+    public void viewListRoom(Room room){
+        Pane itemRoom = new Pane();
+        ImageView ava = new ImageView(imageVT);
+        ava.setFitHeight(50);
+        ava.setFitWidth(50);
+        itemRoom.getChildren().add(ava);
+        ava.setLayoutX(14);
+        ava.setLayoutY(12);
+        Label name = new Label(findRoomName(room));
+        name.setPrefWidth(160);
+        name.setStyle("-fx-font-weight: bold;" +
+                "    -fx-font-size: 18px;");
+        itemRoom.getChildren().add(name);
+        name.setLayoutX(81);
+        name.setLayoutY(12);
+        MessageData messageData = getLastMessageData(room);
+        Label lastMessage = new Label(getLastMessageInfor(messageData));
+        lastMessage.setStyle("-fx-font-size: 12px;" +
+                "    -fx-text-fill: #6d6d6d;");
+        lastMessage.setPrefWidth(127);
+        itemRoom.getChildren().add(lastMessage);
+        lastMessage.setLayoutX(81);
+        lastMessage.setLayoutY(39);
+        String time = "";
+        if(messageData!=null) time = messageData.getSend_time().getHour() + ":"+messageData.getSend_time().getMinute();
+        Label timeLastMessage = new Label(time);
+        timeLastMessage.setStyle("-fx-font-size: 12px;" +
+                "    -fx-text-fill: #6d6d6d;");
+        itemRoom.getChildren().add(timeLastMessage);
+        timeLastMessage.setLayoutX(216);
+        timeLastMessage.setLayoutY(39);
+        listRoomVBox.getChildren().add(itemRoom);
+        listRoomVBox.setSpacing(5);
+        itemRoom.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    start = true;
+                    mainRoom = RoomController.findRoom(StartEverything.getSocketController().getRoomList(), room.getId());
+                    System.out.println(room.getId());
+                    StartEverything.getSocketController().selectRoom(room.getId());
+                    reload();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+    public String getLastMessageInfor(MessageData messageData){
+        String rs = "";
+        if(messageData != null){
+            if(messageData.getId_user().equals(client.getId())) rs  = "Bạn: ";
+            else rs = getLastName(StartEverything.getSocketController().getNameById(messageData.getId_user())) + ": ";
+            return rs + messageData.getContent();
+        }
+        return "";
+    }
+    public MessageData getLastMessageData(Room room){
+        if(room.getMessageDatas().size() == 0) return null;
+        return room.getMessageDatas().get(room.getMessageDatas().size()-1);
+    }
+
     public void reload() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
@@ -173,39 +224,10 @@ public class HomeController implements Initializable{
         Stage stage1 = StartEverything.getSocketController().getStage();
         stage1.setScene(scene);
     }
-    public void openChatUser(MouseEvent e) throws IOException {
-        if(e.getSource().equals(userOnl1)) openByUser(nameus1, 0);
-        else if(e.getSource().equals(userOnl2)) openByUser(nameus2, 1);
-        else if(e.getSource().equals(userOnl3)) openByUser(nameus3, 2);
-        else if(e.getSource().equals(userOnl4)) openByUser(nameus4, 3);
-        reload();
-    }
-    public void openByUser(Label nameus, int index) throws IOException {
-        start = true;
-        mainNameRoom = nameus.getText();
-        boolean check = StartEverything.getSocketController().selectUser(idUserList.get(index));
-        if(check){
-            mainIDRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUserList.get(index)).getId();
-        }
-    }
 
-    public void openChat(MouseEvent mouseEvent) throws IOException {
-        if(mouseEvent.getSource().equals(ro1)) openByRoom(namero1, 0);
-        else if(mouseEvent.getSource().equals(ro2)) openByRoom(namero2, 1);
-        else if (mouseEvent.getSource().equals(ro3)) openByRoom(namero3, 2);
-        else if (mouseEvent.getSource().equals(ro4)) openByRoom(namero4, 3);
-        reload();
-    }
-    public void openByRoom(Label namero,int index){
-        start = true;
-        mainNameRoom = namero.getText();
-        mainIDRoom = idRoomList.get(index);
-        System.out.println(mainIDRoom);
-        StartEverything.getSocketController().selectRoom(mainIDRoom);
-    }
     static ArrayList<MessageData> ListMessage;
     public void addMessage() {
-        ListMessage = StartEverything.getSocketController().getMessageData(mainIDRoom);
+        ListMessage = StartEverything.getSocketController().getMessageData(mainRoom.getId());
         for (MessageData message : ListMessage) {
             String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
             String name = StartEverything.getSocketController().getNameById(message.getId_user());
@@ -243,7 +265,7 @@ public class HomeController implements Initializable{
     public void send() {
         String contentChat = content.getText();
         System.out.println(contentChat);
-        StartEverything.getSocketController().clickEnterChat(mainIDRoom, contentChat);
+        StartEverything.getSocketController().clickEnterChat(mainRoom.getId(), contentChat);
     }
 
     @FXML
@@ -260,7 +282,7 @@ public class HomeController implements Initializable{
             HBox itemUserHBox = new HBox();
             itemUserHBox.setId("itemUserHBox");
             itemUserHBox.setAlignment(Pos.CENTER_LEFT);
-            ImageView ava = new ImageView();
+            ImageView ava = new ImageView(imageVT);
             ava.setFitWidth(40);
             ava.setFitHeight(40);
             itemUserHBox.getChildren().add(ava);

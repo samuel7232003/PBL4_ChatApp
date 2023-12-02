@@ -285,11 +285,11 @@ public class SocketController {
                                 Room newRoom = new Room(roomID, roomName, roomType, clientlist, messageDatas);
                                 System.out.println("Room id: " + roomID);
                                 connectedServer.AddRoom(newRoom);
-                                StartEverything.getHomeController().setMainIDRoom(roomID);
                                 // test room
                                 Room room = connectedServer.getRooms().get(connectedServer.getRooms().size()-1);
                                 System.out.println(room.getId() + ": " + room.getName());
                                 for(Client client1 : room.getClients()) System.out.println(client1.getName());
+                                StartEverything.getHomeController().setMainRoom(newRoom);
                                 break;
                             }
                             case "text from user to room": {
