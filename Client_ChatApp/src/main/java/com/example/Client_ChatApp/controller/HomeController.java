@@ -246,6 +246,7 @@ public class HomeController implements Initializable{
                 Label lb1 = new Label(time);
                 vb.getChildren().add(lb1);
                 ChatList.getChildren().add(vb);
+                onClickFileMessage(message, vb);
             } else {
                 VBox vb = new VBox();
                 vb.setAlignment(Pos.BOTTOM_LEFT);
@@ -256,10 +257,19 @@ public class HomeController implements Initializable{
                 Label lb1 = new Label(time);
                 vb.getChildren().add(lb1);
                 ChatList.getChildren().add(vb);
+                onClickFileMessage(message, vb);
             }
         }
     }
-
+    public void onClickFileMessage(MessageData message, VBox vb){
+        if(message.getMessType().equals("file")){
+            vb.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println(message.getContent());                    }
+            });
+        }
+    }
     public void send_(KeyEvent e) throws IOException {
         if(e.getCode() == KeyCode.ENTER){
             send();
