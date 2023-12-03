@@ -39,5 +39,6 @@ public class MessageData {
     public void setContent(String content) {
         this.content = content;
     }
+    public String getMessType(){ return messType;}
 
 }
