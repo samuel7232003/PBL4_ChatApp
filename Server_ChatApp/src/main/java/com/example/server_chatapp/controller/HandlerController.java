@@ -306,6 +306,8 @@ public class HandlerController extends Thread {
                                     clientRecieve.getBufferedWriter().newLine();
                                     clientRecieve.getBufferedWriter().write(content);
                                     clientRecieve.getBufferedWriter().write('\0');
+                                    clientRecieve.getBufferedWriter().write("" + room.getMessageOrder());
+                                    clientRecieve.getBufferedWriter().newLine();
                                     clientRecieve.getBufferedWriter().flush();
                                 }
                             }
@@ -315,17 +317,17 @@ public class HandlerController extends Thread {
                     }
                     case "file to room": {
                         String roomID = bufferedReader.readLine();
-                        int roomMessagesCount = Integer.parseInt(bufferedReader.readLine());
+//                        int roomMessagesCount = Integer.parseInt(bufferedReader.readLine());
                         String fileName = bufferedReader.readLine();
                         int fileSize = Integer.parseInt(bufferedReader.readLine());
 
-                        File filesFolder = new File("files");
+                        String pathSaveFile = "files/" + roomID;
+
+                        File filesFolder = new File(pathSaveFile);
                         if (!filesFolder.exists())
                             filesFolder.mkdir();
 
-                        int dotIndex = fileName.lastIndexOf('.');
-                        String saveFileName = "files/" + fileName.substring(0, dotIndex)
-                                + String.format("%s%03d", roomID, roomMessagesCount) + fileName.substring(dotIndex);
+                        String saveFileName = "files/" + roomID + "/" + fileName;
 
                         File file = new File(saveFileName);
                         byte[] buffer = new byte[1024];
@@ -342,7 +344,6 @@ public class HandlerController extends Thread {
                         }
 
                         out.close();
-
                         // gửi cho các client
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
                         room.setMessageOrder();
@@ -365,6 +366,41 @@ public class HandlerController extends Thread {
                                     clientRecieve.bufferedWriter.flush();
                                 }
                             }
+                        }
+                        break;
+                    }
+                    case "request download file": {
+                        try {
+                            int roomID = Integer.parseInt(bufferedReader.readLine());
+                            int messageIndex = Integer.parseInt(bufferedReader.readLine());
+                            String fileName = bufferedReader.readLine();
+
+//                            int dotIndex = fileName.lastIndexOf('.');
+
+//                            fileName = "files/" + fileName.substring(0, dotIndex)
+//                                    + String.format("%02d%03d", roomID, messageIndex) + fileName.substring(dotIndex);
+                            fileName = "files/" + roomID + "/" + fileName;
+                            File file = new File(fileName);
+
+                            bufferedWriter.write("response download file");
+                            bufferedWriter.newLine();
+                            bufferedWriter.write("" + file.length());
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+
+                            byte[] buffer = new byte[1024];
+                            InputStream in = new FileInputStream(file);
+                            OutputStream out = socketHandler.getOutputStream();
+
+                            int count;
+                            while ((count = in.read(buffer)) > 0) {
+                                out.write(buffer, 0, count);
+                            }
+
+                            in.close();
+                            out.flush();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
                         }
                         break;
                     }

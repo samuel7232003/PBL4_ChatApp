@@ -41,4 +41,7 @@ public class MessageData {
     }
     public String getMessType(){ return messType;}
 
+    public int getMessageOrder() {
+        return messageOrder;
+    }
 }
