@@ -30,6 +30,7 @@ public class SocketController {
     private static BufferedWriter bufferedWriter;
     private static BufferedReader bufferedReader;
     private static Stage stage;
+    private String downloadToPath;
     public Stage getStage(){
         return stage;
     }
@@ -324,6 +325,26 @@ public class SocketController {
                                 });
                                 break;
                             }
+                            case "response download file": {
+                                int fileSize = Integer.parseInt(bufferedReader.readLine());
+                                // kiểm tra hắn có cái tên file trước chưa?
+                                File file = new File(downloadToPath);
+                                byte[] buffer = new byte[1024];
+                                InputStream in = socket.getInputStream();
+                                OutputStream out = new FileOutputStream(file);
+
+                                int count;
+                                int receivedFileSize = 0;
+                                while ((count = in.read(buffer)) > 0) {
+                                    out.write(buffer, 0, count);
+                                    receivedFileSize += count;
+                                    if (receivedFileSize >= fileSize)
+                                        break;
+                                }
+
+                                out.close();
+                                break;
+                            }
                         }
                     }
                 }catch (IOException e){
@@ -438,6 +459,24 @@ public class SocketController {
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void downloadFile(String roomID, int fileMessageIndex, String fileName, String downloadToPath) {
+
+        this.downloadToPath = downloadToPath;
+        try {
+            bufferedWriter.write("request download file");
+            bufferedWriter.newLine();
+            bufferedWriter.write(roomID);
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + fileMessageIndex);
+            bufferedWriter.newLine();
+            bufferedWriter.write(fileName);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
     //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này

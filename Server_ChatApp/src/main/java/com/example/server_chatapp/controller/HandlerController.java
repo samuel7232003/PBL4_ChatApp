@@ -369,6 +369,41 @@ public class HandlerController extends Thread {
                         }
                         break;
                     }
+                    case "request download file": {
+                        try {
+                            int roomID = Integer.parseInt(bufferedReader.readLine());
+                            int messageIndex = Integer.parseInt(bufferedReader.readLine());
+                            String fileName = bufferedReader.readLine();
+
+//                            int dotIndex = fileName.lastIndexOf('.');
+
+//                            fileName = "files/" + fileName.substring(0, dotIndex)
+//                                    + String.format("%02d%03d", roomID, messageIndex) + fileName.substring(dotIndex);
+                            fileName = "files/" + roomID + "/" + fileName;
+                            File file = new File(fileName);
+
+                            bufferedWriter.write("response download file");
+                            bufferedWriter.newLine();
+                            bufferedWriter.write("" + file.length());
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+
+                            byte[] buffer = new byte[1024];
+                            InputStream in = new FileInputStream(file);
+                            OutputStream out = socketHandler.getOutputStream();
+
+                            int count;
+                            while ((count = in.read(buffer)) > 0) {
+                                out.write(buffer, 0, count);
+                            }
+
+                            in.close();
+                            out.flush();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        break;
+                    }
                     case "Get id user": {
                         String id = client.getId();
                         bufferedWriter.write(id);

@@ -266,6 +266,7 @@ public class HomeController implements Initializable{
             vb.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
+
                     System.out.println(message.getContent());                    }
             });
         }
