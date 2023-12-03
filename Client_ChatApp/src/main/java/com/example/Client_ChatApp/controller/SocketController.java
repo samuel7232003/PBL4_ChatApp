@@ -433,7 +433,8 @@ public class SocketController {
 
             File file = new File(filePath);
             Room room = RoomController.findRoom(connectedServer.getRooms(), roomID);
-
+            System.out.println(file);
+            System.out.println(fileName);
             bufferedWriter.write("file to room");
             bufferedWriter.newLine();
             bufferedWriter.write(roomID);
@@ -464,7 +465,7 @@ public class SocketController {
 
     public void downloadFile(String roomID, int fileMessageIndex, String fileName, String downloadToPath) {
 
-        this.downloadToPath = downloadToPath;
+        this.downloadToPath = downloadToPath + "/" + fileName;
         try {
             bufferedWriter.write("request download file");
             bufferedWriter.newLine();
