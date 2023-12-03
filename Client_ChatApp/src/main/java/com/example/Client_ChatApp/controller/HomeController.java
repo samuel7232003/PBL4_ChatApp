@@ -262,7 +262,8 @@ public class HomeController implements Initializable{
                     dc.setTitle("Chọn nơi để lưu tài liệu");
                     File file = dc.showDialog(StartEverything.getSocketController().getStage());
                     String filePath = file.getPath();
-                    System.out.println(filePath);
+                    // System.out.println(filePath);
+                    StartEverything.getSocketController().downloadFile(mainRoom.getId(), 1, message.getContent(), filePath);
                 }
             });
         }

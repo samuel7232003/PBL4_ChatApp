@@ -347,7 +347,7 @@ public class HandlerController extends Thread {
                         // gửi cho các client
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
                         room.setMessageOrder();
-                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), file.getPath(), "file");
+                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), file.getName(), "file");
                         RoomMessageController roomMessageController = new RoomMessageController();
                         roomMessageController.insertMessage(roomMessage);
                         room.getMessages().add(roomMessage);
@@ -371,7 +371,7 @@ public class HandlerController extends Thread {
                     }
                     case "request download file": {
                         try {
-                            int roomID = Integer.parseInt(bufferedReader.readLine());
+                            String roomID = bufferedReader.readLine();
                             int messageIndex = Integer.parseInt(bufferedReader.readLine());
                             String fileName = bufferedReader.readLine();
 
