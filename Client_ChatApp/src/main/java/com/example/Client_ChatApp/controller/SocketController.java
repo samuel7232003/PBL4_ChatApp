@@ -297,9 +297,10 @@ public class SocketController {
                                     if (c != '\0')
                                         content += c;
                                 } while (c != '\0');
+                                int messOrder = Integer.parseInt(bufferedReader.readLine());
                                 System.out.println(idUserSend + ": " + content);
                                 LocalDateTime timenow = LocalDateTime.now();
-                                MessageData messageData = new MessageData(idUserSend, content, "text",timenow);
+                                MessageData messageData = new MessageData(messOrder, idUserSend, content, "text",timenow);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
                                 receiveRoom.getMessageDatas().add(messageData);
                                 reloadOnSocket();
@@ -416,8 +417,8 @@ public class SocketController {
             bufferedWriter.newLine();
             bufferedWriter.write(roomID);
             bufferedWriter.newLine();
-            bufferedWriter.write("" + room.getMessageDatas().size());
-            bufferedWriter.newLine();
+//            bufferedWriter.write("" + room.getMessageDatas().size());
+//            bufferedWriter.newLine();
             bufferedWriter.write(fileName);
             bufferedWriter.newLine();
             bufferedWriter.write("" + file.length());

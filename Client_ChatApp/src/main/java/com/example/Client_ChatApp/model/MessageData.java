@@ -40,4 +40,7 @@ public class MessageData {
         this.content = content;
     }
 
+    public int getMessageOrder() {
+        return messageOrder;
+    }
 }
