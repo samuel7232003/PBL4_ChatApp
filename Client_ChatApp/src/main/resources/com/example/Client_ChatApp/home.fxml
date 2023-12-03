@@ -158,5 +158,24 @@
       </VBox>
          </content>
       </ScrollPane>
+      <ImageView fx:id="docxIcon" fitHeight="68.0" fitWidth="61.0" layoutX="1160.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image fx:id="docx" url="@icon/docx_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pdfIcon" fitHeight="61.0" fitWidth="61.0" layoutX="1236.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image fx:id="pdf" url="@icon/pdf_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="61.0" fitWidth="70.0" layoutX="1303.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true" fx:id="xlsxIcon">
+         <image>
+            <Image fx:id="xlsx" url="@icon/xlsx_icon.png" />
+         </image></ImageView>
+      <ImageView fx:id="txtIcon" fitHeight="61.0" fitWidth="61.0" layoutX="1364.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image fx:id="txt" url="@icon/txt_icon.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

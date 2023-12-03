@@ -27,6 +27,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -229,35 +230,26 @@ public class HomeController implements Initializable{
         Stage stage1 = StartEverything.getSocketController().getStage();
         stage1.setScene(scene);
     }
-
     static ArrayList<MessageData> ListMessage;
     public void addMessage() {
         ListMessage = StartEverything.getSocketController().getMessageData(mainRoom.getId());
         for (MessageData message : ListMessage) {
             String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
             String name = StartEverything.getSocketController().getNameById(message.getId_user());
+            VBox vb = new VBox();
+            vb.setId("vb");
+            Label lb = new Label(message.getContent());
+            vb.getChildren().add(lb);
+            Label lb1 = new Label(time);
+            vb.getChildren().add(lb1);
+            ChatList.getChildren().add(vb);
+            onClickFileMessage(message, vb);
             if (name == null) {
-                VBox vb = new VBox();
                 vb.setAlignment(Pos.BOTTOM_RIGHT);
-                vb.setId("vb");
-                Label lb = new Label(message.getContent());
                 lb.setId("BoxMessageMe");
-                vb.getChildren().add(lb);
-                Label lb1 = new Label(time);
-                vb.getChildren().add(lb1);
-                ChatList.getChildren().add(vb);
-                onClickFileMessage(message, vb);
             } else {
-                VBox vb = new VBox();
                 vb.setAlignment(Pos.BOTTOM_LEFT);
-                vb.setId("vb");
-                Label lb = new Label(name + ": " + message.getContent());
                 lb.setId("BoxMessage");
-                vb.getChildren().add(lb);
-                Label lb1 = new Label(time);
-                vb.getChildren().add(lb1);
-                ChatList.getChildren().add(vb);
-                onClickFileMessage(message, vb);
             }
         }
     }
@@ -266,7 +258,12 @@ public class HomeController implements Initializable{
             vb.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println(message.getContent());                    }
+                    DirectoryChooser dc = new DirectoryChooser();
+                    dc.setTitle("Chọn nơi để lưu tài liệu");
+                    File file = dc.showDialog(StartEverything.getSocketController().getStage());
+                    String filePath = file.getPath();
+                    System.out.println(filePath);
+                }
             });
         }
     }
