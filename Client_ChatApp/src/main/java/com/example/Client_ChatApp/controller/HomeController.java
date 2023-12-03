@@ -230,6 +230,14 @@ public class HomeController implements Initializable{
         Stage stage1 = StartEverything.getSocketController().getStage();
         stage1.setScene(scene);
     }
+    @FXML
+    private Image docx;
+    @FXML
+    private Image xlsx;
+    @FXML
+    private Image txt;
+    @FXML
+    private Image pdf;
     static ArrayList<MessageData> ListMessage;
     public void addMessage() {
         ListMessage = StartEverything.getSocketController().getMessageData(mainRoom.getId());
@@ -237,21 +245,45 @@ public class HomeController implements Initializable{
             String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
             String name = StartEverything.getSocketController().getNameById(message.getId_user());
             VBox vb = new VBox();
+            HBox hBox = new HBox();
+            hBox.setMaxWidth(400);
             vb.setId("vb");
             Label lb = new Label(message.getContent());
-            vb.getChildren().add(lb);
+            if(message.getMessType().equals("text")) vb.getChildren().add(lb);
+            else if(message.getMessType().equals("file")){
+                ImageView fileIcon = new ImageView(getIconByTypeFile(message.getContent()));
+                fileIcon.setFitHeight(50);
+                fileIcon.setFitWidth(40);
+                fileIcon.setTranslateY(-8);
+                hBox.getChildren().add(fileIcon);
+                hBox.getChildren().add(lb);
+                vb.getChildren().add(hBox);
+            }
             Label lb1 = new Label(time);
             vb.getChildren().add(lb1);
             ChatList.getChildren().add(vb);
             onClickFileMessage(message, vb);
             if (name == null) {
+                hBox.setAlignment(Pos.BOTTOM_LEFT);
                 vb.setAlignment(Pos.BOTTOM_RIGHT);
+                hBox.setId("BoxMessageMe");
                 lb.setId("BoxMessageMe");
             } else {
+                hBox.setAlignment(Pos.BOTTOM_LEFT);
                 vb.setAlignment(Pos.BOTTOM_LEFT);
+                hBox.setId("BoxMessage");
                 lb.setId("BoxMessage");
             }
         }
+    }
+    public Image getIconByTypeFile(String fileName){
+        String type = "";
+        for (String s : fileName.split("\\.")) type = s;
+        if(type.equals("docx")) return docx;
+        else if (type.equals("xlsx")) return xlsx;
+        else if (type.equals("pdf")) return pdf;
+        else if (type.equals("txt")) return txt;
+        return null;
     }
     public void onClickFileMessage(MessageData message, VBox vb){
         if(message.getMessType().equals("file")){
