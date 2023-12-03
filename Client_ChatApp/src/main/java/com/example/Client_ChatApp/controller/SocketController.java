@@ -116,7 +116,22 @@ public class SocketController {
             if(client.isStatus()) System.out.println(i++ + ". " + client.getName());
         }
     }
-
+    public void GetImageInRoom(){
+        for(Room room : connectedServer.getRooms()){
+            for(MessageData messageData : room.getMessageDatas()){
+                if(messageData.getMessType().equals("file")){
+                    if(messageData.getContent().contains(".jpg") || messageData.getContent().contains(".png")){
+                        File filesFolder = new File("ImgageInMessRoom");
+                        if (!filesFolder.exists())
+                            filesFolder.mkdir();
+                        downloadToPath = "ImgageInMessRoom/" + room.getId() + "/" + messageData.getContent();
+                        downloadFile(room.getId(), 1, messageData.getContent(), downloadToPath);
+                        // cần phải tải về
+                    }
+                }
+            }
+        }
+    }
     public static String getThisIP() {
         String ip = "";
         try {
@@ -193,6 +208,7 @@ public class SocketController {
                 connectedServer.setOpen(true);
                 getAllUsers();
                 getRoomExisted();
+//                GetImageInRoom();
                 updateUserOnlineList();
                 showRoom();
                 StartAll();

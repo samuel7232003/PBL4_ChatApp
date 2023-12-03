@@ -341,7 +341,9 @@ public class HomeController implements Initializable{
         fc.getExtensionFilters().add(fileFilter);
         File file = fc.showOpenDialog(StartEverything.getSocketController().getStage());
         if (file != null){
-            System.out.println(file.getPath());
+            String fileName = file.getName();
+            String filePath = file.getPath();
+            StartEverything.getSocketController().sendFileToRoom(mainRoom.getId(), fileName, filePath);
         }
     }
 }
