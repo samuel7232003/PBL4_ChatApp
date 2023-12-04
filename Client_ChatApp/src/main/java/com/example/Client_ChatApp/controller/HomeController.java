@@ -244,10 +244,14 @@ public class HomeController implements Initializable{
         for (MessageData message : ListMessage) {
             String time = message.getSend_time().getHour() + ":" + message.getSend_time().getMinute();
             String name = StartEverything.getSocketController().getNameById(message.getId_user());
+            HBox other = new HBox();
             VBox vb = new VBox();
             HBox hBox = new HBox();
-            hBox.setMaxWidth(250);
             vb.setId("vb");
+            if(name!=null){
+                Label namelb = new Label(name);
+                vb.getChildren().add(namelb);
+            }
             Label lb = new Label(message.getContent());
             if(message.getMessType().equals("text")) vb.getChildren().add(lb);
             else if(message.getMessType().equals("file")){
@@ -257,23 +261,32 @@ public class HomeController implements Initializable{
                 hBox.getChildren().add(fileIcon);
                 hBox.getChildren().add(lb);
                 vb.getChildren().add(hBox);
+                hBox.setMaxWidth(250);
             }
             Label lb1 = new Label(time);
             lb1.setId("time");
             vb.getChildren().add(lb1);
-            ChatList.getChildren().add(vb);
-            onClickFileMessage(message, vb);
             if (name == null) {
                 hBox.setAlignment(Pos.BOTTOM_LEFT);
                 vb.setAlignment(Pos.BOTTOM_RIGHT);
                 hBox.setId("BoxMessageMe");
                 lb.setId("BoxMessageMe");
+                ChatList.getChildren().add(vb);
             } else {
                 hBox.setAlignment(Pos.BOTTOM_LEFT);
                 vb.setAlignment(Pos.BOTTOM_LEFT);
                 hBox.setId("BoxMessage");
                 lb.setId("BoxMessage");
+                ChatList.getChildren().add(other);
+                ImageView ava = new ImageView(imageVT);
+                ava.setFitWidth(45);
+                ava.setFitHeight(45);
+                other.setAlignment(Pos.CENTER_LEFT);
+                other.setPadding(new Insets(10));
+                other.getChildren().add(ava);
+                other.getChildren().add(vb);
             }
+            onClickFileMessage(message, vb);
         }
     }
     public Image getIconByTypeFile(String fileName){
