@@ -242,24 +242,24 @@ public class HomeController implements Initializable{
     public void addMessage() {
         ListMessage = StartEverything.getSocketController().getMessageData(mainRoom.getId());
         for (MessageData message : ListMessage) {
-            String time = "(" + message.getSend_time().getHour() + ":" + message.getSend_time().getMinute() + ")";
+            String time = message.getSend_time().getHour() + ":" + message.getSend_time().getMinute();
             String name = StartEverything.getSocketController().getNameById(message.getId_user());
             VBox vb = new VBox();
             HBox hBox = new HBox();
-            hBox.setMaxWidth(400);
+            hBox.setMaxWidth(250);
             vb.setId("vb");
             Label lb = new Label(message.getContent());
             if(message.getMessType().equals("text")) vb.getChildren().add(lb);
             else if(message.getMessType().equals("file")){
                 ImageView fileIcon = new ImageView(getIconByTypeFile(message.getContent()));
-                fileIcon.setFitHeight(50);
-                fileIcon.setFitWidth(40);
-                fileIcon.setTranslateY(-8);
+                fileIcon.setFitHeight(40);
+                fileIcon.setFitWidth(35);
                 hBox.getChildren().add(fileIcon);
                 hBox.getChildren().add(lb);
                 vb.getChildren().add(hBox);
             }
             Label lb1 = new Label(time);
+            lb1.setId("time");
             vb.getChildren().add(lb1);
             ChatList.getChildren().add(vb);
             onClickFileMessage(message, vb);

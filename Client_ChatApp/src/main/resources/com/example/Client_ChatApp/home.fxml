@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="main" fx:id="main" prefHeight="801.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.HomeController">
+<AnchorPane id="main" fx:id="main" prefHeight="801.0" prefWidth="1186.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.HomeController">
     <children>
         <Pane prefHeight="800.0" prefWidth="70.0" style="-fx-background-color: #dd4131;">
             <children>
@@ -31,7 +32,7 @@
                 </ImageView>
             </children>
         </Pane>
-        <Pane layoutX="70.0" prefHeight="800.0" prefWidth="260.0" style="-fx-border-color: #d6d6d6;">
+        <Pane layoutX="70.0" prefHeight="800.0" prefWidth="260.0" style="-fx-border-color: #d6d6d6; -fx-background-color: #f4f4f4;">
             <children>
                 <Label layoutX="15.0" layoutY="4.0" text="Chats">
                     <font>
@@ -49,6 +50,9 @@
                      <content>
                         <HBox fx:id="listUserOnlHBox" fillHeight="false" prefHeight="62.0" />
                      </content>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
                   </ScrollPane>
 
                     </children>
@@ -68,7 +72,7 @@
                     </children>
                 </Pane>
             </children></Pane>
-        <Pane id="titlep" fx:id="titlep" layoutX="330.0" prefHeight="75.0" prefWidth="823.0" style="-fx-border-color: #d6d6d6;">
+        <Pane id="titlep" fx:id="titlep" layoutX="330.0" prefHeight="75.0" prefWidth="823.0" style="-fx-border-color: #d6d6d6; -fx-background-color: #fff;">
             <children>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -170,7 +174,7 @@
       </ImageView>
       <ImageView fitHeight="61.0" fitWidth="70.0" layoutX="1303.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true" fx:id="xlsxIcon">
          <image>
-            <Image fx:id="xlsx" url="@icon/xlsx_icon.png" />
+            <Image url="@icon/xlsx_icon.png" fx:id="xlsx" />
          </image></ImageView>
       <ImageView fx:id="txtIcon" fitHeight="61.0" fitWidth="61.0" layoutX="1364.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true">
          <image>

@@ -1,21 +1,24 @@
 #BoxMessageMe{
-    -fx-background-radius: 8;
-    -fx-background-color: #f1c40f;
-    -fx-padding: 15px;
+    -fx-background-radius: 6;
+    -fx-background-color: #dd4131;
+    -fx-text-fill: #fff;
+    -fx-padding: 10px;
     -fx-font-weight: bold;
-    -fx-font-size: 20px;
+    -fx-font-size: 14px;
 }
 
 #BoxMessage{
-    -fx-background-radius: 8;
+    -fx-background-radius: 6;
     -fx-background-color:  #d9d9d9;
-    -fx-padding: 15px;
+    -fx-padding: 10px;
     -fx-font-weight: bold;
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
 }
 
 #time{
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6c6c6c;
 }
 
 #vb{

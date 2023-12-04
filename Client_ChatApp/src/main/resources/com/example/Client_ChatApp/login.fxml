@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="808.0" prefWidth="1154.0" spacing="20.0" style="-fx-background-image: url('Background.png');" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.LoginController">
+<VBox alignment="CENTER" prefHeight="808.0" prefWidth="1154.0" spacing="20.0" style="-fx-background-image: url('Background_old.png');" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.LoginController">
     <Pane prefHeight="808.0" prefWidth="1145.0">
         <children>
-            <ImageView id="imgBG" fitHeight="1150.0" fitWidth="1154.0" layoutX="163.0" layoutY="-174.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;">
+            <ImageView id="imgBG" fitHeight="1150.0" fitWidth="1154.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@Background.png" />
                 </image>
@@ -39,6 +39,11 @@
                             <Font size="30.0" />
                         </font>
                     </PasswordField>
+               <ImageView fitHeight="41.0" fitWidth="23.0" layoutX="804.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@icon/arrow.png" />
+                  </image>
+               </ImageView>
                 </children>
             </Pane>
             <Label id="hello" fx:id="hello" layoutX="188.0" layoutY="167.0" prefHeight="189.0" prefWidth="608.0" text="Bắt đầu cuộc trò chuyện của bạn..." textFill="WHITE" wrapText="true">
@@ -51,7 +56,7 @@
                <Font name="System Italic" size="19.0" />
             </font>
          </Label>
-         <Label onMouseClicked="#onSignupClick" layoutX="556.0" layoutY="767.0" text="Đăng kí!" textFill="#00c42a">
+         <Label layoutX="556.0" layoutY="767.0" onMouseClicked="#onSignupClick" text="Đăng kí!" textFill="#00c42a">
             <font>
                <Font name="System Italic" size="19.0" />
             </font>
