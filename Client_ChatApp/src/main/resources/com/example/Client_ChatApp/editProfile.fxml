@@ -1,14 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.Client_ChatApp.EditProfile"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1150.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Client_ChatApp.controller.EditProfileController">
+   <children>
+      <Pane prefHeight="800.0" prefWidth="70.0" style="-fx-background-color: #dd4131;">
+         <children>
+            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/DT.jpg" />
+               </image></ImageView>
+            <Pane layoutX="13.0" layoutY="680.0" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="25.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/chat.png" />
+                     </image></ImageView>
+               </children></Pane>
+            <Pane layoutX="13.0" layoutY="615.0" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 8; -fx-background-color: #f1c40f;">
+               <children>
+                  <ImageView fitHeight="25.0" fitWidth="30.0" layoutX="8.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/call.png" />
+                     </image></ImageView>
+               </children></Pane>
+            <ImageView fitHeight="38.0" fitWidth="14.0" layoutX="26.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+               <image>
+                  <Image url="@icon/arrow.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane layoutX="70.0" prefHeight="75.0" prefWidth="1081.0" style="-fx-border-color: #d6d6d6; -fx-background-color: #fff;">
+         <opaqueInsets>
+            <Insets bottom="2.0" />
+         </opaqueInsets>
+         <children>
+            <Label layoutX="35.0" layoutY="22.0" text="Chỉnh sửa thông tin tài khoản của bạn!">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <Pane layoutX="171.0" layoutY="133.0" prefHeight="510.0" prefWidth="393.0">
+         <children>
+            <Label layoutY="21.0" text="Ảnh đại diện">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="259.0" fitWidth="257.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/DT.jpg" />
+               </image>
+            </ImageView>
+            <Pane layoutY="412.0" prefHeight="35.0" prefWidth="159.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 6;">
+               <children>
+                  <ImageView fitHeight="24.0" fitWidth="25.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/upload.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="43.0" layoutY="4.0" style="-fx-text-fill: #fff; -fx-font-weight: bold;" text="Tải ảnh mới">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutY="64.0" prefHeight="1.0" prefWidth="200.0" style="-fx-background-color: #d6d6d6;" />
+         </children>
+      </Pane>
+      <Pane layoutX="617.0" layoutY="133.0" prefHeight="510.0" prefWidth="393.0">
+         <children>
+            <Label layoutY="21.0" text="Thông tin tài khoản">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Pane layoutY="412.0" prefHeight="35.0" prefWidth="159.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 6;">
+               <children>
+                  <ImageView fitHeight="24.0" fitWidth="25.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/edit.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="43.0" layoutY="4.0" style="-fx-text-fill: #fff; -fx-font-weight: bold;" text="Chỉnh sửa">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutY="64.0" prefHeight="1.0" prefWidth="200.0" style="-fx-background-color: #d6d6d6;" />
+            <Pane layoutY="88.0" prefHeight="52.0" prefWidth="371.0">
+               <children>
+                  <Label layoutY="13.0" style="-fx-font-weight: bold; -fx-text-fill: #6d6d6d;" text="Họ và tên:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="namelb" layoutX="144.0" layoutY="6.0" style="-fx-font-weight: bold; -fx-background-color: #d9d9d9; -fx-background-radius: 8;" text="Lê Việt Thanh">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+            <Pane layoutY="152.0" prefHeight="52.0" prefWidth="371.0">
+               <children>
+                  <Label layoutY="13.0" style="-fx-font-weight: bold; -fx-text-fill: #6d6d6d;" text="Email:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="emaillb" layoutX="144.0" layoutY="7.0" style="-fx-font-weight: bold; -fx-background-color: #d9d9d9; -fx-background-radius: 8;" text="thanh@gmail.com">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+            <Pane layoutY="222.0" prefHeight="52.0" prefWidth="393.0">
+               <children>
+                  <Label layoutY="13.0" style="-fx-font-weight: bold; -fx-text-fill: #6d6d6d;" text="Tên đăng nhập:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="usernamelb" layoutX="144.0" layoutY="6.0" style="-fx-font-weight: bold; -fx-background-color: #d9d9d9; -fx-background-radius: 8;" text="vietthanh123">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+            <Pane layoutY="301.0" prefHeight="52.0" prefWidth="371.0">
+               <children>
+                  <Label layoutY="13.0" style="-fx-font-weight: bold; -fx-text-fill: #6d6d6d;" text="Mật Khẩu:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="pwdlb" layoutX="144.0" layoutY="6.0" prefHeight="40.0" prefWidth="238.0" style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;" text="123456" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</Pane>

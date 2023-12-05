@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import static com.example.Client_ChatApp.controller.HomeController.getLastName;
-
 public class SocketController {
     private static Client client;
     private static ServerData connectedServer;
@@ -407,7 +405,7 @@ public class SocketController {
         clientSelected.add(client);
         String nameRoomBase = "";
         for(Client client1 : clientSelected){
-            String lastName = getLastName(client1.getName());
+            String lastName = ClientController.getLastName(client1.getName());
             nameRoomBase += lastName;
             nameRoomBase += ", ";
         }
@@ -565,10 +563,5 @@ public class SocketController {
     }
     public ArrayList<Room> getRoomList(){
         return connectedServer.getRooms();
-    }
-    public String getLastName(String name){
-        String Lastname = "";
-        for(String e : name.split(" ")) Lastname = e;
-        return Lastname;
     }
 }
