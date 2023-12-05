@@ -27,6 +27,20 @@ public class RoomDetailDAO {
             throw new RuntimeException(e);
         }
     }
+    public static void addUserToExistedRoom(Room room, ArrayList<Client> clientsSelected){
+        try{
+            Connection conn = connectMySQL.connectSQL();
+
+            // insert vào room detail
+            for(Client client : clientsSelected){
+                String sql = "INSERT INTO room_detail(Id_room, Id_user) VALUES ('" + room.getID_room() + "','" + client.getId() + "')";
+                Statement statement2 = conn.createStatement();
+                statement2.executeUpdate(sql);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static ArrayList<String> returnMyRooms(String id_user){
         int n = 0;
         ArrayList<String> roomIDs = new ArrayList<String>();
