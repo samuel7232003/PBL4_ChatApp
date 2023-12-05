@@ -26,7 +26,9 @@ public class Room {
         this.clientNum = clientNum;
         this.roomType = roomType;
     }
-
+    public void plusClientNum(int clientCnt){
+        this.clientNum += clientCnt;
+    }
     public String getID_room() {
         return ID_room;
     }

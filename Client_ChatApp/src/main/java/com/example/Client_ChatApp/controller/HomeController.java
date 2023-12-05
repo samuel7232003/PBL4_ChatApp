@@ -350,9 +350,15 @@ public class HomeController implements Initializable{
             }
             i++;
         }
-        if(mainRoom.getType().equals("private")) StartEverything.getSocketController().createGroup(clientSelected);
+
+        if(mainRoom.getType().equals("private")){
+            for(Client client1 : mainRoom.getClients()){
+                if(!client1.getId().equals(client.getId())) clientSelected.add(client1);
+            }
+            StartEverything.getSocketController().createGroup(clientSelected);
+        }
         else if(mainRoom.getType().equals("group")){
-            //viết hàm gủi về thêm vô gr
+            StartEverything.getSocketController().addToGroup(mainRoom.getId(), clientSelected);
         }
     }
     public void uploadFile(){

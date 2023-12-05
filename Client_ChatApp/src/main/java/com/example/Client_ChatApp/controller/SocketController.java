@@ -302,6 +302,58 @@ public class SocketController {
                                 reloadOnSocket();
                                 break;
                             }
+
+                            case "new user to room":{
+                                String idRoom = bufferedReader.readLine();
+                                int newUserToRoom = Integer.parseInt(bufferedReader.readLine());
+                                ArrayList<String> clientID = new ArrayList<String>();
+                                for(int i = 0; i < newUserToRoom ; i++){
+                                    clientID.add(bufferedReader.readLine());
+                                }
+
+                                Room room = RoomController.findRoom(connectedServer.getRooms(), idRoom);
+                                System.out.println("Các user được thêm vào gr " + idRoom);
+                                for(String id : clientID){
+                                    System.out.println(id);
+                                    room.getClients().add(ClientController.getClientById(connectedServer.getClients(), id));
+                                }
+                                reloadOnSocket();
+                                break;
+                            }
+
+                            case "join to room": {
+                                String idRoom = bufferedReader.readLine();
+                                String nameRoom = bufferedReader.readLine();
+                                int clientCNT = Integer.parseInt(bufferedReader.readLine());
+                                ArrayList<String> userIDs = new ArrayList<String>();
+                                for (int i = 0; i < clientCNT; i++)
+                                    userIDs.add(bufferedReader.readLine());
+
+                                ArrayList<Client> clientlist = new ArrayList<Client>();
+                                for(String userID : userIDs){
+                                    for(Client client1 : connectedServer.getClients()){
+                                        if(client1.getId().equals(userID)){
+                                            clientlist.add(client1);
+                                            continue;
+                                        }
+                                    }
+                                }
+
+                                ArrayList<MessageData> messageDatas = new ArrayList<MessageData>();
+                                int messageCnt = Integer.parseInt(bufferedReader.readLine());
+                                for(int i = 0 ; i < messageCnt ; i++){
+                                    String idUserSend = bufferedReader.readLine();
+                                    String content = bufferedReader.readLine();
+                                    String messType = bufferedReader.readLine();
+                                    int messOrder = Integer.parseInt(bufferedReader.readLine());
+                                    LocalDateTime timesend = LocalDateTime.parse(bufferedReader.readLine());
+                                    MessageData messageData = new MessageData(messOrder, idUserSend, content, messType, timesend);
+                                    messageDatas.add(messageData);
+                                }
+                                Room room = new Room(idRoom, nameRoom, "group", clientlist, messageDatas);
+                                reloadOnSocket();
+                                break;
+                            }
                             case "text from user to room": {
                                 String idUserSend = bufferedReader.readLine();
                                 String roomID = bufferedReader.readLine();
@@ -330,13 +382,7 @@ public class SocketController {
                                 LocalDateTime timenow = LocalDateTime.now();
                                 MessageData messageData = new MessageData(userID, fileName, "file", timenow);
                                 receiveRoom.getMessageDatas().add(messageData);
-                                Platform.runLater(() ->{
-                                    try {
-                                        StartEverything.getHomeController().reload();
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
+                                reloadOnSocket();
                                 break;
                             }
                             case "response download file": {
