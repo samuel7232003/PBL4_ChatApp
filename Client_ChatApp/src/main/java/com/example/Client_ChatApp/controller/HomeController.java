@@ -184,8 +184,6 @@ public class HomeController implements Initializable{
                 try {
                     start = true;
                     mainRoom = RoomController.findRoom(StartEverything.getSocketController().getRoomList(), room.getId());
-                    System.out.println(room.getId());
-                    StartEverything.getSocketController().selectRoom(room.getId());
                     reload();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -351,8 +349,10 @@ public class HomeController implements Initializable{
             }
             i++;
         }
-        clientSelected.add(RoomController.findOtherUserRoom(mainRoom, client).get(0));
-        StartEverything.getSocketController().createGroup(clientSelected);
+        if(mainRoom.getType().equals("private")) StartEverything.getSocketController().createGroup(clientSelected);
+        else if(mainRoom.getType().equals("group")){
+            //viết hàm gủi về thêm vô gr
+        }
     }
     public void uploadFile(){
         FileChooser fc = new FileChooser();

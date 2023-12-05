@@ -44,6 +44,18 @@ public class ClientController {
         }
         return null;
     }
+    public static ArrayList<Client> getClietsById(ArrayList<String> idClient){
+        ArrayList<Client> clients = new ArrayList<Client>();
+        for(String clientID : idClient){
+            for(Client client : SocketController.getAllClient()){
+                if(client.getId().equals(clientID)){
+                    clients.add(client);
+                    continue;
+                }
+            }
+        }
+        return clients;
+    }
     public static boolean checkClientIsLogin(String idUser){
         return ClientDAO.CheckLogin(idUser);
     }

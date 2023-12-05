@@ -274,6 +274,23 @@ public class HandlerController extends Thread {
                         }
                         break;
                     }
+                    case "request add to room": {
+                        String idRoom = bufferedReader.readLine();
+                        int cnt = Integer.parseInt(bufferedReader.readLine());
+
+                        ArrayList<String> clientId = new ArrayList<String>();
+
+                        for (int i = 0; i < cnt; i++) clientId.add(bufferedReader.readLine());
+                        // viết hàm thêm vào db
+
+                        // íeeets hàm để gửi về add đứa mới
+                        Room room = RoomController.findRoom(SocketController.getAllRooms(), idRoom);
+                        ArrayList<Client> clients = ClientController.getClietsById(clientId);
+                        for(Client client1 : clients)   room.getClients().add(client1);
+                        RoomController.addUserToRoom(room, clients);
+
+                        // for()
+                    }
                     // gửi text
                     case "text to room": {
                         String roomID = bufferedReader.readLine();

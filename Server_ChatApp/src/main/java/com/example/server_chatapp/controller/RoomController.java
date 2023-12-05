@@ -11,19 +11,15 @@ import java.util.ArrayList;
 
 public class RoomController {
     public static Room createRoom(String nameRoom,ArrayList<String> clientId, String roomType){
-        ArrayList<Client> clients = new ArrayList<Client>();
-        for(String clientID : clientId){
-            for(Client client : SocketController.getAllClient()){
-                if(client.getId().equals(clientID)){
-                    clients.add(client);
-                    continue;
-                }
-            }
-        }
+        ArrayList<Client> clients = ClientController.getClietsById(clientId);
         Room room = new Room(nameRoom, clientId.size(), roomType, clients);
         room = RoomDAO.CreateRoom(room);
         RoomDetailDAO.InsertRoomDetail(room);
         return room;
+    }
+    public static void addUserToRoom(Room room, ArrayList<Client> clientsSelected){
+        RoomDAO.UpdateRoom(room);
+        RoomDetailDAO.addUserToExistedRoom(room, clientsSelected);
     }
     public static String createIdRoom(String ID_roomLast){
         int numRoom = Integer.parseInt(ID_roomLast.substring(2));

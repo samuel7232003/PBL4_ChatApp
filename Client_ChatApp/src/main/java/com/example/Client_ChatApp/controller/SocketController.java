@@ -428,6 +428,24 @@ public class SocketController {
             ex.printStackTrace();
         }
     }
+    public void addToGroup(String idRoom, ArrayList<Client> clientSelected){
+        try {
+            bufferedWriter.write("request add to room");
+            bufferedWriter.newLine();
+            bufferedWriter.write(idRoom);
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + clientSelected.size());
+            bufferedWriter.newLine();
+            for(Client client1 : clientSelected){
+                bufferedWriter.write(client1.getId());
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     public void sendTextToRoom(String roomID, String content) {
         try {
             bufferedWriter.write("text to room");
@@ -478,7 +496,6 @@ public class SocketController {
     }
 
     public void downloadFile(String roomID, int fileMessageIndex, String fileName, String downloadToPath) {
-
         this.downloadToPath = downloadToPath + "/" + fileName;
         try {
             bufferedWriter.write("request download file");
@@ -505,11 +522,6 @@ public class SocketController {
             return true;
         }
     }
-
-    public void selectRoom(String id_room){
-        updateRoomUsersJList(id_room);
-    }
-
     public void clickEnterChat(String roomId, String content){
         Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
         System.out.println(roomId + ": " + content);
@@ -518,24 +530,6 @@ public class SocketController {
     public ArrayList<MessageData> getMessageData(String roomId){
         Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomId);
         return receiveRoom.getMessageDatas();
-    }
-    public void updateRoomUsersJList(String id_room) {
-        System.out.println("updateRoomUsersJList");
-        Room theChattingRoom = RoomController.findRoom(connectedServer.getRooms(), id_room);
-        String name ="";
-        if (theChattingRoom != null) {
-            ArrayList<Client> clients = theChattingRoom.getClients();
-            // update dữ liệu của các message trong đoạn chat ra ngoài màn hình
-            for(MessageData messageData:theChattingRoom.getMessageDatas()){
-                for(Client client1:clients){
-                    if(messageData.getId_user().equals(client1.getId())){
-                        name = client1.getName();
-                        break;
-                    }
-                }
-                System.out.println(name + ": " +messageData.getContent()); // sysout ra người gửi và content
-            }
-        }
     }
 
     public Client getClient() {

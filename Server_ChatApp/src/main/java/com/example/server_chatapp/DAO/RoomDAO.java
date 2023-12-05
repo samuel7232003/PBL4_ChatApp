@@ -55,6 +55,17 @@ public class RoomDAO {
             throw new RuntimeException(e);
         }
     }
+    public static void UpdateRoom(Room room){
+        try{
+            Connection conn = connectMySQL.connectSQL();
+            // search ID last
+            String sql_selectLastObj = "UPDATE room SET ClientNum='" + room.getClientNum() + "' WHERE ID_room = '" + room.getID_room() + "'";
+            Statement statement1 = conn.createStatement();
+            statement1.executeUpdate(sql_selectLastObj);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static ArrayList<Room> searchRoom(ArrayList<String> roomIDs){
         try {
             Connection conn = connectMySQL.connectSQL();
