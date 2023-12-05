@@ -38,4 +38,19 @@ public class RoomController {
         return null;
     }
 
+    public static ArrayList<Client> findOtherUserRoom(Room room, Client client ){
+        ArrayList<Client> clients = new ArrayList<>();
+        for (Client client1 : room.getClients()){
+            if(!client1.getId().equals(client.getId())) clients.add(client1);
+        }
+        return clients;
+    }
+
+    public static ArrayList<Client> listUserRemoveListUser(ArrayList<Client> listA, ArrayList<Client> listB){
+        ArrayList<Client> listC = new ArrayList<Client>(listA);
+        for (Client clientA : listA){
+            for (Client clientB : listB) if (clientA.getId().equals(clientB.getId())) listC.remove(clientA);
+        }
+        return listC;
+    }
 }

@@ -335,7 +335,9 @@ public class HomeController implements Initializable{
         else addUserMenu.setLayoutX(1160);
         addUserMenu.toFront();
         CBList = new ArrayList<CheckBox>();
-        for(Client client1 : StartEverything.getSocketController().getConnectedServer().getClients()){
+        ArrayList<Client> listUserToAdd = new ArrayList<Client>();
+        listUserToAdd = RoomController.listUserRemoveListUser(StartEverything.getSocketController().getConnectedServer().getClients(), mainRoom.getClients());
+        for(Client client1 : listUserToAdd){
             HBox itemUserHBox = new HBox();
             itemUserHBox.setId("itemUserHBox");
             itemUserHBox.setAlignment(Pos.CENTER_LEFT);

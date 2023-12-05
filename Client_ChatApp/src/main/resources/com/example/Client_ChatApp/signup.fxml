@@ -14,14 +14,14 @@
                   </image>
               </ImageView>
 
-            <Pane id="login-main" layoutX="168.0" layoutY="328.0" minHeight="343.0" minWidth="871.0" prefHeight="430.0" prefWidth="845.0" style="-fx-background-color: white; -fx-min-height: 250; -fx-min-width: 400; -fx-background-radius: 24px;">
+            <Pane id="login-main" layoutX="168.0" layoutY="328.0" minHeight="343.0" minWidth="871.0" prefHeight="430.0" prefWidth="845.0" style="-fx-background-color: white; -fx-min-height: 250; -fx-min-width: 400; -fx-background-radius: 10;">
                 <children>
-                    <TextField id="fullnametxt" fx:id="fullnametxt" layoutX="251.0" layoutY="14.0" prefHeight="70.0" prefWidth="501.0" promptText="Họ và tên" style="-fx-background-color: #d9d9d9; -fx-background-radius: 16px;">
+                    <TextField id="fullnametxt" fx:id="fullnametxt" layoutX="251.0" layoutY="14.0" prefHeight="70.0" prefWidth="501.0" promptText="Họ và tên" style="-fx-background-color: #d9d9d9; -fx-background-radius: 10;">
                         <font>
                             <Font size="30.0" />
                         </font>
                     </TextField>
-                    <TextField id="gmailtxt" fx:id="gmailtxt" layoutX="251.0" layoutY="96.0" minHeight="70.0" minWidth="501.0" prefHeight="70.0" prefWidth="501.0" promptText="Gmail" style="-fx-min-width: 400; -fx-background-radius: 16px; -fx-background-color: #d9d9d9;">
+                    <TextField id="gmailtxt" fx:id="gmailtxt" layoutX="251.0" layoutY="96.0" minHeight="70.0" minWidth="501.0" prefHeight="70.0" prefWidth="501.0" promptText="Gmail" style="-fx-min-width: 400; -fx-background-radius: 10; -fx-background-color: #d9d9d9;">
                         <font>
                             <Font size="30.0" />
                         </font></TextField>
@@ -39,16 +39,16 @@
                             <Font name="System Italic" size="14.0" />
                         </font>
                     </Label>
-                    <TextField id="usernametxt" fx:id="usernametxt" layoutX="251.0" layoutY="178.0" prefHeight="59.0" prefWidth="501.0" promptText="Tên đăng nhập" style="-fx-min-width: 400; -fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                    <TextField id="usernametxt" fx:id="usernametxt" layoutX="251.0" layoutY="178.0" prefHeight="59.0" prefWidth="501.0" promptText="Tên đăng nhập" style="-fx-min-width: 400; -fx-background-radius: 10; -fx-background-color: #d9d9d9;">
                         <font>
                             <Font size="30.0" />
                         </font></TextField>
-                    <PasswordField id="pwdtxt" fx:id="pwdtxt" layoutX="251.0" layoutY="254.0" prefHeight="58.0" prefWidth="501.0" promptText="Mật khẩu" style="-fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                    <PasswordField id="pwdtxt" fx:id="pwdtxt" layoutX="251.0" layoutY="254.0" prefHeight="58.0" prefWidth="501.0" promptText="Mật khẩu" style="-fx-background-radius: 10; -fx-background-color: #d9d9d9;">
                         <font>
                             <Font size="30.0" />
                         </font>
                     </PasswordField>
-                    <PasswordField id="repwdtxt" fx:id="repwdtxt" layoutX="251.0" layoutY="328.0" prefHeight="57.0" prefWidth="501.0" promptText="Xác nhận mật khẩu" style="-fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                    <PasswordField id="repwdtxt" fx:id="repwdtxt" layoutX="251.0" layoutY="328.0" prefHeight="57.0" prefWidth="501.0" promptText="Xác nhận mật khẩu" style="-fx-background-radius: 10; -fx-background-color: #d9d9d9;">
                         <font>
                             <Font size="30.0" />
                         </font>
