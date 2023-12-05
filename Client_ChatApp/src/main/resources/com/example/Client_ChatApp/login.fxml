@@ -14,7 +14,7 @@
                 </image>
             </ImageView>
 
-            <Pane id="login-main" layoutX="155.0" layoutY="502.0" minHeight="228.0" minWidth="871.0" prefHeight="228.0" prefWidth="845.0" style="-fx-background-color: white; -fx-min-height: 250; -fx-min-width: 400; -fx-background-radius: 24px;">
+            <Pane id="login-main" layoutX="155.0" layoutY="502.0" minHeight="228.0" minWidth="871.0" prefHeight="228.0" prefWidth="845.0" style="-fx-background-color: white; -fx-min-height: 250; -fx-min-width: 400; -fx-background-radius: 10;">
                 <children>
                     <Label layoutX="55.0" layoutY="31.0" prefHeight="179.0" prefWidth="172.0" style="-fx-font-weight: bold;" text="ĐĂNG NHẬP" textAlignment="CENTER" wrapText="true">
                         <font>
@@ -30,11 +30,11 @@
                             <Font name="System Italic" size="14.0" />
                         </font>
                     </Label>
-                    <TextField id="usernametxtlo" fx:id="usernametxtlo" layoutX="251.0" layoutY="31.0" prefHeight="59.0" prefWidth="501.0" promptText="Tên đăng nhập" style="-fx-min-width: 400; -fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                    <TextField id="usernametxtlo" fx:id="usernametxtlo" layoutX="251.0" layoutY="31.0" prefHeight="59.0" prefWidth="501.0" promptText="Tên đăng nhập" style="-fx-min-width: 400; -fx-background-radius: 10; -fx-background-color: #d9d9d9;">
                         <font>
                             <Font size="30.0" />
                         </font></TextField>
-                    <PasswordField id="pwdtxtlo" fx:id="pwdtxtlo" layoutX="251.0" layoutY="120.0" prefHeight="58.0" prefWidth="501.0" promptText="Mật khẩu" style="-fx-background-radius: 16; -fx-background-color: #d9d9d9;">
+                    <PasswordField id="pwdtxtlo" fx:id="pwdtxtlo" layoutX="251.0" layoutY="120.0" prefHeight="58.0" prefWidth="501.0" promptText="Mật khẩu" style="-fx-background-radius: 10; -fx-background-color: #d9d9d9;">
                         <font>
                             <Font size="30.0" />
                         </font>
