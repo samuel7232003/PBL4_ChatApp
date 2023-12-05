@@ -320,7 +320,7 @@ public class HomeController implements Initializable{
         addUserMenu.toFront();
         CBList = new ArrayList<CheckBox>();
         ArrayList<Client> listUserToAdd = new ArrayList<Client>();
-        listUserToAdd = RoomController.listUserRemoveListUser(StartEverything.getSocketController().getConnectedServer().getClients(), mainRoom.getClients());
+        listUserToAdd  = RoomController.listUserRemoveListUser(StartEverything.getSocketController().getConnectedServer().getClients(), mainRoom.getClients());
         for(Client client1 : listUserToAdd){
             HBox itemUserHBox = new HBox();
             itemUserHBox.setId("itemUserHBox");
@@ -340,12 +340,13 @@ public class HomeController implements Initializable{
     }
     public void addUsers(){
         int i = 0;
-        ArrayList<Client> clients = StartEverything.getSocketController().getConnectedServer().getClients();
+        ArrayList<Client> listUserToAdd = new ArrayList<Client>();
+        listUserToAdd  = RoomController.listUserRemoveListUser(StartEverything.getSocketController().getConnectedServer().getClients(), mainRoom.getClients());
         ArrayList<Client> clientSelected = new ArrayList<Client>();
         for(CheckBox CB:CBList){
             if(CB.isSelected()==true){
-                System.out.println(clients.get(i).getId());
-                clientSelected.add(clients.get(i));
+                System.out.println(listUserToAdd.get(i).getId());
+                clientSelected.add(listUserToAdd.get(i));
             }
             i++;
         }
