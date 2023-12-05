@@ -74,7 +74,7 @@ public class HomeController implements Initializable{
         client = StartEverything.getSocketController().getClient();
         setup();
         if(mainRoom == null) main_name.setText("room trong");
-        else main_name.setText(findRoomName(mainRoom));
+        else main_name.setText(RoomController.findRoomName(mainRoom));
         int i = 1;
         for(Room room : StartEverything.getSocketController().getConnectedServer().getRooms()){
             viewListRoom(room);
@@ -95,17 +95,6 @@ public class HomeController implements Initializable{
         stage1.setTitle(client.getName());
     }
 
-    public String findRoomName(Room room){
-        if (room.getType().equals("private")){
-            for(Client client1 : room.getClients()){
-                if (!client1.getId().equals(client.getId())){
-                    return client1.getName();
-                }
-            }
-        }
-        else return room.getName();
-        return "loi";
-    }
     public void viewItemUserOnl(Client client1){
         if(client1.isStatus()){
             VBox itemUser = new VBox();
@@ -127,7 +116,7 @@ public class HomeController implements Initializable{
             cir.setLayoutY(40);
             cir.setFill(Paint.valueOf("#37b916"));
             itemUser.getChildren().add(ava);
-            Label name = new Label(getLastName(client1.getName()));
+            Label name = new Label(ClientController.getLastName(client1.getName()));
             itemUser.getChildren().add(name);
             itemUser.setId(client1.getId());
             itemUser.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -155,11 +144,6 @@ public class HomeController implements Initializable{
         }
         else System.out.println("rong");
     }
-    public static String getLastName(String name){
-        String Lastname = "";
-        for(String e : name.split(" ")) Lastname = e;
-        return Lastname;
-    }
 
     public void viewListRoom(Room room){
         Pane itemRoom = new Pane();
@@ -169,7 +153,7 @@ public class HomeController implements Initializable{
         itemRoom.getChildren().add(ava);
         ava.setLayoutX(14);
         ava.setLayoutY(12);
-        Label name = new Label(findRoomName(room));
+        Label name = new Label(RoomController.findRoomName(room));
         name.setPrefWidth(160);
         name.setStyle("-fx-font-weight: bold;" +
                 "    -fx-font-size: 18px;");
@@ -213,7 +197,7 @@ public class HomeController implements Initializable{
         String rs = "";
         if(messageData != null){
             if(messageData.getId_user().equals(client.getId())) rs  = "Bạn: ";
-            else rs = getLastName(StartEverything.getSocketController().getNameById(messageData.getId_user())) + ": ";
+            else rs = ClientController.getLastName(StartEverything.getSocketController().getNameById(messageData.getId_user())) + ": ";
             return rs + messageData.getContent();
         }
         return "";
@@ -393,5 +377,12 @@ public class HomeController implements Initializable{
             String filePath = file.getPath();
             StartEverything.getSocketController().sendFileToRoom(mainRoom.getId(), fileName, filePath);
         }
+    }
+
+    public void openEditPage(MouseEvent mouseEvent) throws IOException {
+        Stage stage1 = (Stage)((Node) mouseEvent.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("editProfile.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
+        stage1.setScene(scene);
     }
 }

@@ -53,4 +53,16 @@ public class RoomController {
         }
         return listC;
     }
+
+    public static String findRoomName(Room room){
+        if (room.getType().equals("private")){
+            for(Client client1 : room.getClients()){
+                if (!client1.getId().equals(StartEverything.getSocketController().getClient().getId())){
+                    return client1.getName();
+                }
+            }
+        }
+        else return room.getName();
+        return "loi";
+    }
 }
