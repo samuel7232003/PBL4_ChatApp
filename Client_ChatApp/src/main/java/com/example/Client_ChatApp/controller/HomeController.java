@@ -358,7 +358,7 @@ public class HomeController implements Initializable{
         int i = 0;
         ArrayList<Client> clients = StartEverything.getSocketController().getConnectedServer().getClients();
         ArrayList<Client> clientSelected = new ArrayList<Client>();
-        for(CheckBox CB:CBList){
+        for(CheckBox CB : CBList){
             if(CB.isSelected()==true){
                 System.out.println(clients.get(i).getId());
                 clientSelected.add(clients.get(i));
