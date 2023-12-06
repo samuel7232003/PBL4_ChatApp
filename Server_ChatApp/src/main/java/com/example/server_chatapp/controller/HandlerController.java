@@ -93,6 +93,10 @@ public class HandlerController extends Thread {
                                 this.bufferedWriter.newLine();
                                 this.bufferedWriter.write(client.getName());
                                 this.bufferedWriter.newLine();
+                                this.bufferedWriter.write(client.getEmail());
+                                this.bufferedWriter.newLine();
+                                this.bufferedWriter.write(client.getPassword());
+                                this.bufferedWriter.newLine();
                                 this.bufferedWriter.flush();
 
 //                              Hiện số lượng người đang onl - 1 nghĩa là trừ thằng thằng mà đang nhắn
