@@ -12,7 +12,7 @@
          <children>
             <ImageView fx:id="clientAva1" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/DT.jpg" />
+                  <Image fx:id="avaImage" url="@avatar/avatar.jpg" />
                </image></ImageView>
             <Pane layoutX="13.0" layoutY="680.0" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
                <children>

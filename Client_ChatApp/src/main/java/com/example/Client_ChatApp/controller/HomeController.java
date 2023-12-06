@@ -76,12 +76,12 @@ public class HomeController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         client = StartEverything.getSocketController().getClient();
+        clientAva.setImage(getAvaImage(client.getId()));
         setup();
         if(mainRoom == null) main_name.setText("room trong");
         else{
             main_name.setText(RoomController.findRoomName(mainRoom));
             mainAva.setImage(findAvaRoom(mainRoom));
-            clientAva.setImage(getAvaImage(client.getId()));
         }
         int i = 1;
         for(Room room : StartEverything.getSocketController().getConnectedServer().getRooms()){

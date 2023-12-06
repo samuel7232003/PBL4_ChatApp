@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -36,12 +37,13 @@ public class EditProfileController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ArrayList<Client> clients = new ArrayList<Client>(StartEverything.getSocketController().getConnectedServer().getClients());
         for(Client client1 : clients) System.out.println(client1.getId());
-        client = ClientController.getClientById(clients, StartEverything.getSocketController().getClient().getId());
-//        System.out.println(StartEverything.getSocketController().getClient().getId());
-//        namelb.setText(client.getName());
-//        emaillb.setText(client.getEmail());
-//        usernamelb.setText(client.getUsername());
-//        pwdlb.setText(client.getPassword());
+        client = StartEverything.getSocketController().getClient();
+        clientAva.setImage(getAvaImage(client.getId()));
+        clientAva1.setImage(getAvaImage(client.getId()));
+        namelb.setText(client.getName());
+        emaillb.setText(client.getEmail());
+        usernamelb.setText(client.getUsername());
+        pwdlb.setText(client.getPassword());
     }
 
     public void openHomePage(MouseEvent mouseEvent) throws IOException {
@@ -49,5 +51,27 @@ public class EditProfileController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
         stage1.setScene(scene);
+    }
+
+    @FXML
+    Image avaImage;
+
+    public Image getAvaImage(String idUser){
+        String prePath = avaImage.getUrl();
+        String path = "";
+        int i = 1;
+        for(String e : prePath.split("/")){
+            if(i<prePath.split("/").length){
+                if(i==1) path=path+e;
+                else path=path+"/"+e;
+            }
+            i++;
+        }
+        path = path + "/" + "ava" + idUser + ".jpg";
+        Image image = new Image(path);
+        if(image.isError()){
+            return avaImage;
+        }
+        return image;
     }
 }
