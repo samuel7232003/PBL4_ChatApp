@@ -39,7 +39,13 @@ public class Client {
         return name;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getEmail() {
         return email;

@@ -203,6 +203,8 @@ public class SocketController {
                 System.out.println("Đăng nhập thành công!");
                 client.setId(bufferedReader.readLine());
                 client.setName(bufferedReader.readLine());
+                client.setEmail(bufferedReader.readLine());
+                client.setPassword(bufferedReader.readLine());
                 connectedServer.setOpen(true);
                 getAllUsers();
                 getRoomExisted();
