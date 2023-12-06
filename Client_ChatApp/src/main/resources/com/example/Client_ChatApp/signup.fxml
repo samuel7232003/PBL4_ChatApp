@@ -29,7 +29,7 @@
                         <font>
                             <Font size="46.0" />
                         </font></Label>
-                    <Button id="submit" layoutX="785.0" mnemonicParsing="false" onAction="#signup" prefHeight="430.0" prefWidth="60.0" style="-fx-font-weight: bold; -fx-min-width: 60; -fx-min-height: 300; -fx-border-color: none; -fx-background-color: #F1c40F; -fx-text-fill: white; -fx-background-radius: 0 24 24 0;" textAlignment="CENTER" textFill="WHITE">
+                    <Button id="submit" layoutX="785.0" mnemonicParsing="false" onAction="#signup" prefHeight="430.0" prefWidth="60.0" style="-fx-font-weight: bold; -fx-min-width: 60; -fx-min-height: 300; -fx-border-color: none; -fx-background-color: #F1c40F; -fx-text-fill: white; -fx-background-radius: 0 10 10 0;" textAlignment="CENTER" textFill="WHITE">
                         <font>
                             <Font name="System Bold" size="19.0" />
                         </font>
