@@ -284,14 +284,63 @@ public class HandlerController extends Thread {
 
                         // íeeets hàm để gửi về add đứa mới
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), idRoom);
+                        room.plusClientNum(cnt);
                         ArrayList<Client> clientOld = room.getClients();
 
                         ArrayList<Client> clientNew = ClientController.getClietsById(clientId);
                         for(Client client1 : clientNew)   room.getClients().add(client1);
                         RoomController.addUserToRoom(room, clientNew);
-                        // gửi thông tin về các client cũ là cs thêm các client mới vo
+                        // gửi thông tin về các client cũ là có thêm các client mới vo
+                        for(Client client1 : clientOld){
+                            HandlerController handlerControllerFinal = SocketController.getHandlerClient(client1.getId());
+                            if(handlerControllerFinal != null){
+                                handlerControllerFinal.getBufferedWriter().write("new user to room");
+                                handlerControllerFinal.getBufferedWriter().newLine();
+                                handlerControllerFinal.getBufferedWriter().write(room.getID_room());
+                                handlerControllerFinal.getBufferedWriter().newLine();
+                                handlerControllerFinal.getBufferedWriter().write("" + clientNew.size());
+                                handlerControllerFinal.getBufferedWriter().newLine();
+                                for(Client client11 : clientNew){
+                                    handlerControllerFinal.getBufferedWriter().write(client11.getId());
+                                    handlerControllerFinal.getBufferedWriter().newLine();
+                                }
+                                handlerControllerFinal.getBufferedWriter().flush();
+                            }
+                        }
+                        // gửi thông tin về các client mới là room chat mới
+                        bufferedWriter.write("join to room");
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(idRoom);
+                        bufferedWriter.newLine();
+                        bufferedWriter.write(room.getRoomName());
+                        bufferedWriter.newLine();
+                        bufferedWriter.write("" + (room.getClients().size()-1));
+                        bufferedWriter.newLine();
+                        // gửi thông tin tất cả client có trong room về
+                        for(Client client1 : room.getClients()) {
+                            if (!client1.getId().equals(client.getId())){
+                                bufferedWriter.write(client1.getId());
+                                bufferedWriter.newLine();
+                            }
+                        }
+                        bufferedWriter.flush();
 
-                        // gửi thông tin về các client mới là thôgn tin chat
+                        bufferedWriter.write("" + room.getMessages().size());
+                        bufferedWriter.newLine();
+                        for(RoomMessage roomMessage : room.getMessages()){
+                            bufferedWriter.write(roomMessage.getId_userSend());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(roomMessage.getContent());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write(roomMessage.getMessType());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write("" + roomMessage.getMessageOrder());
+                            bufferedWriter.newLine();
+                            bufferedWriter.write("" + roomMessage.getTimeSend());
+                            bufferedWriter.newLine();
+                        }
+                        bufferedWriter.flush();
+                        break;
                     }
                     // gửi text
                     case "text to room": {
