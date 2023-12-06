@@ -25,7 +25,7 @@
                                 <Image url="@icon/chat.png" />
                             </image></ImageView>
                     </children></Pane>
-                <ImageView onMouseClicked="#openEditPage" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" onMouseClicked="#openEditPage" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image fx:id="imageDT" url="@image/DT.jpg" />
                     </image>
@@ -64,7 +64,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                  <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="34.0" prefHeight="571.0" prefWidth="253.0" style="-fx-border-color: #fff;">
+                  <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="34.0" prefHeight="571.0" prefWidth="253.0" style="-fx-border-color: #fff;" vbarPolicy="NEVER">
                      <content>
                         <VBox fx:id="listRoomVBox" prefWidth="245.0" />
                      </content>
@@ -143,7 +143,7 @@
             </Label>
             <ScrollPane layoutX="16.0" layoutY="40.0" prefHeight="247.0" prefWidth="266.0" style="-fx-background-color: #d6d6d6;">
                <content>
-                  <VBox fx:id="listUser" prefHeight="155.0" prefWidth="248.0" style="-fx-background-color: #fff;" />
+                  <VBox fx:id="listUser" prefHeight="155.0" prefWidth="248.0" />
                </content>
             </ScrollPane>
             <Button layoutX="235.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#addUsers" style="-fx-background-color: #f1c40f;" text="Thêm" textFill="WHITE">
