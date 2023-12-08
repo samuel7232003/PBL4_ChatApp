@@ -559,7 +559,11 @@ public class HomeController implements Initializable{
     private HBox timelineBar;
     @FXML
     private Pane pauseBtn;
+    boolean isRecord = false;
+    byte[] AudioByte;
     public void startRecord(){
+        isRecord = true;
+        AudioController.startRecord();
         footerp.setLayoutY(843);
         recordBar.setLayoutY(743);
         long startTime = System.currentTimeMillis();
@@ -586,6 +590,8 @@ public class HomeController implements Initializable{
         time.setUserData(timeline);
     }
     public void pauseRecord(){
+        isRecord = false;
+        this.AudioByte = AudioController.stopRecord();
         Timeline timeline = (Timeline) time.getUserData();
         pauseBtn.setVisible(false);
         timeline.pause();
@@ -595,5 +601,9 @@ public class HomeController implements Initializable{
         Timeline timeline = (Timeline) time.getUserData();
         timeline.stop();
         reload();
+    }
+    public void sendRecordToRoom(){
+        isRecord = false;
+        StartEverything.getSocketController().sendAudioToRoom(mainRoom.getId(), this.AudioByte);
     }
 }
