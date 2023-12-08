@@ -64,6 +64,10 @@ public class HomeController implements Initializable{
     private Image imageVT;
     @FXML
     private Image imageDT;
+    @FXML
+    private ImageView mainAva;
+    @FXML
+    private ImageView clientAva;
 
     public void setMainRoom(Room mainRoom) {
         HomeController.mainRoom = mainRoom;
@@ -72,9 +76,13 @@ public class HomeController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         client = StartEverything.getSocketController().getClient();
+        clientAva.setImage(getAvaImage(client.getId()));
         setup();
         if(mainRoom == null) main_name.setText("room trong");
-        else main_name.setText(RoomController.findRoomName(mainRoom));
+        else{
+            main_name.setText(RoomController.findRoomName(mainRoom));
+            mainAva.setImage(findAvaRoom(mainRoom));
+        }
         int i = 1;
         for(Room room : StartEverything.getSocketController().getConnectedServer().getRooms()){
             viewListRoom(room);
@@ -94,14 +102,48 @@ public class HomeController implements Initializable{
         Stage stage1 = StartEverything.getSocketController().getStage();
         stage1.setTitle(client.getName());
     }
+    @FXML
+    Image avaImage;
+    @FXML
+    Image avaGroupImg;
 
+    public Image getAvaImage(String idUser){
+        String prePath = avaImage.getUrl();
+        String path = "";
+        int i = 1;
+        for(String e : prePath.split("/")){
+            if(i<prePath.split("/").length){
+                if(i==1) path=path+e;
+                else path=path+"/"+e;
+            }
+            i++;
+        }
+        path = path + "/" + "ava" + idUser + ".jpg";
+        Image image = new Image(path);
+        if(image.isError()){
+            return avaImage;
+        }
+        return image;
+    }
+
+    public Image findAvaRoom(Room room){
+        if(room.getType().equals("private")){
+            for(Client client1 : room.getClients()){
+                if(!client1.getId().equals(client.getId())){
+                    Image image = new Image(getAvaImage(client1.getId()).getUrl());
+                    return image;
+                }
+            }
+        }
+        return avaGroupImg;
+    }
     public void viewItemUserOnl(Client client1){
         if(client1.isStatus()){
             VBox itemUser = new VBox();
             itemUser.setPrefWidth(65);
             itemUser.setPrefHeight(60);
             itemUser.setAlignment(Pos.TOP_CENTER);
-            ImageView imageView = new ImageView(imageDT);
+            ImageView imageView = new ImageView(getAvaImage(client1.getId()));
             imageView.setFitHeight(40);
             imageView.setFitWidth(40);
             Circle cir = new Circle();
@@ -144,10 +186,9 @@ public class HomeController implements Initializable{
         }
         else System.out.println("rong");
     }
-
     public void viewListRoom(Room room){
         Pane itemRoom = new Pane();
-        ImageView ava = new ImageView(imageVT);
+        ImageView ava = new ImageView(findAvaRoom(room));
         ava.setFitHeight(50);
         ava.setFitWidth(50);
         itemRoom.getChildren().add(ava);
@@ -260,7 +301,7 @@ public class HomeController implements Initializable{
                 hBox.setId("BoxMessage");
                 lb.setId("BoxMessage");
                 ChatList.getChildren().add(other);
-                ImageView ava = new ImageView(imageVT);
+                ImageView ava = new ImageView(getAvaImage(message.getId_user()));
                 ava.setFitWidth(45);
                 ava.setFitHeight(45);
                 other.setAlignment(Pos.CENTER_LEFT);
@@ -325,7 +366,7 @@ public class HomeController implements Initializable{
             HBox itemUserHBox = new HBox();
             itemUserHBox.setId("itemUserHBox");
             itemUserHBox.setAlignment(Pos.CENTER_LEFT);
-            ImageView ava = new ImageView(imageVT);
+            ImageView ava = new ImageView(getAvaImage(client1.getId()));
             ava.setFitWidth(40);
             ava.setFitHeight(40);
             itemUserHBox.getChildren().add(ava);

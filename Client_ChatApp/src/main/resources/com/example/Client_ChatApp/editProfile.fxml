@@ -10,9 +10,9 @@
    <children>
       <Pane prefHeight="800.0" prefWidth="70.0" style="-fx-background-color: #dd4131;">
          <children>
-            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="clientAva1" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/DT.jpg" />
+                  <Image fx:id="avaImage" url="@avatar/avatar.jpg" />
                </image></ImageView>
             <Pane layoutX="13.0" layoutY="680.0" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
                <children>
@@ -28,7 +28,7 @@
                         <Image url="@icon/call.png" />
                      </image></ImageView>
                </children></Pane>
-            <ImageView fitHeight="38.0" fitWidth="14.0" layoutX="26.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+            <ImageView fitHeight="38.0" fitWidth="14.0" layoutX="26.0" layoutY="26.0" onMouseClicked="#openHomePage" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
                <image>
                   <Image url="@icon/arrow.png" />
                </image>
@@ -44,6 +44,11 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
+            <Label layoutX="969.0" layoutY="25.0" text="Đăng xuất" textFill="#dd4131">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
          </children></Pane>
       <Pane layoutX="171.0" layoutY="133.0" prefHeight="510.0" prefWidth="393.0">
          <children>
@@ -52,7 +57,7 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <ImageView fitHeight="259.0" fitWidth="257.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="clientAva" fitHeight="259.0" fitWidth="257.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@image/DT.jpg" />
                </image>
@@ -105,7 +110,7 @@
                   </Label>
                   <TextField fx:id="namelb" layoutX="144.0" layoutY="6.0" style="-fx-font-weight: bold; -fx-background-color: #d9d9d9; -fx-background-radius: 8;" text="Lê Việt Thanh">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </TextField>
                </children>
@@ -119,7 +124,7 @@
                   </Label>
                   <TextField fx:id="emaillb" layoutX="144.0" layoutY="7.0" style="-fx-font-weight: bold; -fx-background-color: #d9d9d9; -fx-background-radius: 8;" text="thanh@gmail.com">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </TextField>
                </children>
@@ -133,7 +138,7 @@
                   </Label>
                   <TextField fx:id="usernamelb" layoutX="144.0" layoutY="6.0" style="-fx-font-weight: bold; -fx-background-color: #d9d9d9; -fx-background-radius: 8;" text="vietthanh123">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </TextField>
                </children>

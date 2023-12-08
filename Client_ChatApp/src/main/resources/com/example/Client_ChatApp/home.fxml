@@ -25,7 +25,7 @@
                                 <Image url="@icon/chat.png" />
                             </image></ImageView>
                     </children></Pane>
-                <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" onMouseClicked="#openEditPage" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="clientAva" fitHeight="45.0" fitWidth="45.0" layoutX="13.0" layoutY="735.0" onMouseClicked="#openEditPage" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image fx:id="imageDT" url="@image/DT.jpg" />
                     </image>
@@ -74,7 +74,7 @@
             </children></Pane>
         <Pane id="titlep" fx:id="titlep" layoutX="330.0" prefHeight="75.0" prefWidth="823.0" style="-fx-border-color: #d6d6d6; -fx-background-color: #fff;">
             <children>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="mainAva" fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image fx:id="imageVT" url="@image/VT.jpg" />
                     </image>
@@ -181,5 +181,15 @@
             <Image fx:id="txt" url="@icon/txt_icon.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="166.0" layoutX="1178.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image fx:id="avaImage" url="@avatar/avatar.jpg" />
+         </image>
+      </ImageView>
+        <ImageView fitHeight="150.0" fitWidth="166.0" layoutX="1178.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image fx:id="avaGroupImg" url="@avatar/avaGroup.jpg" />
+            </image>
+        </ImageView>
     </children>
 </AnchorPane>
