@@ -498,7 +498,10 @@ public class HomeController implements Initializable{
         nameRoomTxt.setText(mainRoom.getName());
     }
 
-    public void renameRoom(){
+    public void renameRoom() throws IOException {
+        mainRoom.setName(nameRoomTxt.getText());
+        StartEverything.getSocketController().requestEditRoomName(mainRoom);
+        reload();
     }
 
     public void uploadFile(){
