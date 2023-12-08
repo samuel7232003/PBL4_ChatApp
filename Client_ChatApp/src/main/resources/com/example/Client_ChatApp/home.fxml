@@ -83,7 +83,7 @@
                     <font>
                         <Font name="System Bold" size="22.0" />
                     </font></Label>
-                <Label layoutX="95.0" layoutY="45.0" text="Đang hoạt động" />
+                <Label fx:id="statusLb" layoutX="95.0" layoutY="45.0" text="Đang hoạt động" />
                 <Label fx:id="openMenubtn" layoutX="765.0" layoutY="11.0" onMouseClicked="#openMenu" style="-fx-text-fill: #f1c40f;" text=". . .">
                     <font>
                         <Font name="System Bold" size="25.0" />
@@ -297,7 +297,7 @@
          </children></Pane>
       <Pane fx:id="recordBar" layoutX="331.0" layoutY="803.0" prefHeight="60.0" prefWidth="823.0">
          <children>
-            <Pane onMouseClicked="#stopRecord" layoutX="14.0" layoutY="10.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+            <Pane layoutX="14.0" layoutY="10.0" onMouseClicked="#stopRecord" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
                <children>
                   <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                      <image>

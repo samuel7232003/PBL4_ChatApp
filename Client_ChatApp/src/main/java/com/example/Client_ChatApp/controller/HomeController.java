@@ -87,6 +87,7 @@ public class HomeController implements Initializable{
             main_name.setText(RoomController.findRoomName(mainRoom));
             mainAva.setImage(findAvaRoom(mainRoom));
             if(mainRoom.getType().equals("private")){
+                setStatusLb(mainRoom);
                 renameButton.setVisible(false);
                 removeButton.setVisible(false);
                 addUserLable.setText("Tạo nhóm trò chuyện");
@@ -150,6 +151,16 @@ public class HomeController implements Initializable{
             }
         }
         return avaGroupImg;
+    }
+    @FXML
+    private Label statusLb;
+    public void setStatusLb(Room room){
+        for (Client client1 :room.getClients()){
+            if (!client1.getId().equals(client.getId())){
+                if (client1.isStatus()) statusLb.setText("Đang hoạt động");
+                else statusLb.setText("Không hoạt động");
+            }
+        }
     }
     public void viewItemUserOnl(Client client1){
         if(client1.isStatus()){
