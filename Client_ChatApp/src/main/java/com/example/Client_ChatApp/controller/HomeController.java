@@ -68,6 +68,12 @@ public class HomeController implements Initializable{
     private ImageView mainAva;
     @FXML
     private ImageView clientAva;
+    @FXML
+    private Pane removeButton;
+    @FXML
+    private Pane renameButton;
+    @FXML
+    private Label addUserLable;
 
     public void setMainRoom(Room mainRoom) {
         HomeController.mainRoom = mainRoom;
@@ -82,6 +88,16 @@ public class HomeController implements Initializable{
         else{
             main_name.setText(RoomController.findRoomName(mainRoom));
             mainAva.setImage(findAvaRoom(mainRoom));
+            if(mainRoom.getType().equals("private")){
+                renameButton.setVisible(false);
+                removeButton.setVisible(false);
+                addUserLable.setText("Tạo nhóm trò chuyện");
+            }
+            else{
+                renameButton.setVisible(true);
+                removeButton.setVisible(true);
+                addUserLable.setText("Thêm người vào nhóm");
+            }
         }
         int i = 1;
         for(Room room : StartEverything.getSocketController().getConnectedServer().getRooms()){
@@ -309,7 +325,7 @@ public class HomeController implements Initializable{
                 other.getChildren().add(ava);
                 other.getChildren().add(vb);
             }
-            onClickFileMessage(message, vb);
+            onClickFileMessage(message, hBox);
         }
     }
     public Image getIconByTypeFile(String fileName){
@@ -321,9 +337,9 @@ public class HomeController implements Initializable{
         else if (type.equals("txt")) return txt;
         return null;
     }
-    public void onClickFileMessage(MessageData message, VBox vb){
+    public void onClickFileMessage(MessageData message, HBox hb){
         if(message.getMessType().equals("file")){
-            vb.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            hb.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     DirectoryChooser dc = new DirectoryChooser();
@@ -353,7 +369,19 @@ public class HomeController implements Initializable{
     private VBox listUser;
 
     private static ArrayList<CheckBox> CBList;
-    public void openMenu(){
+    @FXML
+    private VBox Menu;
+    public void openMenu() throws IOException {
+        if (Menu.getLayoutX() == 1160){
+            Menu.setLayoutX(885);
+            addUserMenu.setLayoutX(1160);
+            //Menu.toFront();
+            return;
+        }
+        Menu.setLayoutX(1160);
+    }
+    public void openAddUser(){
+        Menu.setLayoutX(1160);
         if (addUserMenu.getLayoutX() != 850){
             addUserMenu.setLayoutX(850);
         }
@@ -402,6 +430,77 @@ public class HomeController implements Initializable{
             StartEverything.getSocketController().addToGroup(mainRoom.getId(), clientSelected);
         }
     }
+    @FXML
+    private Pane removeUserMenu;
+    private static ArrayList<CheckBox> CBListRe;
+    @FXML
+    private VBox listUser2;
+    public void openRemoveUser(){
+        Menu.setLayoutX(1160);
+        if (removeUserMenu.getLayoutX() != 850){
+            removeUserMenu.setLayoutX(850);
+        }
+        else removeUserMenu.setLayoutX(1160);
+        removeUserMenu.toFront();
+        CBListRe = new ArrayList<CheckBox>();
+        for(Client client1 : mainRoom.getClients()){
+            if(!client1.getId().equals(client.getId())){
+                HBox itemUserHBox = new HBox();
+                itemUserHBox.setId("itemUserHBox");
+                itemUserHBox.setAlignment(Pos.CENTER_LEFT);
+                ImageView ava = new ImageView(getAvaImage(client1.getId()));
+                ava.setFitWidth(40);
+                ava.setFitHeight(40);
+                itemUserHBox.getChildren().add(ava);
+                Label nameLable = new Label(client1.getName());
+                nameLable.setId("nameLable");
+                itemUserHBox.getChildren().add(nameLable);
+                CheckBox CB = new CheckBox();
+                itemUserHBox.getChildren().add(CB);
+                listUser2.getChildren().add(itemUserHBox);
+                CBListRe.add(CB);
+            }
+        }
+    }
+    public void removeUsers(){
+        int i = 0;
+        ArrayList<Client> listUserToRemove = new ArrayList<Client>();
+        for(Client client1 : mainRoom.getClients()){
+            if(!client1.getId().equals(client.getId())) listUserToRemove.add(client1);
+        }
+        ArrayList<Client> clientSelected = new ArrayList<Client>();
+        for(CheckBox CB : CBListRe){
+            if(CB.isSelected()==true){
+                System.out.println(listUserToRemove.get(i).getId());
+                clientSelected.add(listUserToRemove.get(i));
+            }
+            i++;
+        }
+
+        if(mainRoom.getType().equals("private")){
+            //Khong lam gi ca!
+        }
+        else if(mainRoom.getType().equals("group")){
+            //StartEverything.getSocketController().addToGroup(mainRoom.getId(), clientSelected);
+        }
+    }
+    @FXML
+    private Pane renamePane;
+    @FXML
+    private TextField nameRoomTxt;
+    public void openRenamePane(){
+        Menu.setLayoutX(1160);
+        if (renamePane.getLayoutX() != 850){
+            renamePane.setLayoutX(850);
+        }
+        else renamePane.setLayoutX(1160);
+        renamePane.toFront();
+        nameRoomTxt.setText(mainRoom.getName());
+    }
+
+    public void renameRoom(){
+    }
+
     public void uploadFile(){
         FileChooser fc = new FileChooser();
         fc.setTitle("Chọn file để tải lên");

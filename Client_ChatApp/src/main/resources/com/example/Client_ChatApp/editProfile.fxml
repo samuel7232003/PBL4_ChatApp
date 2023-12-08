@@ -44,7 +44,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="969.0" layoutY="25.0" text="Đăng xuất" textFill="#dd4131">
+            <Label onMouseClicked="#logout" layoutX="969.0" layoutY="25.0" text="Đăng xuất" textFill="#dd4131">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>

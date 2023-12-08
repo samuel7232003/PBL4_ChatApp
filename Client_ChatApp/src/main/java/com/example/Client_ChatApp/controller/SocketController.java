@@ -36,6 +36,10 @@ public class SocketController {
         return connectedServer;
     }
 
+    public static Socket getSocket() {
+        return socket;
+    }
+
     public SocketController() {
         this.client = new Client();
         String ipAddress = getThisIP();

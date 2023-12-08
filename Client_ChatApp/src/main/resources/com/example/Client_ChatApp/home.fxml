@@ -156,6 +156,45 @@
             <Insets />
          </opaqueInsets>
       </Pane>
+        <Pane fx:id="listUserMenu" layoutX="1160.0" layoutY="75.0" prefHeight="337.0" prefWidth="298.0" style="-fx-border-color: #d6d6d6; -fx-background-color: #fff;">
+            <children>
+                <Label layoutX="14.0" layoutY="10.0" text="Danh sách thành viên đoạn chat">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+                <ScrollPane layoutX="16.0" layoutY="40.0" prefHeight="247.0" prefWidth="266.0" style="-fx-background-color: #d6d6d6;">
+                    <content>
+                        <VBox fx:id="listUser1" prefHeight="155.0" prefWidth="248.0" />
+                    </content>
+                </ScrollPane>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </Pane>
+        <Pane fx:id="removeUserMenu" layoutX="1160.0" layoutY="75.0" prefHeight="337.0" prefWidth="298.0" style="-fx-border-color: #d6d6d6; -fx-background-color: #fff;">
+            <children>
+                <Label layoutX="14.0" layoutY="10.0" text="Xóa người khỏi đoạn chat">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+                <ScrollPane layoutX="16.0" layoutY="40.0" prefHeight="247.0" prefWidth="266.0" style="-fx-background-color: #d6d6d6;">
+                    <content>
+                        <VBox fx:id="listUser2" prefHeight="155.0" prefWidth="248.0" />
+                    </content>
+                </ScrollPane>
+                <Button layoutX="235.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#removeUsers" style="-fx-background-color: #dd4131;" text="Xóa" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </Pane>
       <ScrollPane id="chatListScroll" fx:id="chatListScroll" layoutX="331.0" layoutY="76.0" prefHeight="665.0" prefWidth="823.0" style="-fx-background-color: #fff;" vbarPolicy="NEVER">
          <content>
             <VBox id="ChatList" fx:id="ChatList" alignment="BOTTOM_CENTER" prefHeight="662.0" prefWidth="818.0" style="-fx-background-color: #fff;">
@@ -181,15 +220,75 @@
             <Image fx:id="txt" url="@icon/txt_icon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="166.0" layoutX="1178.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="61.0" fitWidth="87.0" layoutX="1260.0" layoutY="722.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image fx:id="avaImage" url="@avatar/avatar.jpg" />
          </image>
       </ImageView>
-        <ImageView fitHeight="150.0" fitWidth="166.0" layoutX="1178.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="75.0" fitWidth="70.0" layoutX="1178.0" layoutY="717.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image fx:id="avaGroupImg" url="@avatar/avaGroup.jpg" />
             </image>
         </ImageView>
+      <VBox fx:id="Menu" layoutX="1160.0" layoutY="76.0" prefHeight="200.0" prefWidth="279.0">
+         <children>
+            <Pane onMouseClicked="#openAddUser" prefHeight="63.0" prefWidth="279.0" style="-fx-background-color: #f1c40f; -fx-border-color: #fff; -fx-border-width: 3;">
+               <children>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="27.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/addUser_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="addUserLable" layoutX="56.0" layoutY="18.0" prefHeight="28.0" prefWidth="202.0" text="Thêm người vào nhóm" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+             <Pane fx:id="removeButton" onMouseClicked="#openRemoveUser" prefHeight="63.0" prefWidth="279.0" style="-fx-background-color: #f1c40f; -fx-border-color: #fff; -fx-border-width: 3;">
+                 <children>
+                     <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="25.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                         <image>
+                             <Image url="@icon/removeUser_icon.png" />
+                         </image>
+                     </ImageView>
+                     <Label layoutX="57.0" layoutY="19.0" text="Xóa người khỏi nhóm" textFill="WHITE">
+                         <font>
+                             <Font name="System Bold" size="16.0" />
+                         </font>
+                     </Label>
+                 </children>
+             </Pane>
+             <Pane onMouseClicked="#openRenamePane" fx:id="renameButton" prefHeight="63.0" prefWidth="279.0" style="-fx-background-color: #f1c40f; -fx-border-color: #fff; -fx-border-width: 3;">
+                 <children>
+                     <ImageView fitHeight="18.0" fitWidth="25.0" layoutX="23.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                         <image>
+                             <Image url="@icon/renameRoom_icon.png" />
+                         </image>
+                     </ImageView>
+                     <Label layoutX="56.0" layoutY="18.0" text="Thay đổi tên nhóm" textFill="WHITE">
+                         <font>
+                             <Font name="System Bold" size="16.0" />
+                         </font>
+                     </Label>
+                 </children>
+             </Pane>
+         </children>
+      </VBox>
+      <Pane fx:id="renamePane" layoutX="1160.0" layoutY="77.0" prefHeight="125.0" prefWidth="287.0" style="-fx-background-color: #fff; -fx-border-color: #d6d6d6;">
+         <children>
+            <Label layoutX="13.0" layoutY="12.0" text="Thay đổi tên nhóm">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nameRoomTxt" layoutX="13.0" layoutY="45.0" prefHeight="37.0" prefWidth="260.0" text="Đây là tên nhóm cũ">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </TextField>
+            <Button onMouseClicked="#renameRoom" layoutX="208.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: #f1c40f; -fx-font-weight: bold; -fx-text-fill: #fff;" text="Thay đổi" />
+         </children></Pane>
     </children>
 </AnchorPane>

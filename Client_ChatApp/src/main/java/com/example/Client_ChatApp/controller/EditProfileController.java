@@ -74,4 +74,8 @@ public class EditProfileController implements Initializable {
         }
         return image;
     }
+
+    public void logout(MouseEvent event) throws IOException {
+        StartEverything.getSocketController().getSocket().close();
+    }
 }
