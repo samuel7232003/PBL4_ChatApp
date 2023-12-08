@@ -17,7 +17,6 @@ public class HandlerController extends Thread {
     private Socket socketHandler;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-
     private ArrayList<Client> clientList;
     private int port;
 
@@ -231,6 +230,12 @@ public class HandlerController extends Thread {
                         }
 
                         break;
+                    }
+                    case "request edit my infor":{
+                        String nameUser = bufferedReader.readLine();
+                        String email = bufferedReader.readLine();
+                        String password = bufferedReader.readLine();
+
                     }
                     case "request create room": {
                         String roomName = bufferedReader.readLine();
@@ -473,6 +478,31 @@ public class HandlerController extends Thread {
                             out.flush();
                         } catch (IOException ex) {
                             ex.printStackTrace();
+                        }
+                        break;
+                    }
+                    case "request edit room name" :{
+                        String idRoom = bufferedReader.readLine();
+                        String newRoomName = bufferedReader.readLine();
+
+                        // lưu vaò db
+                        Room room = RoomController.editRoomProfile(idRoom, newRoomName);
+                        // gửi về các client
+                        for (Client client1 : room.getClients()) {
+                            HandlerController clientRecieve = SocketController.getHandlerClient(client1.getId());
+                            if(clientRecieve != null){
+                                if (clientRecieve != null) {
+                                    clientRecieve.bufferedWriter.write("new name room");
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write(room.getID_room());
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write(room.getRoomName());
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write(this.client.getId());
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.flush();
+                                }
+                            }
                         }
                         break;
                     }
