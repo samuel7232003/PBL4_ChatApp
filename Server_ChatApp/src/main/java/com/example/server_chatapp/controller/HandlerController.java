@@ -490,7 +490,7 @@ public class HandlerController extends Thread {
                         File filesFolder = new File("files");
                         if (!filesFolder.exists())
                             filesFolder.mkdir();
-                        String name ="audio" + roomID + roomMessagesCount + ".mp3";
+                        String name ="audio" + roomID + roomMessagesCount;
                         String audioFileName = "files/" + name;
 
                         File file = new File(audioFileName);
