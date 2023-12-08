@@ -106,7 +106,7 @@
                             </image>
                         </ImageView>
                     </children></Pane>
-                <Pane layoutX="65.0" layoutY="9.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+                <Pane layoutX="65.0" layoutY="9.0" onMouseClicked="#startRecord" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="12.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -120,7 +120,7 @@
                 </TextField>
                 <Pane id="send" fx:id="send" layoutX="750.0" layoutY="9.0" onMouseClicked="#send" prefHeight="40.0" prefWidth="61.0" style="-fx-background-color: #dd4131; -fx-background-radius: 8;">
                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="16.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@icon/send_yellow.png" />
                             </image></ImageView>
@@ -195,9 +195,9 @@
                 <Insets />
             </opaqueInsets>
         </Pane>
-      <ScrollPane id="chatListScroll" fx:id="chatListScroll" layoutX="331.0" layoutY="76.0" prefHeight="665.0" prefWidth="823.0" style="-fx-background-color: #fff;" vbarPolicy="NEVER">
+      <ScrollPane id="chatListScroll" fx:id="chatListScroll" hbarPolicy="NEVER" layoutX="331.0" layoutY="76.0" prefHeight="665.0" prefWidth="823.0" rotate="180.0" style="-fx-background-color: #fff;" vbarPolicy="NEVER">
          <content>
-            <VBox id="ChatList" fx:id="ChatList" alignment="BOTTOM_CENTER" prefHeight="662.0" prefWidth="818.0" style="-fx-background-color: #fff;">
+            <VBox id="ChatList" fx:id="ChatList" alignment="BOTTOM_CENTER" prefHeight="662.0" prefWidth="818.0" rotate="180.0" style="-fx-background-color: #fff;">
       </VBox>
          </content>
       </ScrollPane>
@@ -220,6 +220,11 @@
             <Image fx:id="txt" url="@icon/txt_icon.png" />
          </image>
       </ImageView>
+        <ImageView fx:id="mp3Icon" fitHeight="61.0" fitWidth="61.0" layoutX="1364.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image fx:id="mp3" url="@icon/mp3_icon.png" />
+            </image>
+        </ImageView>
       <ImageView fitHeight="61.0" fitWidth="87.0" layoutX="1260.0" layoutY="722.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image fx:id="avaImage" url="@avatar/avatar.jpg" />
@@ -260,7 +265,7 @@
                      </Label>
                  </children>
              </Pane>
-             <Pane onMouseClicked="#openRenamePane" fx:id="renameButton" prefHeight="63.0" prefWidth="279.0" style="-fx-background-color: #f1c40f; -fx-border-color: #fff; -fx-border-width: 3;">
+             <Pane fx:id="renameButton" onMouseClicked="#openRenamePane" prefHeight="63.0" prefWidth="279.0" style="-fx-background-color: #f1c40f; -fx-border-color: #fff; -fx-border-width: 3;">
                  <children>
                      <ImageView fitHeight="18.0" fitWidth="25.0" layoutX="23.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                          <image>
@@ -283,12 +288,51 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField onKeyPressed="#renameRoom" fx:id="nameRoomTxt" layoutX="13.0" layoutY="45.0" prefHeight="37.0" prefWidth="260.0" text="Đây là tên nhóm cũ">
+            <TextField fx:id="nameRoomTxt" layoutX="13.0" layoutY="45.0" onKeyPressed="#renameRoom_" prefHeight="37.0" prefWidth="260.0" text="Đây là tên nhóm cũ">
                <font>
                   <Font size="17.0" />
                </font>
             </TextField>
-            <Button onMouseClicked="#renameRoom" layoutX="208.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: #f1c40f; -fx-font-weight: bold; -fx-text-fill: #fff;" text="Thay đổi" />
+            <Button layoutX="208.0" layoutY="87.0" mnemonicParsing="false" onMouseClicked="#renameRoom" style="-fx-background-color: #f1c40f; -fx-font-weight: bold; -fx-text-fill: #fff;" text="Thay đổi" />
          </children></Pane>
+      <Pane fx:id="recordBar" layoutX="331.0" layoutY="803.0" prefHeight="60.0" prefWidth="823.0">
+         <children>
+            <Pane onMouseClicked="#stopRecord" layoutX="14.0" layoutY="10.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+               <children>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/cancel.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <HBox fx:id="timelineBar" layoutX="70.0" layoutY="10.0" prefHeight="40.0" prefWidth="666.0" style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;" />
+            <Pane fx:id="pauseBtn" layoutX="80.0" layoutY="14.0" onMouseClicked="#pauseRecord" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 32;">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="18.0" layoutX="7.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/pause.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+             <Pane layoutX="750.0" layoutY="9.0" prefHeight="40.0" prefWidth="61.0" style="-fx-background-color: #dd4131; -fx-background-radius: 8;">
+                 <children>
+                     <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="16.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                         <image>
+                             <Image url="@icon/send_yellow.png" />
+                         </image></ImageView>
+                 </children></Pane>
+            <Pane layoutX="664.0" layoutY="15.0" prefHeight="30.0" prefWidth="61.0" style="-fx-background-color: #fff; -fx-background-radius: 8;">
+               <children>
+                  <Label fx:id="time" layoutX="10.0" layoutY="3.0" prefHeight="25.0" prefWidth="45.0" text="00:00">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

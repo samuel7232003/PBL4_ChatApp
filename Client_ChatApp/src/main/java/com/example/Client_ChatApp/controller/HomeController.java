@@ -4,6 +4,8 @@ import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
 import com.example.Client_ChatApp.model.MessageData;
 import com.example.Client_ChatApp.model.Room;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,31 +14,27 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.LongToIntFunction;
 
 public class HomeController implements Initializable{
     @FXML
@@ -277,6 +275,8 @@ public class HomeController implements Initializable{
     private Image txt;
     @FXML
     private Image pdf;
+    @FXML
+    private Image mp3;
     static ArrayList<MessageData> ListMessage;
     public void addMessage() {
         ListMessage = StartEverything.getSocketController().getMessageData(mainRoom.getId());
@@ -335,6 +335,7 @@ public class HomeController implements Initializable{
         else if (type.equals("xlsx")) return xlsx;
         else if (type.equals("pdf")) return pdf;
         else if (type.equals("txt")) return txt;
+        else if (type.equals("mp3")) return mp3;
         return null;
     }
     public void onClickFileMessage(MessageData message, HBox hb){
@@ -504,6 +505,10 @@ public class HomeController implements Initializable{
         reload();
     }
 
+    public void renameRoom_(KeyEvent e) throws IOException {
+        if(e.getCode() == KeyCode.ENTER) renameRoom();
+    }
+
     public void uploadFile(){
         FileChooser fc = new FileChooser();
         fc.setTitle("Chọn file để tải lên");
@@ -534,5 +539,50 @@ public class HomeController implements Initializable{
         FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("editProfile.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 800);
         stage1.setScene(scene);
+    }
+    @FXML
+    private Pane recordBar;
+    @FXML
+    private Label time;
+    @FXML
+    private HBox timelineBar;
+    @FXML
+    private Pane pauseBtn;
+    public void startRecord(){
+        footerp.setLayoutY(843);
+        recordBar.setLayoutY(743);
+        long startTime = System.currentTimeMillis();
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(false);
+
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), event -> {
+            // Cập nhật thời gian hiện tại
+            double elapsedTime = (System.currentTimeMillis() - startTime) / 1000.0;
+            if(elapsedTime>10)time.setText("00:"+String.format("%.0f", elapsedTime));
+            else time.setText("00:0"+String.format("%.0f", elapsedTime));
+            Pane pane = new Pane();
+            pane.setPrefWidth(666/60);
+            pane.setBackground(Background.fill(Paint.valueOf("#f1c40f")));
+            timelineBar.getChildren().add(pane);
+            if(elapsedTime >= 60) {
+                timeline.pause();
+                pauseBtn.setVisible(false);
+                time.setText("01:00");
+            }
+        }));
+        timeline.play();
+        time.setUserData(timeline);
+    }
+    public void pauseRecord(){
+        Timeline timeline = (Timeline) time.getUserData();
+        pauseBtn.setVisible(false);
+        timeline.pause();
+    }
+
+    public void stopRecord() throws IOException {
+        Timeline timeline = (Timeline) time.getUserData();
+        timeline.stop();
+        reload();
     }
 }
