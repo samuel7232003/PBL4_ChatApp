@@ -1,25 +1,20 @@
 package com.example.Client_ChatApp.controller;
 
-import com.example.Client_ChatApp.index;
 import com.example.Client_ChatApp.model.Client;
 import com.example.Client_ChatApp.model.MessageData;
 import com.example.Client_ChatApp.model.Room;
 import com.example.Client_ChatApp.model.ServerData;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import javax.sound.sampled.*;
+
 
 public class SocketController {
     private static Client client;
@@ -35,6 +30,7 @@ public class SocketController {
     public ServerData getConnectedServer(){
         return connectedServer;
     }
+
 
     public SocketController() {
         this.client = new Client();
@@ -128,6 +124,19 @@ public class SocketController {
                     }
                 }
             }
+        }
+    }
+    public void requestEditRoomName(Room room){
+        try {
+            bufferedWriter.write("request edit room name");
+            bufferedWriter.newLine();
+            bufferedWriter.write(room.getId());
+            bufferedWriter.newLine();
+            bufferedWriter.write(room.getName());
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     public static String getThisIP() {
@@ -410,6 +419,22 @@ public class SocketController {
                                 out.close();
                                 break;
                             }
+                            case "new name room":{
+                                String idRoom = bufferedReader.readLine();
+                                String newNameRoom = bufferedReader.readLine();
+                                String idUserSend = bufferedReader.readLine();
+                                for(Room room : connectedServer.getRooms()){
+                                    if(room.getId().equals(idRoom)){
+                                        room.setName(newNameRoom);
+                                        break;
+                                    }
+                                }
+
+
+                                reloadOnSocket();
+                                //room
+                                break;
+                            }
                         }
                     }
                 }catch (IOException e){
@@ -419,6 +444,7 @@ public class SocketController {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+
                 }
                 System.exit(0);
             }
@@ -448,6 +474,7 @@ public class SocketController {
 
         }
     }
+
     public void createPrivateRoom(String id_userFinal) {
         try {
             bufferedWriter.write("request create room");

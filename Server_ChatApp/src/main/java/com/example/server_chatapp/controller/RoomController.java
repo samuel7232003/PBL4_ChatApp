@@ -67,4 +67,14 @@ public class RoomController {
         }
         return roomReturns;
     }
+    public static Room editRoomProfile(String idRoom, String nameRoom){
+        for(Room room : SocketController.getAllRooms()){
+            if(room.getID_room().equals(idRoom)){
+                room.setRoomName(nameRoom);
+                RoomDAO.UpdateRoom(room);
+                return  room;
+            }
+        }
+        return  null;
+    }
 }

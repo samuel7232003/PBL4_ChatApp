@@ -59,7 +59,7 @@ public class RoomDAO {
         try{
             Connection conn = connectMySQL.connectSQL();
             // search ID last
-            String sql_selectLastObj = "UPDATE room SET ClientNum=" + room.getClientNum() + "  WHERE ID_room = '" + room.getID_room() + "'";
+            String sql_selectLastObj = "UPDATE room SET ID_room='" + room.getID_room() + "',Name_room='" + room.getRoomName() + "',ClientNum='" + room.getClientNum() + "',Type='" + room.getRoomType() + "' WHERE ID_room = '" + room.getID_room() + "'";
             Statement statement1 = conn.createStatement();
             statement1.executeUpdate(sql_selectLastObj);
             System.out.println(room.getClients().size());
