@@ -304,7 +304,7 @@ public class HomeController implements Initializable{
             }
             Label lb = new Label(message.getContent());
             if(message.getMessType().equals("text")) vb.getChildren().add(lb);
-            else if(message.getMessType().equals("file")){
+            else if(message.getMessType().equals("file")||message.getMessType().equals("audio")){
                 ImageView fileIcon = new ImageView(getIconByTypeFile(message.getContent()));
                 fileIcon.setFitHeight(40);
                 fileIcon.setFitWidth(35);
@@ -350,7 +350,7 @@ public class HomeController implements Initializable{
         return null;
     }
     public void onClickFileMessage(MessageData message, HBox hb){
-        if(message.getMessType().equals("file")){
+        if(message.getMessType().equals("file")||message.getMessType().equals("audio")){
             hb.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -603,7 +603,7 @@ public class HomeController implements Initializable{
         reload();
     }
     public void sendRecordToRoom(){
-        isRecord = false;
+        pauseRecord();
         StartEverything.getSocketController().sendAudioToRoom(mainRoom.getId(), this.AudioByte);
     }
 }
