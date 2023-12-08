@@ -356,6 +356,7 @@ public class SocketController {
                                 reloadOnSocket();
                                 break;
                             }
+
                             case "text from user to room": {
                                 String idUserSend = bufferedReader.readLine();
                                 String roomID = bufferedReader.readLine();
@@ -375,6 +376,7 @@ public class SocketController {
                                 reloadOnSocket();
                                 break;
                             }
+
                             case "file from user to room": {
                                 String userID = bufferedReader.readLine();
                                 String roomID = bufferedReader.readLine();
@@ -387,6 +389,7 @@ public class SocketController {
                                 reloadOnSocket();
                                 break;
                             }
+
                             case "response download file": {
                                 int fileSize = Integer.parseInt(bufferedReader.readLine());
                                 // kiểm tra hắn có cái tên file trước chưa?
@@ -429,6 +432,21 @@ public class SocketController {
                 throw new RuntimeException(e);
             }
         });
+    }
+    public void requestEditMyInfor(String name, String email, String password){
+        try {
+            bufferedWriter.write("request edit my infor");
+            bufferedWriter.newLine();
+            bufferedWriter.write(name);
+            bufferedWriter.newLine();
+            bufferedWriter.write(email);
+            bufferedWriter.newLine();
+            bufferedWriter.write(password);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+        } catch (IOException e) {throw new RuntimeException(e);
+
+        }
     }
     public void createPrivateRoom(String id_userFinal) {
         try {

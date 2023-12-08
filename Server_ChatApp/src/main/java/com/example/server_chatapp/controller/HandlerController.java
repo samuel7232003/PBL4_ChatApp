@@ -232,6 +232,12 @@ public class HandlerController extends Thread {
 
                         break;
                     }
+                    case "request edit my infor":{
+                        String nameUser = bufferedReader.readLine();
+                        String email = bufferedReader.readLine();
+                        String password = bufferedReader.readLine();
+
+                    }
                     case "request create room": {
                         String roomName = bufferedReader.readLine();
                         String roomType = bufferedReader.readLine();
