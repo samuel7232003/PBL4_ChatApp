@@ -481,6 +481,58 @@ public class HandlerController extends Thread {
                         }
                         break;
                     }
+                    case "audio to room": {
+                        String roomID = bufferedReader.readLine();
+                        int roomMessagesCount = Integer.parseInt(bufferedReader.readLine());
+                        int audioDuration = Integer.parseInt(bufferedReader.readLine());
+                        int audioByteSize = Integer.parseInt(bufferedReader.readLine());
+
+                        File filesFolder = new File("files");
+                        if (!filesFolder.exists())
+                            filesFolder.mkdir();
+                        String name ="audio" + roomID + roomMessagesCount + ".mp3";
+                        String audioFileName = "files/" + name;
+
+                        File file = new File(audioFileName);
+                        byte[] buffer = new byte[1024];
+                        InputStream in = socketHandler.getInputStream();
+                        OutputStream out = new FileOutputStream(file);
+
+                        int receivedSize = 0;
+                        int count;
+                        while ((count = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, count);
+                            receivedSize += count;
+                            if (receivedSize >= audioByteSize)
+                                break;
+                        }
+
+                        out.close();
+
+                        Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
+                        room.setMessageOrder();
+                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), file.getName(), "audio");
+                        RoomMessageController roomMessageController = new RoomMessageController();
+                        roomMessageController.insertMessage(roomMessage);
+                        room.getMessages().add(roomMessage);
+                        for (Client client1 : room.getClients()) {
+                            HandlerController clientRecieve = SocketController.getHandlerClient(client1.getId());
+                            if(clientRecieve != null){
+                                clientRecieve.getBufferedWriter().write("audio from user to room");
+                                clientRecieve.getBufferedWriter().newLine();
+                                clientRecieve.getBufferedWriter().write(this.client.getId());
+                                clientRecieve.getBufferedWriter().newLine();
+                                clientRecieve.getBufferedWriter().write("" + roomID);
+                                clientRecieve.getBufferedWriter().newLine();
+                                clientRecieve.getBufferedWriter().write(name);
+                                clientRecieve.getBufferedWriter().newLine();
+                                clientRecieve.getBufferedWriter().write("" + audioDuration);
+                                clientRecieve.getBufferedWriter().newLine();
+                                clientRecieve.getBufferedWriter().flush();
+                            }
+                        }
+                        break;
+                    }
                     case "request edit room name" :{
                         String idRoom = bufferedReader.readLine();
                         String newRoomName = bufferedReader.readLine();

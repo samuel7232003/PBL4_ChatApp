@@ -37,7 +37,9 @@ public class SocketController {
 
     public SocketController() {
         this.client = new Client();
-        String ipAddress = getThisIP();
+        // String ipAddress = getThisIP();
+        String ipAddress = "192.168.202.82";
+        System.out.println(ipAddress);
         Stage stage1 = new Stage();
         stage = stage1;
         int port = 2119;
@@ -422,6 +424,19 @@ public class SocketController {
                                 out.close();
                                 break;
                             }
+                            case "audio from user to room": {
+                                String userID = bufferedReader.readLine();
+                                String roomID = bufferedReader.readLine();
+                                String name = bufferedReader.readLine();
+                                int audioDuration = Integer.parseInt(bufferedReader.readLine());
+                                System.out.println("Recevie audio from " + userID + " to room " + roomID);
+                                Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
+                                LocalDateTime timenow = LocalDateTime.now();
+                                MessageData messageData = new MessageData(userID, name, "audio", timenow);
+                                receiveRoom.getMessageDatas().add(messageData);
+                                reloadOnSocket();
+                                break;
+                            }
                             case "new name room":{
                                 String idRoom = bufferedReader.readLine();
                                 String newNameRoom = bufferedReader.readLine();
@@ -567,8 +582,6 @@ public class SocketController {
             bufferedWriter.newLine();
             bufferedWriter.write(roomID);
             bufferedWriter.newLine();
-//            bufferedWriter.write("" + room.getMessageDatas().size());
-//            bufferedWriter.newLine();
             bufferedWriter.write(fileName);
             bufferedWriter.newLine();
             bufferedWriter.write("" + file.length());
@@ -605,6 +618,42 @@ public class SocketController {
             bufferedWriter.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void sendAudioToRoom(String roomID, byte[] audioBytes) {
+
+        try {
+            System.out.println("Send audio to room " + roomID);
+
+            Room room = RoomController.findRoom(connectedServer.getRooms(), roomID);
+
+            bufferedWriter.write("audio to room");
+            bufferedWriter.newLine();
+            bufferedWriter.write(roomID);
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + room.getMessageDatas().size());
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + AudioController.getAudioDuration(audioBytes));
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + audioBytes.length);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            byte[] buffer = new byte[1024];
+            InputStream in = new ByteArrayInputStream(audioBytes);
+            OutputStream out = socket.getOutputStream();
+
+            int count;
+            while ((count = in.read(buffer)) > 0) {
+                out.write(buffer, 0, count);
+            }
+
+            in.close();
+            out.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này
