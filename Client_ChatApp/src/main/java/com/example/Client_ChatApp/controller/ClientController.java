@@ -17,7 +17,7 @@ public class ClientController {
 
     public static String getLastName(String name){
         String Lastname = "";
-        for(String e : name.split(" ")) Lastname = e;
+        if(name!=null) for(String e : name.split(" ")) Lastname = e;
         return Lastname;
     }
 }
