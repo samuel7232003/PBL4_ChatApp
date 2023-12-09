@@ -288,6 +288,8 @@ public class HomeController implements Initializable{
     private Image pdf;
     @FXML
     private Image mp3;
+    @FXML
+    private Image jpg;
     static ArrayList<MessageData> ListMessage;
     public void addMessage() {
         ListMessage = StartEverything.getSocketController().getMessageData(mainRoom.getId());
@@ -347,6 +349,7 @@ public class HomeController implements Initializable{
         else if (type.equals("pdf")) return pdf;
         else if (type.equals("txt")) return txt;
         else if (type.equals("mp3")) return mp3;
+        else if (type.equals("jpg")||type.equals("png")) return jpg;
         return null;
     }
     public void onClickFileMessage(MessageData message, HBox hb){
