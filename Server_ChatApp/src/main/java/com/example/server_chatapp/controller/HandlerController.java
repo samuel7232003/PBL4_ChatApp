@@ -394,7 +394,6 @@ public class HandlerController extends Thread {
                     }
                     case "file to room": {
                         String roomID = bufferedReader.readLine();
-//                        int roomMessagesCount = Integer.parseInt(bufferedReader.readLine());
                         String fileName = bufferedReader.readLine();
                         int fileSize = Integer.parseInt(bufferedReader.readLine());
 

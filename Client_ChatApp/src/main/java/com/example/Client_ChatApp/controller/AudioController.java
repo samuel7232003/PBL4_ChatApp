@@ -1,16 +1,13 @@
 package com.example.Client_ChatApp.controller;
 
 import javax.sound.sampled.*;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class AudioController {
     static Thread recordThread;
     static ByteArrayOutputStream out;
     static boolean isRecording = false;
-    public static AudioFormat format = new AudioFormat(8000.0f, 16, 1, true, true);
+    public static AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100, 16, 2, 4,  44100, false);
 
     public static void startRecord() {
         out = new ByteArrayOutputStream();
@@ -51,6 +48,36 @@ public class AudioController {
 
         recordThread.start();
     }
+//public static void startRecord() {
+//    isRecording = true;
+//    AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100, 16, 2, 4, 44100, false);
+//    DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+//    if (!AudioSystem.isLineSupported(info)) {
+//        System.out.println("Line not support");
+//    }
+//    final TargetDataLine targetDataLine;
+//    try {
+//        targetDataLine = (TargetDataLine) AudioSystem.getLine(info);
+//        targetDataLine.open();
+//    } catch (LineUnavailableException e) {
+//        throw new RuntimeException(e);
+//    }
+//    System.out.println("Starting recording");
+//    targetDataLine.start();
+//    recordThread = new Thread(() -> {
+//        AudioInputStream audioInputStream = new AudioInputStream(targetDataLine);
+//        File audioFile = new File("record.mav");
+//        try {
+//            AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, audioFile);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    });
+//    recordThread.start();
+//    targetDataLine.stop();
+//    targetDataLine.close();
+//    System.out.println("end sound test");
+//}
 
     public static byte[] stopRecord() {
         isRecording = false;
@@ -58,7 +85,12 @@ public class AudioController {
         }
         return out.toByteArray();
     }
-
+//    public static void stopRecord(){
+//        isRecording = false;
+//        if (recordThread.isAlive()) {
+//            recordThread.stop();
+//        }
+//    }
     public static void play(byte[] audioData) {
         // Get an input stream on the byte array
         // containing the data

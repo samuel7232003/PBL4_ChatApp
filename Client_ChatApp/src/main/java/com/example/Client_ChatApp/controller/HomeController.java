@@ -564,6 +564,7 @@ public class HomeController implements Initializable{
     public void startRecord(){
         isRecord = true;
         AudioController.startRecord();
+
         footerp.setLayoutY(843);
         recordBar.setLayoutY(743);
         long startTime = System.currentTimeMillis();
@@ -598,12 +599,19 @@ public class HomeController implements Initializable{
     }
 
     public void stopRecord() throws IOException {
+        isRecord = false;
+        this.AudioByte = AudioController.stopRecord();
         Timeline timeline = (Timeline) time.getUserData();
         timeline.stop();
         reload();
     }
     public void sendRecordToRoom(){
         pauseRecord();
+        try {
+            stopRecord();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         StartEverything.getSocketController().sendAudioToRoom(mainRoom.getId(), this.AudioByte);
     }
 }
