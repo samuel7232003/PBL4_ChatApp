@@ -485,7 +485,10 @@ public class HandlerController extends Thread {
                         int roomMessagesCount = Integer.parseInt(bufferedReader.readLine());
                         int audioDuration = Integer.parseInt(bufferedReader.readLine());
                         int audioByteSize = Integer.parseInt(bufferedReader.readLine());
-
+                        System.out.println(roomID);
+                        System.out.println(roomMessagesCount);
+                        System.out.println(audioDuration);
+                        System.out.println(audioByteSize);
                         File filesFolder = new File("files");
                         if (!filesFolder.exists())
                             filesFolder.mkdir();
@@ -507,7 +510,7 @@ public class HandlerController extends Thread {
                         }
 
                         out.close();
-
+                        System.out.println("đã nhận xong");
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
                         room.setMessageOrder();
                         RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), file.getName(), "audio");
@@ -554,6 +557,37 @@ public class HandlerController extends Thread {
                                     clientRecieve.bufferedWriter.flush();
                                 }
                             }
+                        }
+                        break;
+                    }
+                    case "request audio bytes": {
+                        try {
+                            String roomID = bufferedReader.readLine();
+                            int messageIndex = Integer.parseInt(bufferedReader.readLine());
+                            String name ="audio" + roomID + messageIndex;
+                            String audioFileName = "files/" + name;
+//                            String audioFileName = "files/audio" + String.format("%02d%03d", roomID, messageIndex);
+                            File file = new File(audioFileName);
+
+                            bufferedWriter.write("response audio bytes");
+                            bufferedWriter.newLine();
+                            bufferedWriter.write("" + file.length());
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+
+                            byte[] buffer = new byte[1024];
+                            InputStream in = new FileInputStream(file);
+                            OutputStream out = socketHandler.getOutputStream();
+
+                            int count;
+                            while ((count = in.read(buffer)) > 0) {
+                                out.write(buffer, 0, count);
+                            }
+
+                            in.close();
+                            out.flush();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
                         }
                         break;
                     }

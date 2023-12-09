@@ -353,7 +353,7 @@ public class HomeController implements Initializable{
         return null;
     }
     public void onClickFileMessage(MessageData message, HBox hb){
-        if(message.getMessType().equals("file")||message.getMessType().equals("audio")){
+        if(message.getMessType().equals("file")){//||message.getMessType().equals("audio")
             hb.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -363,6 +363,16 @@ public class HomeController implements Initializable{
                     String filePath = file.getPath();
                     // System.out.println(filePath);
                     StartEverything.getSocketController().downloadFile(mainRoom.getId(), 1, message.getContent(), filePath);
+                }
+            });
+        }
+        else if(message.getMessType().equals("audio")){
+            hb.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Room room = RoomController.findRoom(StartEverything.getSocketController().getConnectedServer().getRooms(),mainRoom.getId());
+
+                    StartEverything.getSocketController().getAudioBytes(room.getId(), 0);
                 }
             });
         }
@@ -563,7 +573,7 @@ public class HomeController implements Initializable{
     @FXML
     private Pane pauseBtn;
     boolean isRecord = false;
-    byte[] AudioByte;
+//    byte[] AudioByte = new byte[1024];
     public void startRecord(){
         isRecord = true;
         AudioController.startRecord();
@@ -595,26 +605,29 @@ public class HomeController implements Initializable{
     }
     public void pauseRecord(){
         isRecord = false;
-        this.AudioByte = AudioController.stopRecord();
+        byte[] AudioByte = AudioController.stopRecord();
         Timeline timeline = (Timeline) time.getUserData();
         pauseBtn.setVisible(false);
         timeline.pause();
     }
 
     public void stopRecord() throws IOException {
-        isRecord = false;
-        this.AudioByte = AudioController.stopRecord();
         Timeline timeline = (Timeline) time.getUserData();
         timeline.stop();
         reload();
     }
     public void sendRecordToRoom(){
-        pauseRecord();
-        try {
-            stopRecord();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        StartEverything.getSocketController().sendAudioToRoom(mainRoom.getId(), this.AudioByte);
+
+            isRecord = false;
+            byte[] AudioByte = AudioController.stopRecord();
+            Timeline timeline = (Timeline) time.getUserData();
+            timeline.stop();
+            try {
+                reload();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        StartEverything.getSocketController().sendAudioToRoom(mainRoom.getId(), AudioByte);
     }
 }

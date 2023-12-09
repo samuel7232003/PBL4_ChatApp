@@ -7,7 +7,7 @@ public class AudioController {
     static Thread recordThread;
     static ByteArrayOutputStream out;
     static boolean isRecording = false;
-    public static AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100, 16, 2, 4,  44100, false);
+    public static AudioFormat format = new AudioFormat(8000.0f, 16, 1, true, true);
 
     public static void startRecord() {
         out = new ByteArrayOutputStream();
@@ -45,7 +45,6 @@ public class AudioController {
                 e.printStackTrace();
             }
         });
-
         recordThread.start();
     }
 //public static void startRecord() {
@@ -131,5 +130,41 @@ public class AudioController {
         AudioInputStream audioInputStream = new AudioInputStream(new ByteArrayInputStream(audioBytes),
                 AudioController.format, audioBytes.length);
         return Math.round(audioInputStream.getFrameLength() / audioInputStream.getFormat().getFrameRate() / 2);
+    }
+    public static void play(ByteArrayOutputStream receivedBytes) {
+        // Get an input stream on the byte array
+        // containing the data
+        byte[] audioData = receivedBytes.toByteArray();
+        try {
+            AudioFormat format = new AudioFormat(8000.0f, 16, 1, true, true);
+            InputStream byteArrayInputStream = new ByteArrayInputStream(audioData);
+            AudioInputStream audioInputStream = new AudioInputStream(byteArrayInputStream, format,
+                    audioData.length / format.getFrameSize());
+            DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, format);
+            SourceDataLine speaker = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
+            speaker.open(format);
+            speaker.start();
+            int cnt = 0;
+            byte tempBuffer[] = new byte[10000];
+            try {
+                while ((cnt = audioInputStream.read(tempBuffer, 0, tempBuffer.length)) != -1) {
+                    if (cnt > 0) {
+                        // Write data to the internal buffer of
+                        // the data line where it will be
+                        // delivered to the speaker.
+                        speaker.write(tempBuffer, 0, cnt);
+                    } // end if
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // Block and wait for internal buffer of the
+            // data line to empty.
+            speaker.drain();
+            speaker.close();
+        } catch (LineUnavailableException ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
