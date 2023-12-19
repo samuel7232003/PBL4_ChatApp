@@ -106,7 +106,7 @@ public class HomeController implements Initializable{
             viewItemUserOnl(client1);
         }
         if(start){
-            addMessage();
+            if(mainRoom != null) addMessage();
         }
     }
 
@@ -121,7 +121,8 @@ public class HomeController implements Initializable{
     Image avaImage;
     @FXML
     Image avaGroupImg;
-
+    static String pathForShowImage;
+    public String getPathForShowImage(){return pathForShowImage;}
     public Image getAvaImage(String idUser){
         String prePath = avaImage.getUrl();
         String path = "";
@@ -133,6 +134,7 @@ public class HomeController implements Initializable{
             }
             i++;
         }
+        pathForShowImage = path;
         path = path + "/" + "ava" + idUser + ".jpg";
         Image image = new Image(path);
         if(image.isError()){
@@ -205,11 +207,8 @@ public class HomeController implements Initializable{
 
     public void openByUser(String userName, String idUser) throws IOException {
         start = true;
-        boolean check = StartEverything.getSocketController().selectUser(idUser);
-        if(check){
-            mainRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUser);
-        }
-        else System.out.println("rong");
+        StartEverything.getSocketController().selectUser(idUser);
+        mainRoom = RoomController.findPrivateRoom(StartEverything.getSocketController().getRoomList(), idUser);
     }
     public void viewListRoom(Room room){
         Pane itemRoom = new Pane();

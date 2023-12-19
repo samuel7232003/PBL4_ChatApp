@@ -400,6 +400,7 @@ public class SocketController {
                                 LocalDateTime timenow = LocalDateTime.now();
                                 MessageData messageData = new MessageData(userID, fileName, "file", timenow);
                                 receiveRoom.getMessageDatas().add(messageData);
+                                //downloadIfImage(fileName, roomID);
                                 reloadOnSocket();
                                 break;
                             }
@@ -657,14 +658,10 @@ public class SocketController {
         }
     }
     //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này
-    public boolean selectUser(String id_user){
+    public void selectUser(String id_user){
         Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
         if(foundRoom == null){
             createPrivateRoom(id_user);
-            return  false;
-        }
-        else{
-            return true;
         }
     }
     public void clickEnterChat(String roomId, String content){
@@ -708,5 +705,15 @@ public class SocketController {
     }
     public ArrayList<Room> getRoomList(){
         return connectedServer.getRooms();
+    }
+
+    public void downloadIfImage(String fileName, String roomID){
+        String type = "";
+        for (String s : fileName.split("\\.")) type = s;
+        if(type.equals("jpg")||type.equals("png")) {
+            String path = StartEverything.getHomeController().getPathForShowImage();
+            downloadFile(roomID, 1, fileName, path);
+            System.out.println("Download thành công!" + path);
+        }
     }
 }
