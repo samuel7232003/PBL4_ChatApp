@@ -438,6 +438,27 @@ public class SocketController {
                                 reloadOnSocket();
                                 break;
                             }
+                            case "response audio bytes": {
+
+                                int fileSize = Integer.parseInt(bufferedReader.readLine());
+
+                                byte[] buffer = new byte[1024];
+                                InputStream in = socket.getInputStream();
+                                ByteArrayOutputStream receivedBytes = new ByteArrayOutputStream();
+
+                                int count;
+                                int receivedFileSize = 0;
+                                while ((count = in.read(buffer)) > 0) {
+                                    receivedBytes.write(buffer, 0, count);
+                                    receivedFileSize += count;
+                                    if (receivedFileSize >= fileSize)
+                                        break;
+                                }
+
+                                receivedBytes.close();
+                                AudioController.play(receivedBytes);
+                                break;
+                            }
                             case "new name room":{
                                 String idRoom = bufferedReader.readLine();
                                 String newNameRoom = bufferedReader.readLine();
@@ -633,7 +654,7 @@ public class SocketController {
             bufferedWriter.newLine();
             bufferedWriter.write(roomID);
             bufferedWriter.newLine();
-            bufferedWriter.write("" + room.getMessageDatas().size());
+            bufferedWriter.write("" + 0);
             bufferedWriter.newLine();
             bufferedWriter.write("" + AudioController.getAudioDuration(audioBytes));
             bufferedWriter.newLine();
@@ -649,12 +670,23 @@ public class SocketController {
             while ((count = in.read(buffer)) > 0) {
                 out.write(buffer, 0, count);
             }
-
-            in.close();
-            out.flush();
-
+            System.out.println("đã gửi xong");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void getAudioBytes(String roomID, int fileMessageIndex) {
+
+        try {
+            bufferedWriter.write("request audio bytes");
+            bufferedWriter.newLine();
+            bufferedWriter.write(roomID);
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + fileMessageIndex);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
     //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này
