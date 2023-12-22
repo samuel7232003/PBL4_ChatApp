@@ -219,6 +219,7 @@ public class SocketController {
                 client.setName(bufferedReader.readLine());
                 client.setEmail(bufferedReader.readLine());
                 client.setPassword(bufferedReader.readLine());
+                client.setUsername(bufferedReader.readLine());
                 connectedServer.setOpen(true);
                 getAllUsers();
                 getRoomExisted();
