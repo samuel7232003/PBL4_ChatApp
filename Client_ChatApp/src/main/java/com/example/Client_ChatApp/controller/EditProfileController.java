@@ -78,4 +78,8 @@ public class EditProfileController implements Initializable {
     public void logout(MouseEvent event) throws IOException {
         StartEverything.getSocketController().getSocket().close();
     }
+
+    public void requestEditProfile(){
+        StartEverything.getSocketController().requestEditMyInfor(namelb.getText(), emaillb.getText(), pwdlb.getText());
+    }
 }
