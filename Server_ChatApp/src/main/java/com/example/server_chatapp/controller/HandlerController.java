@@ -56,7 +56,6 @@ public class HandlerController extends Thread {
                         String clientPassword = bufferedReader.readLine();
 
                         String rs = ClientController.Login(clientUsername, clientPassword); // kiểm tra đăng nhập
-                        // nếu mà k dính 2 cái trên thì dưới đó trả về id của client
 
                         if (rs.equals("Login-fail")) {
                             System.out.println("Đăng nhập không thành công");
@@ -96,6 +95,8 @@ public class HandlerController extends Thread {
                                 this.bufferedWriter.newLine();
                                 this.bufferedWriter.write(client.getPassword());
                                 this.bufferedWriter.newLine();
+                                this.bufferedWriter.write(client.getUsername());
+                                this.bufferedWriter.newLine();
                                 this.bufferedWriter.flush();
 
 //                              Hiện số lượng người đang onl - 1 nghĩa là trừ thằng thằng mà đang nhắn
@@ -105,6 +106,7 @@ public class HandlerController extends Thread {
                                 this.bufferedWriter.flush();
                                 // cập nhật lại danh sách user đang online cho thằng this client
                                 for (Client client1 : clients) {
+                                    // gửi ảnh về cho chính client đó
                                     if ((client1.getId()).equals(this.client.getId()))
                                         continue;
                                     this.bufferedWriter.write(client1.getId());
@@ -160,7 +162,6 @@ public class HandlerController extends Thread {
 
                                 //Gửi thông tin từ this client về các client khác
                                 for (HandlerController handlerController : SocketController.getClientHandlers()) {
-
                                     if ((handlerController.getClient().getId()).equals(this.client.getId()))
                                         continue;
                                     handlerController.getBufferedWriter().write("new user online");
