@@ -8,5 +8,6 @@
       <Label id="iptxt" fx:id="iptxt" layoutX="87.0" layoutY="24.0" text="Label" />
       <Label id="porttxt" fx:id="porttxt" layoutX="87.0" layoutY="57.0" text="Label" />
       <TextArea id="tbtxt" fx:id="tbtxt" layoutX="87.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button onMouseClicked="#closeSocket" layoutX="87.0" layoutY="307.0" mnemonicParsing="false" text="Đóng server" />
    </children>
 </AnchorPane>

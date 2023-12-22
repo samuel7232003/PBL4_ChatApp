@@ -138,8 +138,8 @@ public class HandlerController extends Thread {
                                         this.bufferedWriter.newLine();
                                         this.bufferedWriter.write(clientInRoom.getName());
                                         this.bufferedWriter.newLine();
+                                        this.bufferedWriter.flush();
                                     }
-                                    this.bufferedWriter.flush();
                                     // gửi thông tin về những cái chat cho room
                                     this.bufferedWriter.write("" + room.getMessages().size());
                                     this.bufferedWriter.newLine();
