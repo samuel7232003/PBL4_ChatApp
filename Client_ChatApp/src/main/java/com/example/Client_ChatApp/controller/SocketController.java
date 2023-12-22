@@ -282,6 +282,8 @@ public class SocketController {
                                         break;
                                     }
                                 }
+                                reloadOnSocket();
+                                break;
                             }
                             case "user quit": {
                                 String Id_user = bufferedReader.readLine();
