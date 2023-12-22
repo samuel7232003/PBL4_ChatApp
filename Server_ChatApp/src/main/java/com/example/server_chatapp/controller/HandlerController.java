@@ -217,7 +217,6 @@ public class HandlerController extends Thread {
                         }
 //                              //Gửi thông tin từ this client về các client khác
                         for (HandlerController handlerController : SocketController.getClientHandlers()) {
-
                             if ((handlerController.getClient().getId()).equals(this.client.getId()))
                                 continue;
                             handlerController.getBufferedWriter().write("new user online");
@@ -235,7 +234,30 @@ public class HandlerController extends Thread {
                         String nameUser = bufferedReader.readLine();
                         String email = bufferedReader.readLine();
                         String password = bufferedReader.readLine();
-
+                        this.client.setName(nameUser);
+                        this.client.setEmail(email);
+                        this.client.setPassword(password);
+                        ClientController clientController = new ClientController();
+                        clientController.updateThisProfile(this.client.getId(), nameUser, email, password);
+                        for(Client client1 : SocketController.getAllClient()){
+                            if(client1.getId().equals(this.client.getId())){
+                                client1.setName(nameUser);
+                                client1.setEmail(email);
+                                client1.setPassword(password);
+                                break;
+                            }
+                        }
+                        for (HandlerController handlerController : SocketController.getClientHandlers()) {
+                            if ((handlerController.getClient().getId()).equals(this.client.getId()))
+                                continue;
+                            handlerController.getBufferedWriter().write("edit client infor");
+                            handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().write(this.client.getId());
+                            handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().write(this.client.getName());
+                            handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().flush();
+                        }
                     }
                     case "request create room": {
                         String roomName = bufferedReader.readLine();

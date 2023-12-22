@@ -266,6 +266,23 @@ public class SocketController {
                                 reloadOnSocket();
                                 break;
                             }
+                            case "edit client infor": {
+                                String idUser = bufferedReader.readLine();
+                                String newNameUser = bufferedReader.readLine();
+                                for(Client client1 : connectedServer.getClients()){
+                                    if(client1.getId().equals(idUser)){
+                                        client1.setName(newNameUser);
+                                        break;
+                                    }
+                                }
+
+                                for(Client client1 : connectedServer.getClients()){
+                                    if(client1.getId().equals(idUser)){
+                                        System.out.println("Client " + idUser + " đã đổi tên thành: " + client1.getName());
+                                        break;
+                                    }
+                                }
+                            }
                             case "user quit": {
                                 String Id_user = bufferedReader.readLine();
                                 String Name_user = bufferedReader.readLine();

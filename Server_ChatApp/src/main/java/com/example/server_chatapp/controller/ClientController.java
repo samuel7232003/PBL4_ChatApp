@@ -56,6 +56,11 @@ public class ClientController {
         }
         return clients;
     }
+    public boolean updateThisProfile(String idUser, String name, String email, String password){
+        Client client = new Client(idUser, name, password, email);
+        ClientDAO.updateInforClient(client);
+        return true;
+    }
     public static boolean checkClientIsLogin(String idUser){
         return ClientDAO.CheckLogin(idUser);
     }

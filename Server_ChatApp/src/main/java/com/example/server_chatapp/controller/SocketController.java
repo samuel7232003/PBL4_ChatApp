@@ -99,6 +99,7 @@ public class SocketController{
         try {
             for (HandlerController handlerController : clients) {
                 ClientController.Logout(handlerController.getClient().getId());
+                System.out.println(handlerController.getClient().getId());
                 handlerController.getClient().getSocket().close();
             }
             serverSocket.close();
