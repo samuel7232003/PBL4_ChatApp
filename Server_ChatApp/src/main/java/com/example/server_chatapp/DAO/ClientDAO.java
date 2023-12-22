@@ -119,14 +119,12 @@ public class ClientDAO extends connectMySQL{
         }
         return true;
     }
-    public static void updateInforClient(Client client){
+    public static int updateInforClient(Client client){
         try{
             Connection conn = connectSQL();
-            String sql = "UPDATE user SET Name='" + client.getName() + "'," +
-                                    "password ='" + client.getPassword() + "'," +
-                                    "email='" + client.getEmail() + "' WHERE ID_user = '" + client.getId() + "';";
+            String sql = "UPDATE USER SET Name='" + client.getName() + "',password='" + client.getPassword() + "',email='" + client.getEmail() +"' WHERE ID_user = '" + client.getId() + "'";
             Statement statement = conn.createStatement();
-            statement.executeUpdate(sql);
+            return statement.executeUpdate(sql);
         }catch (SQLException ex){
             throw new RuntimeException();
         }

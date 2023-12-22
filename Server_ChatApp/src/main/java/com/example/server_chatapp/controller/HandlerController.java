@@ -210,7 +210,7 @@ public class HandlerController extends Thread {
                         for (HandlerController handlerController : SocketController.getClientHandlers()) {
                             if ((handlerController.getClient().getId()).equals(this.client.getId()))
                                 continue;
-                            String filePath = "Server_ChatApp/avatar/person/ava" + handlerController.getClient().getId() + ".jpg"
+                            String filePath = "Server_ChatApp/avatar/person/ava" + handlerController.getClient().getId() + ".jpg";
                             this.bufferedWriter.write(handlerController.getClient().getId());
                             this.bufferedWriter.newLine();
                             this.bufferedWriter.write(handlerController.getClient().getName());
@@ -236,6 +236,7 @@ public class HandlerController extends Thread {
                         String nameUser = bufferedReader.readLine();
                         String email = bufferedReader.readLine();
                         String password = bufferedReader.readLine();
+
                         this.client.setName(nameUser);
                         this.client.setEmail(email);
                         this.client.setPassword(password);
@@ -260,6 +261,7 @@ public class HandlerController extends Thread {
                             handlerController.getBufferedWriter().newLine();
                             handlerController.getBufferedWriter().flush();
                         }
+                        break;
                     }
                     case "request create room": {
                         String roomName = bufferedReader.readLine();

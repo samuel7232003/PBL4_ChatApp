@@ -530,8 +530,12 @@ public class SocketController {
             bufferedWriter.write(password);
             bufferedWriter.newLine();
             bufferedWriter.flush();
-        } catch (IOException e) {throw new RuntimeException(e);
-
+            client.setName(name);
+            client.setPassword(password);
+            client.setEmail(email);
+            reloadOnSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
