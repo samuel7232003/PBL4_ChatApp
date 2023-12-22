@@ -41,4 +41,8 @@ public class ServerUIController implements Initializable {
             isSocketOpened = false;
         }
     }
+
+    public void closeSocket(){
+        socketController.CloseSocket();
+    }
 }
