@@ -44,7 +44,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label onMouseClicked="#logout" layoutX="969.0" layoutY="25.0" text="Đăng xuất" textFill="#dd4131">
+            <Label layoutX="969.0" layoutY="25.0" onMouseClicked="#logout" text="Đăng xuất" textFill="#dd4131">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -86,7 +86,7 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <Pane layoutY="412.0" prefHeight="35.0" prefWidth="159.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 6;">
+            <Pane fx:id="edit" layoutY="412.0" onMouseClicked="#requestEditProfile" prefHeight="35.0" prefWidth="159.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 6;">
                <children>
                   <ImageView fitHeight="24.0" fitWidth="25.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                      <image>
