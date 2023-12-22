@@ -210,6 +210,7 @@ public class HandlerController extends Thread {
                         for (HandlerController handlerController : SocketController.getClientHandlers()) {
                             if ((handlerController.getClient().getId()).equals(this.client.getId()))
                                 continue;
+                            String filePath = "Server_ChatApp/avatar/person/ava" + handlerController.getClient().getId() + ".jpg"
                             this.bufferedWriter.write(handlerController.getClient().getId());
                             this.bufferedWriter.newLine();
                             this.bufferedWriter.write(handlerController.getClient().getName());
