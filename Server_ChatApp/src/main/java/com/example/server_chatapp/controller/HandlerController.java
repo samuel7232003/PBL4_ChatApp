@@ -99,7 +99,6 @@ public class HandlerController extends Thread {
                                 this.bufferedWriter.newLine();
                                 this.bufferedWriter.flush();
 
-//                              Hiện số lượng người đang onl - 1 nghĩa là trừ thằng thằng mà đang nhắn
                                 ArrayList<Client> clients = ClientController.getAllClients();
                                 this.bufferedWriter.write("" + (clients.size() - 1));
                                 this.bufferedWriter.newLine();
@@ -109,13 +108,53 @@ public class HandlerController extends Thread {
                                     // gửi ảnh về cho chính client đó
                                     if ((client1.getId()).equals(this.client.getId()))
                                         continue;
-                                    this.bufferedWriter.write(client1.getId());
-                                    this.bufferedWriter.newLine();
-                                    this.bufferedWriter.write(client1.getName());
-                                    this.bufferedWriter.newLine();
-                                    this.bufferedWriter.write(""+client1.isLogin());
-                                    this.bufferedWriter.newLine();
-                                    this.bufferedWriter.flush();
+                                        this.bufferedWriter.write(client1.getId());
+                                        this.bufferedWriter.newLine();
+                                        this.bufferedWriter.write(client1.getName());
+                                        this.bufferedWriter.newLine();
+                                        this.bufferedWriter.write(""+client1.isLogin());
+                                        this.bufferedWriter.newLine();
+                                        this.bufferedWriter.flush();
+
+//                                        try{
+//                                            // gửi về ava của từng client
+//                                            String filePath = "avatar/person/ava" + client1.getId() + ".jpg";
+//                                            String fileName = "ava" + client1.getId() + ".jpg";
+//                                            File file = new File(filePath);
+//                                            if(!file.exists()) {
+//                                                this.bufferedWriter.write("no avatar");
+//                                                this.bufferedWriter.newLine();
+//                                                this.bufferedWriter.flush();
+//                                            }
+//                                            else{
+//                                                //System.out.println(file.length());
+//                                                //System.out.println(fileName);
+//                                                //System.out.println(filePath);
+//                                                this.bufferedWriter.write("have avatar");
+//                                                this.bufferedWriter.newLine();
+//                                                this.bufferedWriter.flush();
+//
+//                                                this.bufferedWriter.write(fileName);
+//                                                this.bufferedWriter.newLine();
+//                                                this.bufferedWriter.write("" + file.length());
+//                                                this.bufferedWriter.newLine();
+//                                                this.bufferedWriter.flush();
+//
+//                                                byte[] buffer = new byte[1024];
+//                                                InputStream in = new FileInputStream(file);
+//                                                OutputStream out = socketHandler.getOutputStream();
+//
+//                                                int count;
+//                                                while ((count = in.read(buffer)) > 0) {
+//                                                    out.write(buffer, 0, count);
+//                                                }
+//                                                in.close();
+//                                                out.flush();
+//                                            }
+//                                        }catch (IOException ex){
+//                                            ex.printStackTrace();
+//                                        }
+
                                 }
 
 
@@ -210,7 +249,6 @@ public class HandlerController extends Thread {
                         for (HandlerController handlerController : SocketController.getClientHandlers()) {
                             if ((handlerController.getClient().getId()).equals(this.client.getId()))
                                 continue;
-                            String filePath = "Server_ChatApp/avatar/person/ava" + handlerController.getClient().getId() + ".jpg";
                             this.bufferedWriter.write(handlerController.getClient().getId());
                             this.bufferedWriter.newLine();
                             this.bufferedWriter.write(handlerController.getClient().getName());
@@ -515,11 +553,12 @@ public class HandlerController extends Thread {
                         System.out.println(roomMessagesCount);
                         System.out.println(audioDuration);
                         System.out.println(audioByteSize);
-                        File filesFolder = new File("files");
+                        String folderPath = "files/" + roomID + "i"  +roomMessagesCount;
+                        File filesFolder = new File(folderPath);
                         if (!filesFolder.exists())
                             filesFolder.mkdir();
                         String name ="audio" + roomID + roomMessagesCount;
-                        String audioFileName = "files/" + name;
+                        String audioFileName = folderPath + "/" + name;
 
                         File file = new File(audioFileName);
                         byte[] buffer = new byte[1024];
@@ -534,9 +573,11 @@ public class HandlerController extends Thread {
                             if (receivedSize >= audioByteSize)
                                 break;
                         }
-
                         out.close();
                         System.out.println("đã nhận xong");
+
+
+
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
                         room.setMessageOrder();
                         RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), file.getName(), "audio");
@@ -591,7 +632,7 @@ public class HandlerController extends Thread {
                             String roomID = bufferedReader.readLine();
                             int messageIndex = Integer.parseInt(bufferedReader.readLine());
                             String name ="audio" + roomID + messageIndex;
-                            String audioFileName = "files/" + name;
+                            String audioFileName = "files/" + roomID + "i"  +messageIndex + "/" + name;
 //                            String audioFileName = "files/audio" + String.format("%02d%03d", roomID, messageIndex);
                             File file = new File(audioFileName);
 

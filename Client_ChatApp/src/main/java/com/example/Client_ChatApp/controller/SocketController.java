@@ -37,8 +37,8 @@ public class SocketController {
 
     public SocketController() {
         this.client = new Client();
-        String ipAddress = getThisIP();
-        // String ipAddress = "192.168.202.82";
+        //String ipAddress = getThisIP();
+        String ipAddress = "192.168.68.82";
         // System.out.println(ipAddress);
         Stage stage1 = new Stage();
         stage = stage1;
@@ -62,6 +62,9 @@ public class SocketController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        String pathSaveFile = "src/main/resources/com/example/Client_ChatApp/avatar/user";
+        File filesFolder = new File(pathSaveFile);
+        if(!filesFolder.exists()) filesFolder.mkdir();
         for(int i = 0; i < connectedServer.getConnectAccountCount(); i++ ){
             try {
                 String id_user = bufferedReader.readLine();
@@ -69,6 +72,49 @@ public class SocketController {
                 boolean isLogin = Boolean.parseBoolean(bufferedReader.readLine());
                 Client clientVari = new Client(id_user, NameUser, isLogin);
                 connectedServer.addClient(clientVari);
+
+//                //nhận avatar của các client từ server gửi về
+//                String haveOrNoAvatar = bufferedReader.readLine();
+//                System.out.println(haveOrNoAvatar);
+//                if(haveOrNoAvatar.equals("have avatar")){
+//                    String fileName = bufferedReader.readLine();
+//                    int fileLength = Integer.parseInt(bufferedReader.readLine());
+//                    String saveFileName = pathSaveFile + "/" + fileName;
+//                    File file = new File(saveFileName);
+//                    String saveFileDelete = "src/main/resources/com/example/Client_ChatApp/avatar/avaDelete.jpg";
+//                    File filedelete = new File(saveFileDelete);
+//                    byte[] buffer = new byte[1024];
+//                    InputStream in = socket.getInputStream();
+//                    int receivedSize = 0;
+//                    int count;
+//
+//                    if(!file.exists()){
+//                        OutputStream out = new FileOutputStream(file);
+//                        while ((count = in.read(buffer)) > 0) {
+//                            out.write(buffer, 0, count);
+//                            receivedSize += count;
+//                            if (receivedSize >= fileLength)
+//                                break;
+//                        }
+//                        out.close();
+//                    }
+//                    else{
+//                        System.out.println("ava của " + NameUser + " đã tồn tại");
+//                        OutputStream out = new FileOutputStream(filedelete);
+//                        while ((count = in.read(buffer)) > 0) {
+//                            out.write(buffer, 0, count);
+//                            receivedSize += count;
+//                            if (receivedSize >= fileLength)
+//                                break;
+//                        }
+//                        out.close();
+//                        filedelete.delete();
+//                    }
+//
+//                }
+//                else {
+//                    System.out.println(haveOrNoAvatar);
+//                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -82,6 +128,7 @@ public class SocketController {
                 String idRoom = bufferedReader.readLine();
                 String nameRoom = bufferedReader.readLine();
                 String typeRoom = bufferedReader.readLine();
+                System.out.println(roomCount + idRoom + nameRoom + typeRoom);
                 int clientCount = Integer.parseInt(bufferedReader.readLine());
                 ArrayList<Client> clients = new ArrayList<Client>();
                 for(int j = 0; j <clientCount; j++){
