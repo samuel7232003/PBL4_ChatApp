@@ -6,6 +6,8 @@ import com.example.server_chatapp.model.Room;
 import com.example.server_chatapp.model.RoomMessage;
 
 import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -470,7 +472,57 @@ public class HandlerController extends Thread {
                         String saveFileName = "files/" + roomID + "/" + fileName;
 
                         File file = new File(saveFileName);
-                        byte[] buffer = new byte[1024];
+                        //test
+//                        int PIECES_OF_FILE_SIZE = 1024 * 32;
+//                        byte[] receiveData = new byte[PIECES_OF_FILE_SIZE];
+//                        DatagramPacket receivePacket;
+//                        try {
+//                            // get file info
+//                            receivePacket = new DatagramPacket(receiveData, receiveData.length);
+//                            ByteArrayInputStream bais = new ByteArrayInputStream(
+//                                    receivePacket.getData());
+//                            ObjectInputStream ois = new ObjectInputStream(bais);
+//                            FileInfo fileInfo = (FileInfo) ois.readObject();
+//                            // show file info
+//                            if (fileInfo != null) {
+//                                System.out.println("File name: " + fileInfo.getFilename());
+//                                System.out.println("File size: " + fileInfo.getFileSize());
+//                                System.out.println("Pieces of file: " + fileInfo.getPiecesOfFile());
+//                                System.out.println("Last bytes length: "+ fileInfo.getLastByteLength());
+//                            }
+//                            // get file content
+//                            System.out.println("Receiving file...");
+//                            File fileReceive = new File(fileInfo.getDestinationDirectory()
+//                                    + fileInfo.getFilename());
+//                            BufferedOutputStream bos = new BufferedOutputStream(
+//                                    new FileOutputStream(fileReceive));
+//                            // write pieces of file
+//                            for (int i = 0; i < (fileInfo.getPiecesOfFile() - 1); i++) {
+//                                receivePacket = new DatagramPacket(receiveData, receiveData.length,
+//                                        inetAddress, port);
+//                                serverSocket.receive(receivePacket);
+//                                bos.write(receiveData, 0, PIECES_OF_FILE_SIZE);
+//                            }
+//                            // write last bytes of file
+//                            receivePacket = new DatagramPacket(receiveData, receiveData.length,
+//                                    inetAddress, port);
+//                            serverSocket.receive(receivePacket);
+//                            bos.write(receiveData, 0, fileInfo.getLastByteLength());
+//                            bos.flush();
+//                            System.out.println("Done!");
+//
+//                            // close stream
+//                            bos.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (ClassNotFoundException e) {
+//                            e.printStackTrace();
+//                        }
+                        //
+
+
+
+                        byte[] buffer = new byte[1024*32];
                         InputStream in = socketHandler.getInputStream();
                         OutputStream out = new FileOutputStream(file);
 
@@ -484,6 +536,8 @@ public class HandlerController extends Thread {
                         }
 
                         out.close();
+
+
                         // gửi cho các client
                         Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
                         room.setMessageOrder();
