@@ -399,6 +399,8 @@ public class HomeController implements Initializable{
         if (Menu.getLayoutX() == 1160){
             Menu.setLayoutX(885);
             addUserMenu.setLayoutX(1160);
+            removeUserMenu.setLayoutX(1160);
+            renamePane.setLayoutX(1160);
             //Menu.toFront();
             return;
         }
