@@ -36,7 +36,7 @@ public class EditProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ArrayList<Client> clients = new ArrayList<Client>(StartEverything.getSocketController().getConnectedServer().getClients());
-        for(Client client1 : clients) System.out.println(client1.getId());
+        // for(Client client1 : clients) System.out.println(client1.getId());
         client = StartEverything.getSocketController().getClient();
         clientAva.setImage(getAvaImage(client.getId()));
         clientAva1.setImage(getAvaImage(client.getId()));

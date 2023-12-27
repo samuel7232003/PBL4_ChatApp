@@ -57,8 +57,11 @@ public class ClientController {
         return clients;
     }
     public boolean updateThisProfile(String idUser, String name, String email, String password){
-        Client client = new Client(idUser, name, password, email);
-        ClientDAO.updateInforClient(client);
+        Client client = new Client(name, password, email);
+        client.setId(idUser);
+        System.out.println(client.getId() + client.getName() +  client.getPassword() + client.getEmail());
+        int check = ClientDAO.updateInforClient(client);
+        System.out.println(check);
         return true;
     }
     public static boolean checkClientIsLogin(String idUser){
