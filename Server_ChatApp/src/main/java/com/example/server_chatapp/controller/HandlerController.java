@@ -1,6 +1,7 @@
 package com.example.server_chatapp.controller;
 
 import com.example.server_chatapp.DAO.ClientDAO;
+import com.example.server_chatapp.File.FileInfo;
 import com.example.server_chatapp.model.Client;
 import com.example.server_chatapp.model.Room;
 import com.example.server_chatapp.model.RoomMessage;
@@ -472,57 +473,42 @@ public class HandlerController extends Thread {
                         String saveFileName = "files/" + roomID + "/" + fileName;
 
                         File file = new File(saveFileName);
-                        //test
-//                        int PIECES_OF_FILE_SIZE = 1024 * 32;
-//                        byte[] receiveData = new byte[PIECES_OF_FILE_SIZE];
-//                        DatagramPacket receivePacket;
+
+//                        DataInputStream inFromClient = null;
+//                        ObjectInputStream ois = null;
+//                        ObjectOutputStream oos = null;
 //                        try {
-//                            // get file info
-//                            receivePacket = new DatagramPacket(receiveData, receiveData.length);
-//                            ByteArrayInputStream bais = new ByteArrayInputStream(
-//                                    receivePacket.getData());
-//                            ObjectInputStream ois = new ObjectInputStream(bais);
-//                            FileInfo fileInfo = (FileInfo) ois.readObject();
-//                            // show file info
-//                            if (fileInfo != null) {
-//                                System.out.println("File name: " + fileInfo.getFilename());
-//                                System.out.println("File size: " + fileInfo.getFileSize());
-//                                System.out.println("Pieces of file: " + fileInfo.getPiecesOfFile());
-//                                System.out.println("Last bytes length: "+ fileInfo.getLastByteLength());
-//                            }
-//                            // get file content
-//                            System.out.println("Receiving file...");
-//                            File fileReceive = new File(fileInfo.getDestinationDirectory()
-//                                    + fileInfo.getFilename());
-//                            BufferedOutputStream bos = new BufferedOutputStream(
-//                                    new FileOutputStream(fileReceive));
-//                            // write pieces of file
-//                            for (int i = 0; i < (fileInfo.getPiecesOfFile() - 1); i++) {
-//                                receivePacket = new DatagramPacket(receiveData, receiveData.length,
-//                                        inetAddress, port);
-//                                serverSocket.receive(receivePacket);
-//                                bos.write(receiveData, 0, PIECES_OF_FILE_SIZE);
-//                            }
-//                            // write last bytes of file
-//                            receivePacket = new DatagramPacket(receiveData, receiveData.length,
-//                                    inetAddress, port);
-//                            serverSocket.receive(receivePacket);
-//                            bos.write(receiveData, 0, fileInfo.getLastByteLength());
-//                            bos.flush();
-//                            System.out.println("Done!");
+//                            // get greeting from client
+//                            inFromClient = new DataInputStream(socketHandler.getInputStream());
+//                            System.out.println(inFromClient.readUTF());
 //
-//                            // close stream
-//                            bos.close();
+//                            // receive file info
+//                            ois = new ObjectInputStream(socketHandler.getInputStream());
+//                            FileInfo fileInfo = (FileInfo) ois.readObject();
+//                            if (fileInfo != null) {
+//                                createFile(fileInfo);
+//                            }
+//
+//                            // confirm that file is received
+//                            oos = new ObjectOutputStream(socketHandler.getOutputStream());
+//                            fileInfo.setStatus("success");
+//                            fileInfo.setDataBytes(null);
+//                            oos.writeObject(fileInfo);
+//
 //                        } catch (IOException e) {
 //                            e.printStackTrace();
 //                        } catch (ClassNotFoundException e) {
 //                            e.printStackTrace();
+//                        } finally {
+//                            // close all stream
+//                            closeStream(ois);
+//                            closeStream(oos);
+//                            closeStream(inFromClient);
+//                            // close session
+//
 //                        }
-                        //
 
-
-
-                        byte[] buffer = new byte[1024*32];
+                        byte[] buffer = new byte[1024];
                         InputStream in = socketHandler.getInputStream();
                         OutputStream out = new FileOutputStream(file);
 
@@ -598,6 +584,7 @@ public class HandlerController extends Thread {
                         }
                         break;
                     }
+
                     case "audio to room": {
                         String roomID = bufferedReader.readLine();
                         int roomMessagesCount = Integer.parseInt(bufferedReader.readLine());
@@ -749,6 +736,45 @@ public class HandlerController extends Thread {
                 ClientController.Logout(client.getId());
                 SocketController.updateClient();
             }
+        }
+    }
+    private boolean createFile(FileInfo fileInfo) {
+        BufferedOutputStream bos = null;
+
+        try {
+            if (fileInfo != null) {
+                File fileReceive = new File(fileInfo.getDestinationDirectory()
+                        + fileInfo.getFilename());
+                bos = new BufferedOutputStream(
+                        new FileOutputStream(fileReceive));
+                // write file content
+                bos.write(fileInfo.getDataBytes());
+                bos.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeStream(bos);
+        }
+        return true;
+    }
+    public void closeStream(InputStream inputStream) {
+        try {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void closeStream(OutputStream outputStream) {
+        try {
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

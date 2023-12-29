@@ -681,7 +681,7 @@ public class SocketController {
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
-            byte[] buffer = new byte[1024*32];
+            byte[] buffer = new byte[1024];
             InputStream in = new FileInputStream(file);
             OutputStream out = socket.getOutputStream();
 
