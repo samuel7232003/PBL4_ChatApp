@@ -37,8 +37,8 @@ public class SocketController {
 
     public SocketController() {
         this.client = new Client();
-        //String ipAddress = getThisIP();
-        String ipAddress = "192.168.68.82";
+        String ipAddress = getThisIP();
+        //String ipAddress = "192.168.68.82";
         // System.out.println(ipAddress);
         Stage stage1 = new Stage();
         stage = stage1;
