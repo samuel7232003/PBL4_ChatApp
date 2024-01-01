@@ -51,6 +51,7 @@ public class RoomController {
             ArrayList<RoomMessage> roomMessages = RoomMessageDAO.getMessagebByIdRoom(room.getID_room());
             room.setClients(clientInRoom);
             room.setMessages(roomMessages);
+            room.setMessageOrder(roomMessages.size());
         }
         return rooms;
     }

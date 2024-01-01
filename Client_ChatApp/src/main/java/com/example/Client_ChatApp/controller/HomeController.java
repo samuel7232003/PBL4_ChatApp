@@ -373,7 +373,7 @@ public class HomeController implements Initializable{
                 public void handle(MouseEvent mouseEvent) {
                     Room room = RoomController.findRoom(StartEverything.getSocketController().getConnectedServer().getRooms(),mainRoom.getId());
 
-                    StartEverything.getSocketController().getAudioBytes(room.getId(), 0);
+                    StartEverything.getSocketController().playAudio(room.getId(), message.getContent());
                 }
             });
         }
@@ -576,10 +576,12 @@ public class HomeController implements Initializable{
     @FXML
     private Pane pauseBtn;
     boolean isRecord = false;
+    AudioController audioController;
 //    byte[] AudioByte = new byte[1024];
     public void startRecord(){
         isRecord = true;
-        AudioController.startRecord();
+        audioController = new AudioController();
+        audioController.startRecord();
 
         footerp.setLayoutY(843);
         recordBar.setLayoutY(743);
@@ -608,7 +610,8 @@ public class HomeController implements Initializable{
     }
     public void pauseRecord(){
         isRecord = false;
-        byte[] AudioByte = AudioController.stopRecord();
+        // byte[] AudioByte = AudioController.stopRecord();
+        audioController.stopRecord();
         Timeline timeline = (Timeline) time.getUserData();
         pauseBtn.setVisible(false);
         timeline.pause();
@@ -620,17 +623,17 @@ public class HomeController implements Initializable{
         reload();
     }
     public void sendRecordToRoom(){
+        isRecord = false;
+        // byte[] AudioByte = AudioController.stopRecord();
+        audioController.stopRecord();
+        Timeline timeline = (Timeline) time.getUserData();
+        timeline.stop();
+        try {
+            reload();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-            isRecord = false;
-            byte[] AudioByte = AudioController.stopRecord();
-            Timeline timeline = (Timeline) time.getUserData();
-            timeline.stop();
-            try {
-                reload();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        StartEverything.getSocketController().sendAudioToRoom(mainRoom.getId(), AudioByte);
+        StartEverything.getSocketController().sendAudioToRoom(mainRoom.getId());
     }
 }

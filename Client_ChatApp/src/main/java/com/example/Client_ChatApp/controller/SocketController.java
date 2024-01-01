@@ -37,9 +37,9 @@ public class SocketController {
 
     public SocketController() {
         this.client = new Client();
-        // String ipAddress = getThisIP();
+        String ipAddress = getThisIP();
         // String ipAddress = "192.168.68.82";
-        String ipAddress = "10.10.59.27";
+        // String ipAddress = "10.10.59.27";
 
         // System.out.println(ipAddress);
         Stage stage1 = new Stage();
@@ -498,7 +498,6 @@ public class SocketController {
                                 String userID = bufferedReader.readLine();
                                 String roomID = bufferedReader.readLine();
                                 String name = bufferedReader.readLine();
-                                int audioDuration = Integer.parseInt(bufferedReader.readLine());
                                 System.out.println("Recevie audio from " + userID + " to room " + roomID);
                                 Room receiveRoom = RoomController.findRoom(connectedServer.getRooms(), roomID);
                                 LocalDateTime timenow = LocalDateTime.now();
@@ -507,27 +506,55 @@ public class SocketController {
                                 reloadOnSocket();
                                 break;
                             }
-                            case "response audio bytes": {
-
-                                int fileSize = Integer.parseInt(bufferedReader.readLine());
-
+                            case "response audio play": {
+                                int audioSize = Integer.parseInt(bufferedReader.readLine());
+                                File file = new File("Audio/playRecorder.wav");
                                 byte[] buffer = new byte[1024];
                                 InputStream in = socket.getInputStream();
-                                ByteArrayOutputStream receivedBytes = new ByteArrayOutputStream();
+                                OutputStream out = new FileOutputStream(file);
 
                                 int count;
                                 int receivedFileSize = 0;
                                 while ((count = in.read(buffer)) > 0) {
-                                    receivedBytes.write(buffer, 0, count);
+                                    out.write(buffer, 0, count);
                                     receivedFileSize += count;
-                                    if (receivedFileSize >= fileSize)
+                                    if (receivedFileSize >= audioSize)
                                         break;
                                 }
 
-                                receivedBytes.close();
-                                AudioController.play(receivedBytes);
+                                out.close();
+
+                                try{
+                                    Clip currentCLip = AudioController.playMusic("Audio/playRecorder.wav");
+                                    while (currentCLip.getMicrosecondLength() != currentCLip.getMicrosecondPosition()){
+
+                                    }
+                                }catch (Exception e){
+                                    System.out.println(e);
+                                }
                                 break;
                             }
+//                            case "response audio bytes": {
+//
+//                                int fileSize = Integer.parseInt(bufferedReader.readLine());
+//
+//                                byte[] buffer = new byte[1024];
+//                                InputStream in = socket.getInputStream();
+//                                ByteArrayOutputStream receivedBytes = new ByteArrayOutputStream();
+//
+//                                int count;
+//                                int receivedFileSize = 0;
+//                                while ((count = in.read(buffer)) > 0) {
+//                                    receivedBytes.write(buffer, 0, count);
+//                                    receivedFileSize += count;
+//                                    if (receivedFileSize >= fileSize)
+//                                        break;
+//                                }
+//
+//                                receivedBytes.close();
+//                                // AudioController.play(receivedBytes);
+//                                break;
+//                            }
                             case "new name room":{
                                 String idRoom = bufferedReader.readLine();
                                 String newNameRoom = bufferedReader.readLine();
@@ -715,37 +742,83 @@ public class SocketController {
             ex.printStackTrace();
         }
     }
-
-    public void sendAudioToRoom(String roomID, byte[] audioBytes) {
-
+    public void sendAudioToRoom(String roomID) {
         try {
             System.out.println("Send audio to room " + roomID);
-
+            File file = new File("Audio/record.wav");
             Room room = RoomController.findRoom(connectedServer.getRooms(), roomID);
 
             bufferedWriter.write("audio to room");
             bufferedWriter.newLine();
             bufferedWriter.write(roomID);
             bufferedWriter.newLine();
-            bufferedWriter.write("" + 0);
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + AudioController.getAudioDuration(audioBytes));
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + audioBytes.length);
+            bufferedWriter.write("" + file.length());
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
             byte[] buffer = new byte[1024];
-            InputStream in = new ByteArrayInputStream(audioBytes);
+            InputStream in = new FileInputStream(file);
             OutputStream out = socket.getOutputStream();
 
             int count;
             while ((count = in.read(buffer)) > 0) {
                 out.write(buffer, 0, count);
             }
-            System.out.println("đã gửi xong");
+
+            in.close();
+            out.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+//    public void sendAudioToRoom(String roomID, byte[] audioBytes) {
+//
+//        try {
+//            System.out.println("Send audio to room " + roomID);
+//
+//            Room room = RoomController.findRoom(connectedServer.getRooms(), roomID);
+//
+//            bufferedWriter.write("audio to room");
+//            bufferedWriter.newLine();
+//            bufferedWriter.write(roomID);
+//            bufferedWriter.newLine();
+//            bufferedWriter.write("" + AudioController.getAudioDuration(audioBytes));
+//            bufferedWriter.newLine();
+//            bufferedWriter.write("" + audioBytes.length);
+//            bufferedWriter.newLine();
+//            bufferedWriter.flush();
+//
+//            byte[] buffer = new byte[1024];
+//            InputStream in = new ByteArrayInputStream(audioBytes);
+//            OutputStream out = socket.getOutputStream();
+//            int i = 0;
+//            int count;
+//            while ((count = in.read(buffer)) > 0) {
+//                out.write(buffer, 0, count);
+//                System.out.println(i++);
+//            }
+//            in.close();
+//            out.flush();
+//            System.out.println(audioBytes.length);
+//            System.out.println("đã gửi xong");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+    public void playAudio(String roomID, String name) {
+
+        try {
+            bufferedWriter.write("request audio play");
+            bufferedWriter.newLine();
+            bufferedWriter.write(roomID);
+            bufferedWriter.newLine();
+            bufferedWriter.write(name);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
     public void getAudioBytes(String roomID, int fileMessageIndex) {

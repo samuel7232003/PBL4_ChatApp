@@ -84,6 +84,8 @@ public class Room {
     public void setMessageOrder() {
         this.messageOrder++;
     }
-
+    public void setMessageOrder(int messageOrder) {
+        this.messageOrder = messageOrder;
+    }
 }
 
