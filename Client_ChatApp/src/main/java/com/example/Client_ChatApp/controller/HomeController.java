@@ -72,6 +72,8 @@ public class HomeController implements Initializable{
     private Pane renameButton;
     @FXML
     private Label addUserLable;
+    @FXML
+    private Circle onlCir;
 
     public void setMainRoom(Room mainRoom) {
         HomeController.mainRoom = mainRoom;
@@ -86,8 +88,8 @@ public class HomeController implements Initializable{
         else{
             main_name.setText(RoomController.findRoomName(mainRoom));
             mainAva.setImage(findAvaRoom(mainRoom));
+            setStatusLb(mainRoom);
             if(mainRoom.getType().equals("private")){
-                setStatusLb(mainRoom);
                 renameButton.setVisible(false);
                 removeButton.setVisible(false);
                 addUserLable.setText("Tạo nhóm trò chuyện");
@@ -114,6 +116,7 @@ public class HomeController implements Initializable{
         titlep.setVisible(start);
         footerp.setVisible(start);
         ChatList.setVisible(start);
+        onlCir.setVisible(false);
         Stage stage1 = StartEverything.getSocketController().getStage();
         stage1.setTitle(client.getName());
     }
@@ -159,7 +162,12 @@ public class HomeController implements Initializable{
     public void setStatusLb(Room room){
         for (Client client1 :room.getClients()){
             if (!client1.getId().equals(client.getId())){
-                if (client1.isStatus()) statusLb.setText("Đang hoạt động");
+                ArrayList<Client> listClientOnl = StartEverything.getSocketController().getConnectedServer().getClients();
+                if (ClientController.checkClientInRoom(client1,listClientOnl)){
+                    statusLb.setText("Đang hoạt động");
+                    onlCir.setVisible(true);
+                    return;
+                }
                 else statusLb.setText("Không hoạt động");
             }
         }
@@ -317,7 +325,7 @@ public class HomeController implements Initializable{
             Label lb1 = new Label(time);
             lb1.setId("time");
             vb.getChildren().add(lb1);
-            if (name == null) {
+            if (message.getId_user().equals(client.getId())) {
                 hBox.setAlignment(Pos.BOTTOM_LEFT);
                 vb.setAlignment(Pos.BOTTOM_RIGHT);
                 hBox.setId("BoxMessageMe");
@@ -347,7 +355,7 @@ public class HomeController implements Initializable{
         else if (type.equals("xlsx")) return xlsx;
         else if (type.equals("pdf")) return pdf;
         else if (type.equals("txt")) return txt;
-        else if (type.equals("mp3")) return mp3;
+        else if (type.equals("wav")) return mp3;
         else if (type.equals("jpg")||type.equals("png")) return jpg;
         return null;
     }

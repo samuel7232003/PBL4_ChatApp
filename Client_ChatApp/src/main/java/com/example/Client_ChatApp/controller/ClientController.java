@@ -20,4 +20,12 @@ public class ClientController {
         if(name!=null) for(String e : name.split(" ")) Lastname = e;
         return Lastname;
     }
+
+    public static boolean checkClientInRoom(Client client, ArrayList<Client> listClient){
+        if(listClient.size()==0) return false;
+        for(Client client1 : listClient){
+            if(client.getId().equals(client1.getId())&&client1.isStatus()==true) return true;
+        }
+        return false;
+    }
 }
