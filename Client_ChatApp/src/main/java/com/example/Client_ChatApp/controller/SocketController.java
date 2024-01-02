@@ -37,8 +37,8 @@ public class SocketController {
 
     public SocketController() {
         this.client = new Client();
-        String ipAddress = getThisIP();
-        // String ipAddress = "192.168.68.82";
+        // String ipAddress = getThisIP();
+        String ipAddress = "192.168.1.125";
         // String ipAddress = "10.10.59.27";
 
         // System.out.println(ipAddress);
@@ -773,40 +773,7 @@ public class SocketController {
         }
     }
 
-//    public void sendAudioToRoom(String roomID, byte[] audioBytes) {
-//
-//        try {
-//            System.out.println("Send audio to room " + roomID);
-//
-//            Room room = RoomController.findRoom(connectedServer.getRooms(), roomID);
-//
-//            bufferedWriter.write("audio to room");
-//            bufferedWriter.newLine();
-//            bufferedWriter.write(roomID);
-//            bufferedWriter.newLine();
-//            bufferedWriter.write("" + AudioController.getAudioDuration(audioBytes));
-//            bufferedWriter.newLine();
-//            bufferedWriter.write("" + audioBytes.length);
-//            bufferedWriter.newLine();
-//            bufferedWriter.flush();
-//
-//            byte[] buffer = new byte[1024];
-//            InputStream in = new ByteArrayInputStream(audioBytes);
-//            OutputStream out = socket.getOutputStream();
-//            int i = 0;
-//            int count;
-//            while ((count = in.read(buffer)) > 0) {
-//                out.write(buffer, 0, count);
-//                System.out.println(i++);
-//            }
-//            in.close();
-//            out.flush();
-//            System.out.println(audioBytes.length);
-//            System.out.println("đã gửi xong");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
     public void playAudio(String roomID, String name) {
 
         try {
