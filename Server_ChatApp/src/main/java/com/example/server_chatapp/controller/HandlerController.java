@@ -118,46 +118,6 @@ public class HandlerController extends Thread {
                                         this.bufferedWriter.write(""+client1.isLogin());
                                         this.bufferedWriter.newLine();
                                         this.bufferedWriter.flush();
-
-//                                        try{
-//                                            // gửi về ava của từng client
-//                                            String filePath = "avatar/person/ava" + client1.getId() + ".jpg";
-//                                            String fileName = "ava" + client1.getId() + ".jpg";
-//                                            File file = new File(filePath);
-//                                            if(!file.exists()) {
-//                                                this.bufferedWriter.write("no avatar");
-//                                                this.bufferedWriter.newLine();
-//                                                this.bufferedWriter.flush();
-//                                            }
-//                                            else{
-//                                                //System.out.println(file.length());
-//                                                //System.out.println(fileName);
-//                                                //System.out.println(filePath);
-//                                                this.bufferedWriter.write("have avatar");
-//                                                this.bufferedWriter.newLine();
-//                                                this.bufferedWriter.flush();
-//
-//                                                this.bufferedWriter.write(fileName);
-//                                                this.bufferedWriter.newLine();
-//                                                this.bufferedWriter.write("" + file.length());
-//                                                this.bufferedWriter.newLine();
-//                                                this.bufferedWriter.flush();
-//
-//                                                byte[] buffer = new byte[1024];
-//                                                InputStream in = new FileInputStream(file);
-//                                                OutputStream out = socketHandler.getOutputStream();
-//
-//                                                int count;
-//                                                while ((count = in.read(buffer)) > 0) {
-//                                                    out.write(buffer, 0, count);
-//                                                }
-//                                                in.close();
-//                                                out.flush();
-//                                            }
-//                                        }catch (IOException ex){
-//                                            ex.printStackTrace();
-//                                        }
-
                                 }
 
 
@@ -473,41 +433,6 @@ public class HandlerController extends Thread {
                         String saveFileName = "files/" + roomID + "/" + fileName;
 
                         File file = new File(saveFileName);
-
-//                        DataInputStream inFromClient = null;
-//                        ObjectInputStream ois = null;
-//                        ObjectOutputStream oos = null;
-//                        try {
-//                            // get greeting from client
-//                            inFromClient = new DataInputStream(socketHandler.getInputStream());
-//                            System.out.println(inFromClient.readUTF());
-//
-//                            // receive file info
-//                            ois = new ObjectInputStream(socketHandler.getInputStream());
-//                            FileInfo fileInfo = (FileInfo) ois.readObject();
-//                            if (fileInfo != null) {
-//                                createFile(fileInfo);
-//                            }
-//
-//                            // confirm that file is received
-//                            oos = new ObjectOutputStream(socketHandler.getOutputStream());
-//                            fileInfo.setStatus("success");
-//                            fileInfo.setDataBytes(null);
-//                            oos.writeObject(fileInfo);
-//
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        } catch (ClassNotFoundException e) {
-//                            e.printStackTrace();
-//                        } finally {
-//                            // close all stream
-//                            closeStream(ois);
-//                            closeStream(oos);
-//                            closeStream(inFromClient);
-//                            // close session
-//
-//                        }
-
                         byte[] buffer = new byte[1024];
                         InputStream in = socketHandler.getInputStream();
                         OutputStream out = new FileOutputStream(file);
@@ -552,13 +477,7 @@ public class HandlerController extends Thread {
                     case "request download file": {
                         try {
                             String roomID = bufferedReader.readLine();
-                            int messageIndex = Integer.parseInt(bufferedReader.readLine());
                             String fileName = bufferedReader.readLine();
-
-//                            int dotIndex = fileName.lastIndexOf('.');
-
-//                            fileName = "files/" + fileName.substring(0, dotIndex)
-//                                    + String.format("%02d%03d", roomID, messageIndex) + fileName.substring(dotIndex);
                             fileName = "files/" + roomID + "/" + fileName;
                             File file = new File(fileName);
 
@@ -638,94 +557,11 @@ public class HandlerController extends Thread {
                         break;
                     }
 
-//                    case "audio to room": {
-//                        String roomID = bufferedReader.readLine();
-//                        int audioDuration = Integer.parseInt(bufferedReader.readLine());
-//                        int audioByteSize = Integer.parseInt(bufferedReader.readLine());
-//
-//                        Room room = RoomController.findRoom(SocketController.getAllRooms(), roomID);
-//                        room.setMessageOrder();
-//
-//                        String folderPath = "files/" + roomID;
-//                        File filesFolder = new File(folderPath);
-//                        if (!filesFolder.exists())
-//                            filesFolder.mkdir();
-//                        String name ="audio" + roomID + room.getMessageOrder();
-//                        String audioFileName = folderPath + "/" + name;
-//
-//                        File file = new File(audioFileName);
-//                        byte[] buffer = new byte[1024];
-//                        InputStream in = socketHandler.getInputStream();
-//                        OutputStream out = new FileOutputStream(file);
-//
-//                        int receivedSize = 0;
-//                        int count;
-//                        int i = 0;
-//                        while ((count = in.read(buffer)) != -1) {
-//                            out.write(buffer, 0, count);
-//                            receivedSize += count;
-//                            if (receivedSize >= audioByteSize)
-//                                break;
-//                            System.out.println(i++);
-//                        }
-//                        out.close();
-//
-//                        System.out.println("đã nhận xong");
-//
-//                        RoomMessage roomMessage = new RoomMessage(roomID, this.client.getId(), room.getMessageOrder(), name, "audio");
-//                        RoomMessageController roomMessageController = new RoomMessageController();
-//                        roomMessageController.insertMessage(roomMessage);
-//                        room.getMessages().add(roomMessage);
-//
-//                        for (Client client1 : room.getClients()) {
-//                            HandlerController clientRecieve = SocketController.getHandlerClient(client1.getId());
-//                            if(clientRecieve != null){
-//                                clientRecieve.getBufferedWriter().write("audio from user to room");
-//                                clientRecieve.getBufferedWriter().newLine();
-//                                clientRecieve.getBufferedWriter().write(this.client.getId());
-//                                clientRecieve.getBufferedWriter().newLine();
-//                                clientRecieve.getBufferedWriter().write("" + roomID);
-//                                clientRecieve.getBufferedWriter().newLine();
-//                                clientRecieve.getBufferedWriter().write(name);
-//                                clientRecieve.getBufferedWriter().newLine();
-//                                clientRecieve.getBufferedWriter().write("" + audioDuration);
-//                                clientRecieve.getBufferedWriter().newLine();
-//                                clientRecieve.getBufferedWriter().flush();
-//                            }
-//                        }
-//                        break;
-//                    }
-                    case "request edit room name" :{
-                        String idRoom = bufferedReader.readLine();
-                        String newRoomName = bufferedReader.readLine();
-
-                        // lưu vaò db
-                        Room room = RoomController.editRoomProfile(idRoom, newRoomName);
-                        // gửi về các client
-                        for (Client client1 : room.getClients()) {
-                            HandlerController clientRecieve = SocketController.getHandlerClient(client1.getId());
-                            if(clientRecieve != null){
-                                if (clientRecieve != null) {
-                                    clientRecieve.bufferedWriter.write("new name room");
-                                    clientRecieve.bufferedWriter.newLine();
-                                    clientRecieve.bufferedWriter.write(room.getID_room());
-                                    clientRecieve.bufferedWriter.newLine();
-                                    clientRecieve.bufferedWriter.write(room.getRoomName());
-                                    clientRecieve.bufferedWriter.newLine();
-                                    clientRecieve.bufferedWriter.write(this.client.getId());
-                                    clientRecieve.bufferedWriter.newLine();
-                                    clientRecieve.bufferedWriter.flush();
-                                }
-                            }
-                        }
-                        break;
-                    }
                     case "request audio play": {
                         try {
                             String roomID = bufferedReader.readLine();
                             String nameAudio = bufferedReader.readLine();
                             String audioFileName = "files/" + roomID + "/" + nameAudio;
-//                            String audioFileName = "files/audio" + String.format("%02d%03d", roomID, messageIndex);
 
                             File file = new File(audioFileName);
 
@@ -751,42 +587,85 @@ public class HandlerController extends Thread {
                         }
                         break;
                     }
-//                    case "request audio bytes": {
-//                        try {
-//                            String roomID = bufferedReader.readLine();
-//                            int messageIndex = Integer.parseInt(bufferedReader.readLine());
-//                            String name ="audio" + roomID + messageIndex;
-//                            String audioFileName = "files/" + roomID + "i"  +messageIndex + "/" + name;
-////                            String audioFileName = "files/audio" + String.format("%02d%03d", roomID, messageIndex);
-//                            File file = new File(audioFileName);
-//
-//                            bufferedWriter.write("response audio bytes");
-//                            bufferedWriter.newLine();
-//                            bufferedWriter.write("" + file.length());
-//                            bufferedWriter.newLine();
-//                            bufferedWriter.flush();
-//
-//                            byte[] buffer = new byte[1024];
-//                            InputStream in = new FileInputStream(file);
-//                            OutputStream out = socketHandler.getOutputStream();
-//
-//                            int count;
-//                            while ((count = in.read(buffer)) > 0) {
-//                                out.write(buffer, 0, count);
-//                            }
-//
-//                            in.close();
-//                            out.flush();
-//                        } catch (IOException ex) {
-//                            ex.printStackTrace();
-//                        }
-//                        break;
-//                    }
+
+                    case "request edit room name" :{
+                        String idRoom = bufferedReader.readLine();
+                        String newRoomName = bufferedReader.readLine();
+
+                        // lưu vaò db
+                        Room room = RoomController.editRoomProfile(idRoom, newRoomName);
+                        // gửi về các client
+                        for (Client client1 : room.getClients()) {
+                            HandlerController clientRecieve = SocketController.getHandlerClient(client1.getId());
+                            if(clientRecieve != null){
+                                if (clientRecieve != null) {
+                                    clientRecieve.bufferedWriter.write("new name room");
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write(room.getID_room());
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write(room.getRoomName());
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.write(this.client.getId());
+                                    clientRecieve.bufferedWriter.newLine();
+                                    clientRecieve.bufferedWriter.flush();
+                                }
+                            }
+                        }
+                        break;
+                    }
+
+                    case "request edit avatar":{
+                        int fileSize = Integer.parseInt(bufferedReader.readLine());
+                        String pathSaveAva = "avatar/person";
+
+                        File filesFolder = new File(pathSaveAva);
+                        if (!filesFolder.exists())
+                            filesFolder.mkdir();
+
+                        String saveAvaName = pathSaveAva + "/ava" + this.client.getId() + ".jpg";
+
+                        File file = new File(saveAvaName);
+                        byte[] buffer = new byte[1024];
+                        InputStream in = socketHandler.getInputStream();
+                        OutputStream out = new FileOutputStream(file);
+
+                        int receivedSize = 0;
+                        int count;
+                        while ((count = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, count);
+                            receivedSize += count;
+                            if (receivedSize >= fileSize)
+                                break;
+                        }
+
+                        out.close();
+
+                        for (HandlerController handlerController : SocketController.getClientHandlers()) {
+                            handlerController.getBufferedWriter().write("request client edit avatar");
+                            handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().write(this.client.getId());
+                            handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().write("" + file.length());
+                            handlerController.getBufferedWriter().newLine();
+                            handlerController.getBufferedWriter().flush();
+
+                            File fileVe = new File(saveAvaName);
+                            byte[] bufferVe = new byte[1024];
+                            InputStream inVe = new FileInputStream(fileVe);
+                            OutputStream outVe = handlerController.getSocketHandler().getOutputStream();    while ((count = inVe.read(bufferVe)) > 0) {
+                                outVe.write(buffer, 0, count);
+                            }
+                            inVe.close();
+                            outVe.flush();
+                        }
+                        break;
+                    }
 
                     case "Get id user": {
                         String id = client.getId();
                         bufferedWriter.write(id);
                         bufferedWriter.flush();
+                        break;
                     }
 
                     case "get name": {
@@ -860,5 +739,9 @@ public class HandlerController extends Thread {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public Socket getSocketHandler() {
+        return socketHandler;
     }
 }

@@ -37,8 +37,8 @@ public class SocketController {
 
     public SocketController() {
         this.client = new Client();
-        // String ipAddress = getThisIP();
-        String ipAddress = "192.168.1.125";
+        String ipAddress = getThisIP();
+        // String ipAddress = "192.168.1.20";
         // String ipAddress = "10.10.59.27";
 
         // System.out.println(ipAddress);
@@ -74,49 +74,6 @@ public class SocketController {
                 boolean isLogin = Boolean.parseBoolean(bufferedReader.readLine());
                 Client clientVari = new Client(id_user, NameUser, isLogin);
                 connectedServer.addClient(clientVari);
-
-//                //nhận avatar của các client từ server gửi về
-//                String haveOrNoAvatar = bufferedReader.readLine();
-//                System.out.println(haveOrNoAvatar);
-//                if(haveOrNoAvatar.equals("have avatar")){
-//                    String fileName = bufferedReader.readLine();
-//                    int fileLength = Integer.parseInt(bufferedReader.readLine());
-//                    String saveFileName = pathSaveFile + "/" + fileName;
-//                    File file = new File(saveFileName);
-//                    String saveFileDelete = "src/main/resources/com/example/Client_ChatApp/avatar/avaDelete.jpg";
-//                    File filedelete = new File(saveFileDelete);
-//                    byte[] buffer = new byte[1024];
-//                    InputStream in = socket.getInputStream();
-//                    int receivedSize = 0;
-//                    int count;
-//
-//                    if(!file.exists()){
-//                        OutputStream out = new FileOutputStream(file);
-//                        while ((count = in.read(buffer)) > 0) {
-//                            out.write(buffer, 0, count);
-//                            receivedSize += count;
-//                            if (receivedSize >= fileLength)
-//                                break;
-//                        }
-//                        out.close();
-//                    }
-//                    else{
-//                        System.out.println("ava của " + NameUser + " đã tồn tại");
-//                        OutputStream out = new FileOutputStream(filedelete);
-//                        while ((count = in.read(buffer)) > 0) {
-//                            out.write(buffer, 0, count);
-//                            receivedSize += count;
-//                            if (receivedSize >= fileLength)
-//                                break;
-//                        }
-//                        out.close();
-//                        filedelete.delete();
-//                    }
-//
-//                }
-//                else {
-//                    System.out.println(haveOrNoAvatar);
-//                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -130,7 +87,6 @@ public class SocketController {
                 String idRoom = bufferedReader.readLine();
                 String nameRoom = bufferedReader.readLine();
                 String typeRoom = bufferedReader.readLine();
-                System.out.println(roomCount + idRoom + nameRoom + typeRoom);
                 int clientCount = Integer.parseInt(bufferedReader.readLine());
                 ArrayList<Client> clients = new ArrayList<Client>();
                 for(int j = 0; j <clientCount; j++){
@@ -162,22 +118,6 @@ public class SocketController {
         int i = 1;
         for(Client client : connectedServer.getClients()){
             if(client.isStatus()) System.out.println(i++ + ". " + client.getName());
-        }
-    }
-    public void GetImageInRoom(){
-        for(Room room : connectedServer.getRooms()){
-            for(MessageData messageData : room.getMessageDatas()){
-                if(messageData.getMessType().equals("file")){
-                    if(messageData.getContent().contains(".jpg") || messageData.getContent().contains(".png")){
-                        File filesFolder = new File("ImgageInMessRoom");
-                        if (!filesFolder.exists())
-                            filesFolder.mkdir();
-                        downloadToPath = "ImgageInMessRoom/" + room.getId() + "/" + messageData.getContent();
-                        downloadFile(room.getId(), 1, messageData.getContent(), downloadToPath);
-                        // cần phải tải về
-                    }
-                }
-            }
         }
     }
     public void requestEditRoomName(Room room){
@@ -274,7 +214,6 @@ public class SocketController {
                 getRoomExisted();
 //                GetImageInRoom();
                 updateUserOnlineList();
-                showRoom();
                 StartAll();
                 return "Login success";
             }
@@ -350,11 +289,6 @@ public class SocketController {
                                 }
                                 connectedServer.removeClient(clientQuit);
 
-//                                for (Room room : connectedServer.getRooms()) {
-//                                    if (room.getClients().contains(clientQuit))) {
-//                                        room.getClients().remove(clientQuit);
-//                                    }
-//                                }
                                 updateUserOnlineList();
                                 reloadOnSocket();
                                 break;
@@ -469,7 +403,6 @@ public class SocketController {
                                 LocalDateTime timenow = LocalDateTime.now();
                                 MessageData messageData = new MessageData(userID, fileName, "file", timenow);
                                 receiveRoom.getMessageDatas().add(messageData);
-                                //downloadIfImage(fileName, roomID);
                                 reloadOnSocket();
                                 break;
                             }
@@ -534,27 +467,7 @@ public class SocketController {
                                 }
                                 break;
                             }
-//                            case "response audio bytes": {
-//
-//                                int fileSize = Integer.parseInt(bufferedReader.readLine());
-//
-//                                byte[] buffer = new byte[1024];
-//                                InputStream in = socket.getInputStream();
-//                                ByteArrayOutputStream receivedBytes = new ByteArrayOutputStream();
-//
-//                                int count;
-//                                int receivedFileSize = 0;
-//                                while ((count = in.read(buffer)) > 0) {
-//                                    receivedBytes.write(buffer, 0, count);
-//                                    receivedFileSize += count;
-//                                    if (receivedFileSize >= fileSize)
-//                                        break;
-//                                }
-//
-//                                receivedBytes.close();
-//                                // AudioController.play(receivedBytes);
-//                                break;
-//                            }
+
                             case "new name room":{
                                 String idRoom = bufferedReader.readLine();
                                 String newNameRoom = bufferedReader.readLine();
@@ -565,10 +478,36 @@ public class SocketController {
                                         break;
                                     }
                                 }
-
-
                                 reloadOnSocket();
                                 //room
+                                break;
+                            }
+                            case "request client edit avatar": {
+                                String idUser = bufferedReader.readLine();
+                                int fileSize = Integer.parseInt(bufferedReader.readLine());
+                                String pathSaveAva = "src/main/resources/com/example/Client_ChatApp/avatar";
+
+                                File filesFolder = new File(pathSaveAva);
+                                if (!filesFolder.exists())
+                                    filesFolder.mkdir();
+
+                                String saveAvaName = pathSaveAva + "/ava" + idUser + ".jpg";
+
+                                File file = new File(saveAvaName);
+                                byte[] buffer = new byte[1024];
+                                InputStream in = socket.getInputStream();
+                                OutputStream out = new FileOutputStream(file);
+                                int receivedSize = 0;
+                                int count;
+                                while ((count = in.read(buffer)) > 0) {
+                                    out.write(buffer, 0, count);
+                                    receivedSize += count;
+                                    if (receivedSize >= fileSize)
+                                        break;
+                                }
+
+                                out.close();
+                                reloadOnSocket();
                                 break;
                             }
                         }
@@ -698,8 +637,6 @@ public class SocketController {
 
             File file = new File(filePath);
             Room room = RoomController.findRoom(connectedServer.getRooms(), roomID);
-            System.out.println(file);
-            System.out.println(fileName);
             bufferedWriter.write("file to room");
             bufferedWriter.newLine();
             bufferedWriter.write(roomID);
@@ -732,8 +669,6 @@ public class SocketController {
             bufferedWriter.write("request download file");
             bufferedWriter.newLine();
             bufferedWriter.write(roomID);
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + fileMessageIndex);
             bufferedWriter.newLine();
             bufferedWriter.write(fileName);
             bufferedWriter.newLine();
@@ -788,20 +723,6 @@ public class SocketController {
             ex.printStackTrace();
         }
     }
-    public void getAudioBytes(String roomID, int fileMessageIndex) {
-
-        try {
-            bufferedWriter.write("request audio bytes");
-            bufferedWriter.newLine();
-            bufferedWriter.write(roomID);
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + fileMessageIndex);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
     //////////////// kick vô 1 user nào trên đó thì sẽ tự động vô hàm này
     public void selectUser(String id_user){
         Room foundRoom = RoomController.findPrivateRoom(connectedServer.getRooms(), id_user);
@@ -823,42 +744,39 @@ public class SocketController {
         return client;
     }
 
-    public String returnRoomId(String idClient){
-        for(Room room : connectedServer.getRooms()){
-            for(Client client1 : room.getClients()){
-                if(client1.getId().equals(idClient)){
-                    return room.getId();
-                }
-            }
-        }
-        return "";
-    }
     public String getNameById(String iduser){
         for(Client client1 : connectedServer.getClients()){
             if(client1.getId().equals(iduser)) return  client1.getName();
         }
         return  null;
     }
-    public void showRoom(){
-        for(Room room : connectedServer.getRooms()){
-            System.out.println(room.getId() + " có các user: ");
-            for(Client client1 : room.getClients()){
-                System.out.print(client1.getName() + " ");
-            }
-            System.out.println();
-        }
-    }
     public ArrayList<Room> getRoomList(){
         return connectedServer.getRooms();
     }
 
-    public void downloadIfImage(String fileName, String roomID){
-        String type = "";
-        for (String s : fileName.split("\\.")) type = s;
-        if(type.equals("jpg")||type.equals("png")) {
-            String path = StartEverything.getHomeController().getPathForShowImage();
-            downloadFile(roomID, 1, fileName, path);
-            System.out.println("Download thành công!" + path);
+    public void requestEditAvatar(String filePath){
+        try {
+            System.out.println("Edit my avatar");
+
+            File file = new File(filePath);
+            bufferedWriter.write("request edit avatar");
+            bufferedWriter.newLine();
+            bufferedWriter.write("" + file.length());
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            byte[] buffer = new byte[1024];
+            InputStream in = new FileInputStream(file);
+            OutputStream out = socket.getOutputStream();
+
+            int count;
+            while ((count = in.read(buffer)) > 0) {
+                out.write(buffer, 0, count);
+            }
+            in.close();
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

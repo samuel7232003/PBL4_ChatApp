@@ -12,8 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -81,5 +83,17 @@ public class EditProfileController implements Initializable {
 
     public void requestEditProfile(){
         StartEverything.getSocketController().requestEditMyInfor(namelb.getText(), emaillb.getText(), pwdlb.getText());
+    }
+
+    public void uploadNewAva(MouseEvent mouseEvent) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Chọn ảnh để tải lên");
+        FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("Kiểu tệp", "*.png", "*.jpg");
+        fc.getExtensionFilters().add(fileFilter);
+        File file = fc.showOpenDialog(StartEverything.getSocketController().getStage());
+        if (file != null){
+            String filePath = file.getPath();
+            StartEverything.getSocketController().requestEditAvatar(filePath);
+        }
     }
 }
