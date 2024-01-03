@@ -108,14 +108,14 @@
                             </image>
                         </ImageView>
                     </children></Pane>
-                <Pane layoutX="65.0" layoutY="9.0" onMouseClicked="#startRecord" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
+                <Pane layoutX="160.0" layoutY="9.0" onMouseClicked="#startRecord" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #f1c40f; -fx-background-radius: 8;">
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="12.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@icon/audio.png" />
                             </image></ImageView>
                     </children></Pane>
-                <TextField id="content" fx:id="content" layoutX="166.0" layoutY="9.0" onKeyPressed="#send_" prefHeight="40.0" prefWidth="571.0" promptText="Nhập tin nhắn gửi tới bạn của bạn..." style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;">
+                <TextField id="content" fx:id="content" layoutX="209.0" layoutY="9.0" onKeyPressed="#send_" prefHeight="40.0" prefWidth="528.0" promptText="Nhập tin nhắn gửi tới bạn của bạn..." style="-fx-background-color: #d9d9d9; -fx-background-radius: 8;">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -127,11 +127,18 @@
                                 <Image url="@icon/send_yellow.png" />
                             </image></ImageView>
                     </children></Pane>
-                <Pane layoutX="115.0" layoutY="9.0" onMouseClicked="#uploadImage" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 8; -fx-background-color: #f1c40f;">
+                <Pane layoutX="64.0" layoutY="9.0" onMouseClicked="#uploadImage" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 8; -fx-background-color: #f1c40f;">
                     <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@icon/photo.png" />
+                            </image></ImageView>
+                    </children></Pane>
+                <Pane layoutX="112.0" layoutY="9.0" onMouseClicked="#takePhoto" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 8; -fx-background-color: #f1c40f;">
+                    <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icon/camera_icon.png" />
                             </image></ImageView>
                     </children></Pane>
             </children>

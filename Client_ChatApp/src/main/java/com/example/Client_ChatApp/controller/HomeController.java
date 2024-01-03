@@ -644,4 +644,13 @@ public class HomeController implements Initializable{
 
         StartEverything.getSocketController().sendAudioToRoom(mainRoom.getId());
     }
+
+    public void takePhoto(MouseEvent event) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("cameraScreen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setTitle("Camera");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
