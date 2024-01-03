@@ -2,12 +2,47 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.server_chatapp.controller.ServerUIController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.server_chatapp.controller.ServerUIController">
    <children>
-      <Label id="iptxt" fx:id="iptxt" layoutX="87.0" layoutY="24.0" text="Label" />
-      <Label id="porttxt" fx:id="porttxt" layoutX="87.0" layoutY="57.0" text="Label" />
-      <TextArea id="tbtxt" fx:id="tbtxt" layoutX="87.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button onMouseClicked="#closeSocket" layoutX="87.0" layoutY="307.0" mnemonicParsing="false" text="Đóng server" />
+      <Label id="iptxt" fx:id="iptxt" layoutX="89.0" layoutY="91.0" text="IP: 0000000">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label id="porttxt" fx:id="porttxt" layoutX="87.0" layoutY="120.0" text="Port: 1234">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <TextArea id="tbtxt" fx:id="tbtxt" layoutX="87.0" layoutY="385.0" prefHeight="138.0" prefWidth="430.0" />
+      <Button layoutX="425.0" layoutY="544.0" mnemonicParsing="false" onMouseClicked="#closeSocket" prefHeight="36.0" prefWidth="92.0" style="-fx-background-color: #f1c40f;" text="Đóng server" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Label layoutX="172.0" layoutY="14.0" text=" SERVER MANAGER">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="89.0" layoutY="62.0" style="-fx-font-weight: bold;" text="Infor:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Line endX="324.3999938964844" layoutX="187.0" layoutY="84.0" startX="-100.0" />
+      <Label layoutX="87.0" layoutY="171.0" style="-fx-font-weight: bold;" text="List User Online:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Line endX="328.4000244140625" layoutX="187.0" layoutY="193.0" startX="-100.0" />
+      <VBox layoutX="87.0" layoutY="207.0" prefHeight="129.0" prefWidth="430.0" />
+      <Label layoutX="85.0" layoutY="350.0" text="Status:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Line endX="325.4000244140625" layoutX="186.0" layoutY="372.0" startX="-100.0" />
    </children>
 </AnchorPane>
