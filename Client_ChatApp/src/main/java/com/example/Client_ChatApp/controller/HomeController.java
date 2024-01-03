@@ -567,6 +567,7 @@ public class HomeController implements Initializable{
             String filePath = file.getPath();
             StartEverything.getSocketController().sendFileToRoom(mainRoom.getId(), fileName, filePath);
         }
+
     }
 
     public void openEditPage(MouseEvent mouseEvent) throws IOException {
@@ -618,7 +619,6 @@ public class HomeController implements Initializable{
     }
     public void pauseRecord(){
         isRecord = false;
-        // byte[] AudioByte = AudioController.stopRecord();
         audioController.stopRecord();
         Timeline timeline = (Timeline) time.getUserData();
         pauseBtn.setVisible(false);
@@ -632,7 +632,6 @@ public class HomeController implements Initializable{
     }
     public void sendRecordToRoom(){
         isRecord = false;
-        // byte[] AudioByte = AudioController.stopRecord();
         audioController.stopRecord();
         Timeline timeline = (Timeline) time.getUserData();
         timeline.stop();
