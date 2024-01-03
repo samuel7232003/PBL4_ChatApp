@@ -28,6 +28,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -645,11 +646,13 @@ public class HomeController implements Initializable{
     }
 
     public void takePhoto(MouseEvent event) throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(index.class.getResource("cameraScreen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Camera");
-        stage.setScene(scene);
-        stage.show();
-    }
+        CameraCaptureController cameraCaptureController = new CameraCaptureController();
+        cameraCaptureController.startCamera();
+        if(CameraCaptureController.isSendOK()){
+            String fileName = "ImageCapture" + CameraCaptureController.getIdCapture() + ".jpg";
+            String filePath = "Images/" + fileName;
+            StartEverything.getSocketController().sendFileToRoom(mainRoom.getId(), fileName, filePath);
+            CameraCaptureController.setSendOK(false);
+        }
+   }
 }
