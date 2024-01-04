@@ -105,7 +105,4 @@ public class CameraCaptureController extends JFrame{
         return idCapture;
     }
 
-    public static void setIdCapture(int idCapture) {
-        CameraCaptureController.idCapture = idCapture;
-    }
 }
